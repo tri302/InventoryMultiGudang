@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Menu Manager";
+    Layout = "_AdminLayout";
+}
+@Html.AntiForgeryToken()
+<div class="container-fluid">
+    <!-- Header Halaman -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <div>
+            <h4 class="fw-bold mb-1 text-indigo-dark">Menu Manager</h4>
+            <p class="text-muted small mb-0">Configure database-driven sidebar menus, sorting order, and access filters.</p>
+        </div>
+        <!-- Action Buttons -->
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalManageGroups">
+                <i class="bi bi-folder-check"></i> Manage Groups
+            </button>
+            <button class="btn btn-success rounded-pill px-4 btn-sm" id="btnOpenAddModal">
+                <i class="bi bi-plus-lg"></i> Add Menu Item
+            </button>
+        </div>
+    </div>
+
+    <!-- Container Utama Tempat Dynamic Render Menu via AJAX -->
+    <div id="menuListContainer">
+        <!-- Render Loading State -->
+        <div class="text-center py-5">
+            <div class="spinner-border text-indigo" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-muted small mt-2">Memuat daftar menu...</p>
+        </div>
+    </div>
+
+    <!-- Pagination Footer -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 pt-3 border-top gap-3">
+        <div class="text-muted small" id="paginationInfo">
+            Menampilkan 0 - 0 dari 0 data
+        </div>
+        <nav aria-label="Menu Pagination">
+            <ul class="pagination pagination-sm mb-0" id="paginationNav">
+                <!-- Pagination Buttons Rendered via JS -->
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+@await Html.PartialAsync("modalAddMenu")
+@await Html.PartialAsync("modalManageGroups")
+@section Scripts {
+    <script src="~/js/MenuManager.js"></script>
+}

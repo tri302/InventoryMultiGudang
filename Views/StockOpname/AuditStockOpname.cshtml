@@ -1,0 +1,418 @@
+﻿@model InventoryMultiGudang.ViewModels.StockOpnameFormViewModel
+@{
+Layout = "_AdminLayout";
+}
+@Html.AntiForgeryToken()
+
+<style>
+  /* 1. Base & Reset Styles */
+  html,
+  :host {
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    font-family: Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    line-height: 1.5;
+  }
+
+  body {
+    line-height: inherit;
+  }
+
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    border: 0 solid #e5e7eb;
+  }
+
+  /* 2. Layout & Typography Utilities */
+  .flex {
+    display: flex;
+  }
+
+  .block {
+    display: block;
+  }
+
+  .flex-shrink-0,
+  .shrink-0 {
+    flex-shrink: 0;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .gap-1\.5 {
+    gap: .375rem;
+  }
+
+  .font-sans {
+    font-family: Figtree, ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+
+  .tracking-wider {
+    letter-spacing: .05em;
+  }
+
+  .text-\[10px\] {
+    font-size: 10px;
+  }
+
+  .text-\[9px\] {
+    font-size: 9px;
+  }
+
+  /* 3. Spacing & Borders */
+  .px-1\.5 {
+    padding-left: .375rem;
+    padding-right: .375rem;
+  }
+
+  .border {
+    border-width: 1px;
+  }
+
+  .rounded {
+    border-radius: .25rem;
+  }
+
+  /* 4. Colors & Themes */
+  .bg-white {
+    background-color: rgb(255 255 255);
+  }
+
+  .bg-slate-50 {
+    background-color: rgb(248 250 252);
+  }
+
+  .border-slate-200 {
+    border-color: rgb(226 232 240);
+  }
+
+  .text-slate-900 {
+    color: rgb(15 23 42);
+  }
+
+  .text-blue-700 {
+    color: rgb(29 78 216);
+  }
+
+  .bg-blue-50 {
+    background-color: rgb(239 246 255);
+  }
+
+  .text-purple-700 {
+    color: rgb(126 34 206);
+  }
+
+  .bg-purple-50 {
+    background-color: rgb(250 245 255);
+  }
+
+  /* Force warna teks menjadi gelap/hitam pada elemen select */
+  .formAuditStockOpname select.form-select,
+  .formAuditStockOpname select.form-control {
+    color: #212529 !important;
+    font-weight: 500;
+  }
+
+  .formAuditStockOpname select.form-select option,
+  .formAuditStockOpname select.form-control option {
+    color: #212529 !important;
+    background-color: #ffffff !important;
+  }
+</style>
+
+<div class="container-fluid formAuditStockOpname">
+  <form id="formAuditStockOpname">
+    <input type="hidden" id="AuditId" asp-for="Id" />
+    <input type="hidden" id="GudangId" asp-for="GudangId" />
+
+    <!-- HEADER HALAMAN -->
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <a asp-action="Index" asp-controller="StockOpname" class="btn btn-cancel p-2 d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <div>
+        <h1 class="h3 mb-1 fw-bold text-indigo-dark" style="color: #0f172a !important;">Audit Stock Opname</h1>
+        <p class="text-muted mb-0 small">Pencatatan persediaan fisik riil di gudang untuk mendeteksi selisih stock.</p>
+      </div>
+    </div>
+
+    <!-- CARD METADATA GUDANG & CATATAN -->
+    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4" style="background: #ffffff;">
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <label class="form-label mb-1 text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">GUDANG
+            AUDIT</label>
+          <h5 class="fw-bold text-indigo-dark mb-1" style="color: #0f172a !important;">@Model.NamaGudang</h5>
+          <span class="text-muted tracking-wider fw-bold small" style="font-size: 0.75rem;">@Model.KodeGudang</span>
+        </div>
+        <div class="col-12 col-md-8">
+          <label class="form-label mb-1 text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">CATATAN AUDIT /
+            KETERANGAN DOKUMEN</label>
+          <input type="text" id="CatatanAudit" asp-for="Catatan" class="form-control py-2 fs-6" placeholder="E.g. Opname tengah tahun, audit investigasi selisih barang IT...">
+          <span asp-validation-for="Catatan" class="text-danger small"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AREA PENCOCOKAN STOK FISIK PRODUK -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+      <div class="bg-light-subtle px-4 py-3 border-bottom d-flex align-items-center gap-2">
+        <i class="bi bi-layers text-muted"></i>
+        <span class="text-muted tracking-wider fw-bold text-uppercase" style="font-size: 0.75rem;">Pencocokan Stok Fisik
+          Produk (TOTAL: @Model.Items.Count)</span>
+      </div>
+
+      <div class="p-4">
+        @if (Model.Items != null && Model.Items.Count > 0)
+        {
+        @foreach (var item in Model.Items)
+        {
+        <div class="card border-0 shadow-sm rounded-4 p-4 audit-item-row mb-3" style="background: #ffffff; border: 1px solid var(--border-color) !important;">
+          <input type="hidden" class="produk-id" value="@item.ProdukId" />
+
+          <div class="row align-items-center g-4">
+            <!-- INFO PRODUK -->
+            <div class="col-12 col-md-6">
+              <h5 class="fw-bold text-indigo-dark mb-2" style="color: #0f172a !important; font-size: 1.1rem;">
+                @item.NamaProduk</h5>
+              <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
+                <span class="text-muted tracking-wider fw-bold small me-2 sku font-monospace" style="font-size: 0.75rem;">@item.Sku</span>
+                <span class="badge bg-secondary-subtle text-secondary fw-bold text-uppercase px-2 py-0.5 rounded" style="font-size: 0.6rem;">@item.TipeBarang</span>
+                @if (item.SnItems != null && item.SnItems.Count > 0)
+                {
+                <span class="badge bg-purple-subtle text-purple fw-bold text-uppercase px-2 py-0.5 rounded" style="font-size: 0.6rem;">SN Tracked</span>
+                }
+                else
+                {
+                <span class="badge bg-secondary-subtle text-secondary fw-bold text-uppercase px-2 py-0.5 rounded" style="font-size: 0.6rem;">Non-SN (Bulk)</span>
+                }
+              </div>
+            </div>
+
+            <!-- Statistik Stok (Sistem, Fisik, Selisih) -->
+            <div class="col-12 col-md-6">
+              <div class="row text-center g-2 bg-light p-3 rounded-3 align-items-center">
+                <div class="col-4 border-end">
+                  <span class="text-muted tracking-wider fw-bold text-uppercase d-block mb-1" style="font-size: 0.65rem;">Stok Sistem</span>
+                  <span class="fw-bold text-indigo-dark fs-6 stok-sistem">@item.StokSistem</span>
+                </div>
+                <div class="col-4 border-end">
+                  <span class="text-muted tracking-wider fw-bold text-uppercase d-block mb-1" style="font-size: 0.65rem;">Stok Fisik</span>
+                  @if (item.SnItems != null && item.SnItems.Count > 0)
+                  {
+                  <span class="fw-bold text-indigo-dark fs-6 stok-fisik-input">@item.StokFisik</span>
+
+                  }
+                  else
+                  {
+                  <input type="number" name="Items[@Model.Items.IndexOf(item)].StokFisik" class="form-control form-control-sm text-center fw-bold stok-fisik-manual" value="@item.StokFisik" min="0" />
+                  }
+                </div>
+                <div class="col-4">
+                  <span class="text-muted tracking-wider fw-bold text-uppercase d-block mb-1" style="font-size: 0.65rem;">Selisih</span>
+                  <!-- Sinkronisasi kelas warna merah otomatis jika selisih != 0 -->
+                  <span class="fw-bold fs-6 selisih-val @(item.Selisih != 0 ? " text-danger" : "text-muted" )">
+                    @item.Selisih
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VERIFIKASI KONDISI NOMOR SERI (SN) -->
+          @if (item.SnItems != null && item.SnItems.Count > 0)
+          {
+          <div class="card bg-light border-0 mt-3 p-3 rounded-3">
+            <div class="card-body p-0">
+              <h6 class="text-[10px] fw-bold text-secondary uppercase tracking-wider d-flex align-items-center gap-1.5 mb-3">
+                <i class="bi bi-tag-fill text-primary"></i> Verifikasi Kondisi Nomor Seri (SN) Aset & Alasan Selisih
+              </h6>
+              <div class="row g-3">
+                @foreach (var sn in item.SnItems)
+                {
+                var badgeClass = sn.Kondisi switch
+                {
+                "Ditemukan (OK)" => "bg-success text-white",
+                "Hilang (Lost)" => "bg-danger text-white",
+                "Rusak (Damage)" => "bg-warning text-dark",
+                "Dihapuskan (Disposed)" => "bg-secondary text-white",
+                _ => "bg-secondary text-white"
+                };
+
+                <div class="col-12 col-md-6">
+                  <div class="p-3 bg-white border rounded-2">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                      <span class="fw-bold small text-secondary">@sn.SerialNumber</span>
+                      <!-- Pada bagian perulangan snItems di AuditStockOpname.cshtml -->
+                      <select class="form-select form-select-sm sn-select-item" data-sn="@sn.SerialNumber" data-produkitemid="@sn.ProdukItemId" style="width: 140px; font-size: 0.75rem;">
+                        <option value="Ditemukan (OK)" selected="@(sn.Kondisi == " Ditemukan (OK)" ? "selected" : null)">Ditemukan (OK)</option>
+                        <option value="Hilang (Lost)" selected="@(sn.Kondisi == " Hilang (Lost)" ? "selected" : null)">Hilang (Lost)</option>
+                        <option value="Rusak (Damage)" selected="@(sn.Kondisi == " Rusak (Damage)" ? "selected" : null)">Rusak (Damage)</option>
+                        <option value="Dihapuskan (Disposed)" selected="@(sn.Kondisi == " Dihapuskan (Disposed)" ? "selected" : null)">Dihapuskan (Disposed)</option>
+                      </select>                      
+                    </div>
+                    <!-- Input Alasan & Keterangan khusus melekat per SN item -->
+                    <div class="row g-2 mt-1">
+                      <div class="col-6">
+                        <input type="text" class="form-control form-control-sm sn-alasan" value="@sn.AlasanSelisih" placeholder="Alasan (jika hilang/rusak)..." style="font-size: 0.7rem;" />
+                      </div>
+                      <div class="col-6">
+                        <input type="text" class="form-control form-control-sm sn-keterangan" value="@sn.Keterangan" placeholder="Keterangan..." style="font-size: 0.7rem;" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+          }
+          else
+          {
+          <!-- Input Alasan & Keterangan khusus untuk Produk Non-SN -->
+          <div class="row mt-3 pt-3 border-top g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label text-muted fw-bold tracking-wider mb-1" style="font-size: 0.7rem;">ALASAN
+                SELISIH:</label>
+              <input type="text" class="form-control form-control-sm alasan-selisih-input" value="@item.AlasanSelisih" placeholder="Contoh: Selisih opname fisik..." />
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label text-muted fw-bold tracking-wider mb-1" style="font-size: 0.7rem;">KETERANGAN:</label>
+              <input type="text" class="form-control form-control-sm keterangan-input" value="@item.Keterangan" placeholder="Keterangan tambahan..." />
+            </div>
+          </div>
+          }
+        </div>
+        }
+        }
+      </div>
+
+      <!-- TOMBOL SUBMIT DOKUMEN -->
+      <div class="card-footer bg-white d-flex justify-content-between align-items-center py-3 px-4 border-top">
+        <div class="alert alert-info mb-0 py-2 px-3 border-0 rounded-3 text-info-emphasis bg-info-subtle" style="font-size: 0.75rem; max-width: 500px;">
+          Opname ini akan disimpan sebagai <strong>Draft</strong> terlebih dahulu untuk divalidasi oleh Manager.
+        </div>
+        <div class="d-flex gap-2 ms-auto">
+          <a asp-action="Index" class="btn btn-cancel px-4 py-2 border d-inline-flex align-items-center gap-2 bg-white text-secondary rounded-3 fw-medium" style="font-size: 0.875rem;">
+            <i class="bi bi-arrow-90deg-left"></i> Batal
+          </a>
+          <button type="button" onclick="StockOpname.saveDraftOpname()" class="btn btn-success px-4 py-2 text-white border-0 rounded-3 fw-medium d-inline-flex align-items-center gap-2 shadow-sm" style="font-size: 0.875rem; background-color: #10b981;">
+            <i class="bi bi-check-circle"></i> Simpan Draf Opname
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+@section Scripts {
+<script src="~/js/StockOpname.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('.sn-select-item').each(function() {
+      updateSelectColor(this);
+    });
+    $('.audit-item-row').each(function() {
+      hitungStokFisikOtomatisBaris($(this));
+    });
+  });
+
+  function hitungStokFisikOtomatisBaris($row) {
+    var stokSistem = parseInt($row.find('.stok-sistem').text().trim()) || 0;
+    var totalItemSn = $row.find('.sn-select-item').length;
+    var stokFisikAktual = 0;
+    if (totalItemSn > 0) {
+      // Produk Ber-SN
+      $row.find('.sn-select-item').each(function() {
+        if ($(this).val() !== "Hilang (Lost)" && $(this).val() !== "Dihapuskan (Disposed)") {
+          stokFisikAktual += 1;
+        }
+      });
+    } else {
+      // Produk Non-SN (Ambil dari input manual)
+      stokFisikAktual = parseInt($row.find('.stok-fisik-manual').val()) || 0;
+    }
+    // Update tampilan angka Stok Fisik
+    $row.find('.stok-fisik-input').text(stokFisikAktual);
+    if ($row.find('.stok-fisik-manual').length > 0) {
+      $row.find('.stok-fisik-manual').val(stokFisikAktual);
+    }
+    // Hitung Selisih (Fisik - Sistem)
+    var selisih = stokFisikAktual - stokSistem;
+    var $selisihVal = $row.find('.selisih-val');
+    $selisihVal.text(selisih);
+    // Atur warna merah otomatis jika ada selisih
+    $selisihVal.removeClass('text-success text-danger text-muted');
+    if (selisih !== 0) {
+      $selisihVal.addClass('text-danger'); // Wajib merah jika selisih != 0
+    } else {
+      $selisihVal.addClass('text-muted');
+    }
+  }
+  // Event listener agar otomatis terpanggil saat ada perubahan input atau select SN
+  $(document).on('change', '.sn-select-item', function() {
+    updateSelectColor(this);
+    var $row = $(this).closest('.audit-item-row');
+    hitungStokFisikOtomatisBaris($row);
+  });
+  $(document).on('input', '.stok-fisik-manual', function() {
+    var $row = $(this).closest('.audit-item-row');
+    hitungStokFisikOtomatisBaris($row);
+  });
+  // Panggil saat document ready untuk kalkulasi awal
+  $(document).ready(function() {
+    $('.audit-item-row').each(function() {
+      hitungStokFisikOtomatisBaris($(this));
+    });
+  });
+  $(document).on('change', '.sn-select-item', function() {
+    updateSelectColor(this);
+    var $row = $(this).closest('.audit-item-row');
+    hitungStokFisikOtomatisBaris($row);
+  });
+  $(document).on('input', '.stok-fisik-manual', function() {
+    var $row = $(this).closest('.audit-item-row');
+    hitungStokFisikOtomatisBaris($row);
+  });
+</script>
+
+<script>
+  function updateSelectColor(selectElement) {
+    if (!selectElement) return;
+    var val = $(selectElement).val() ? $(selectElement).val().trim() : "";
+    $(selectElement).removeClass('bg-success bg-danger bg-warning bg-secondary text-white text-dark');
+    switch (val) {
+      case "Ditemukan (OK)":
+        $(selectElement).addClass('bg-success text-white');
+        break;
+      case "Hilang (Lost)":
+        $(selectElement).addClass('bg-danger text-white');
+        break;
+      case "Rusak (Damage)":
+        $(selectElement).addClass('bg-warning text-dark');
+        break;
+      case "Dihapuskan (Disposed)":
+        $(selectElement).addClass('bg-secondary text-white');
+        break;
+      default:
+        $(selectElement).addClass('bg-secondary text-white');
+        break;
+    }
+  }
+</script>
+}

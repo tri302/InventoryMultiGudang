@@ -1,0 +1,80 @@
+﻿<div class="modal fade" id="modalEditGudang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEditGudangLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-box-seam text-primary fs-4"></i>
+                    <h5 class="modal-title" id="modalEditGudangLabel">Edit Gudang</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formEditGudang">
+                    <input type="hidden" id="edit_gudangId" value="0" />
+                    <div class="mb-4">
+                        <label for="edit_kodeGudang" class="form-label">Kode Gudang <span class="text-muted small">(Auto-generated)</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-qr-code"></i></span>
+                            <input type="text" class="form-control bg-light" id="edit_kodeGudang" readonly>
+                        </div>
+                        <div class="form-text">Kode gudang bersifat tetap dan tidak dapat diubah.</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="edit_namaGudang" class="form-label">Nama Gudang</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                            <input type="text" class="form-control" id="edit_namaGudang" placeholder="Masukkan nama gudang...">
+                        </div>
+                        <span class="text-danger small error-msg" id="error-edit-NamaGudang"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="edit_tipeGudang" class="form-label">Tipe Gudang</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-tags"></i></span>
+                            <select class="form-select" id="edit_tipeGudang">
+                                <option value="fisik">Fisik (Physical)</option>
+                                <option value="virtual">Virtual (Transit/Cloud)</option>
+                            </select>
+                        </div>
+                        <span class="text-danger small error-msg" id="error-edit-TipeGudang"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="edit_picGudang" class="form-label">Nama Penanggung Jawab (PIC)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text" class="form-control" id="edit_picGudang" placeholder="Nama lengkap PIC...">
+                        </div>
+                        <span class="text-danger small error-msg" id="error-edit-PicGudang"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="edit_alamatGudang" class="form-label">Alamat Gudang</label>
+                        <div class="input-group">
+                            <span class="input-group-text align-items-start pt-2"><i class="bi bi-geo-alt"></i></span>
+                            <textarea class="form-control" id="edit_alamatGudang" rows="3" placeholder="Tuliskan alamat lengkap gudang..."></textarea>
+                        </div>
+                        <span class="text-danger small error-msg" id="error-edit-AlamatGudang"></span>
+                    </div>
+
+                    <div class="form-check form-switch p-0 d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input ms-0 fs-5" type="checkbox" role="switch" id="edit_statusGudang">
+                        <label class="form-check-label" for="edit_statusGudang">Gudang Aktif</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center gap-2">
+                <button type="button" data-bs-dismiss="modal" class="btn btn-batal-custom px-4 btn-sm">
+                    <i class="bi bi-arrow-90deg-left"></i> Batal
+                </button>
+                <button type="submit" class="btn btn-emerald-custom px-4 btn-sm" onclick="submitEdit()">
+                    <i class="bi bi-check-lg me-1"></i> Simpan Perubahan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

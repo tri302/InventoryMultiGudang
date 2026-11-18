@@ -1,0 +1,173 @@
+﻿@{
+    Layout = "_AdminLayout";
+}
+@{
+    ViewData["Title"] = "Laporan Rangkuman Stock Opname";
+}
+<style>
+.form-control, 
+.form-select, 
+.form-input-custom,
+.form-control-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    color: #1e293b !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+</style>
+<div class="container-fluid px-4 py-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-indigo-dark mb-1">Laporan Rangkuman Stock Opname</h2>
+            <p class="text-muted mb-0">Ikhtisar hasil stock opname, rekapitulasi temuan selisih barang, dan status
+                posting jurnal penyesuaian.</p>
+            </div>
+            <button class="btn btn-sm btn-success" id="btnCetak">
+                <i class="bi bi-printer"></i> Cetak Rangkuman
+            </button>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="card border-0 shadow-sm mb-4 p-3">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label font-monospace small text-muted fw-bold mb-2">Tanggal Mulai</label>
+                    <input type="text" id="filterStartDate" class="form-control" placeholder="Pilih tanggal mulai..." />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label font-monospace small text-muted fw-bold mb-2">Tanggal Selesai</label>
+                    <input type="text" id="filterEndDate" class="form-control" placeholder="Pilih tanggal selesai..." />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label font-monospace small text-muted fw-bold mb-2">Gudang</label>
+                    <select id="filterGudang" class="form-select">
+                        <option value="">Semua Gudang</option>
+                        @if (ViewBag.GudangList != null)
+                        {
+                            foreach (var gudang in ViewBag.GudangList)
+                            {
+                                <option value="@gudang.Id">@gudang.NamaGudang</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label font-monospace small text-muted fw-bold mb-2">Status Dokumen</label>
+                    <select id="filterStatus" class="form-select">
+                        <option value="">Semua Status</option>
+                        @if (ViewBag.StatusList != null)
+                        {
+                            foreach (var status in ViewBag.StatusList)
+                            {
+                                <option value="@status.Id">@status.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm p-3 border-start border-primary border-4">
+                    <div class="text-muted small fw-bold">OPNAME SELESAI</div>
+                    <h3 class="fw-bold mt-2 mb-0" id="cardOpnameSelesai">0 Sesi</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm p-3 border-start border-info border-4">
+                    <div class="text-muted small fw-bold">ITEM DIPERIKSA</div>
+                    <h3 class="fw-bold mt-2 mb-0" id="cardItemDiperiksa">0 SKU</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm p-3 border-start border-success border-4">
+                    <div class="text-muted small fw-bold">TOTAL SELISIH LEBIH</div>
+                    <h3 class="fw-bold mt-2 mb-0 text-success" id="cardSelisihLebih">+0 unit</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm p-3 border-start border-danger border-4">
+                    <div class="text-muted small fw-bold">TOTAL SELISIH KURANG</div>
+                    <h3 class="fw-bold mt-2 mb-0 text-danger" id="cardSelisihKurang">-0 unit</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs mb-3" id="reportTabs" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active fw-bold text-uppercase" id="tab-sesi" data-bs-toggle="tab"
+                        data-bs-target="#content-sesi" type="button">Daftar Sesi Opname</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link fw-bold text-uppercase" id="tab-rekap" data-bs-toggle="tab"
+                        data-bs-target="#content-rekap" type="button">Rekapitulasi Barang (Summary Report)</button>
+            </li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div class="tab-content card border-0 shadow-sm p-4">
+            <!-- Daftar Sesi Opname -->
+            <div class="tab-pane fade show active" id="content-sesi">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle" id="tableDaftarSesi">
+                        <thead class="table-light font-monospace small text-muted fw-bold">
+                            <tr>
+                                <th>TANGGAL POSTING</th>
+                                <th>KODE DOKUMEN</th>
+                                <th>GUDANG</th>
+                                <th>JUMLAH SKU</th>
+                                <th>SELISIH LEBIH (+)</th>
+                                <th>SELISIH KURANG (-)</th>
+                                <th>SELISIH BERSIH (NET)</th>
+                                <th>PENCATAT</th>
+                                <th>STATUS</th>
+                                <th>AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Diisi via AJAX JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Rekapitulasi Barang -->
+            <div class="tab-pane fade" id="content-rekap">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle" id="tableRekapitulasi">
+                        <thead class="table-light font-monospace small text-muted fw-bold">
+                            <tr>
+                                <th>SKU</th>
+                                <th>NAMA PRODUK</th>
+                                <th>KATEGORI</th>
+                                <th>TOTAL STOK SISTEM</th>
+                                <th>TOTAL STOK FISIK</th>
+                                <th>SELISIH AKUMULASI</th>
+                                <th>FREKUENSI SELISIH</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Diisi via AJAX JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="~/js/LaporanStokOpname.js"></script>
+       <script>  
+      flatpickr("#filterStartDate, #filterEndDate", {
+        dateFormat: "d-m-Y",
+        locale: "id",
+        allowInput: true       
+      });
+    </script>
+    }

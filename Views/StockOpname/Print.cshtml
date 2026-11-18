@@ -1,0 +1,288 @@
+﻿@model InventoryMultiGudang.ViewModels.StockOpnameFormViewModel
+@{
+Layout = null;
+}
+<!DOCTYPE html>
+<html lang="id">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cetak Berita Acara Opname - @Model.NoReferensi - @ViewBag.SiteName</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        color: #1e293b;
+      }
+
+      .print-container {
+        max-width: 900px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 8px;
+      }
+
+      .border-thick {
+        border-bottom: 2px solid #000;
+      }
+
+      .text-indigo-dark {
+        color: #1e1b4b;
+      }
+
+      @@media print {
+        .no-print {
+          display: none !important;
+        }
+
+        body {
+          background-color: #fff;
+        }
+
+        .print-container {
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+          border: none;
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Top Action Bar -->
+    <div class="no-print bg-white border-bottom py-2 px-4 d-flex justify-content-between align-items-center sticky-top shadow-sm">
+      <div class="d-flex align-items-center gap-2">
+        <div class="avatar-box bg-light text-danger d-flex align-items-center justify-content-center rounded" style="width: 36px; height: 36px;">
+          <i class="bi bi-file-earmark-pdf-fill fs-5"></i>
+        </div>
+        <div>
+          <h6 class="mb-0 fw-bold">Pratinjau Berita Acara Stock Opname</h6>
+          <small class="text-muted">Laporan resmi hasil penyesuaian fisik persediaan barang.</small>
+        </div>
+      </div>
+      <div class="d-flex gap-2">
+        <button onclick="window.close()" class="btn btn-secondary btn-sm rounded-3"><i class="bi bi-x-lg"></i> Tutup
+          Halaman</button>
+        <button onclick="window.print()" class="btn btn-success btn-sm rounded-3"><i class="bi bi-printer"></i>
+          Cetak Sekarang</button>
+      </div>
+    </div>
+
+    <!-- Container Utama -->
+    <div class="print-container shadow-sm">
+      <!-- Header Dokumen -->
+      <div class="row align-items-start pb-3 mb-3 border-thick">
+        <div class="col-7">
+          <h3 class="fw-bold text-dark mb-1">@ViewBag.SiteName</h3>
+          <p class="text-muted small mb-1" style="font-size: 10px; line-height: 1.2;">
+            @ViewBag.SiteDescription
+          </p>
+          <p class="text-muted small mb-0" style="font-size: 11px;">
+            @ViewBag.CompanyAddress<br>
+            Telp: @ViewBag.CompanyPhone | Email: @ViewBag.CompanyEmail
+          </p>
+        </div>
+        <div class="col-5 text-end">
+          <h4 class="fw-bold mb-1">BERITA ACARA OPNAME</h4>
+          <div class="small text-muted mb-1">Nomor Dokumen: <strong>@Model.NoReferensi</strong></div>
+        </div>
+      </div>
+      <!-- Judul & Narasi Berita Acara (Sesuai Gambar) -->
+      <div class="text-center my-4">
+        <h4 class="fw-bold text-dark mb-1 text-decoration-underline" style="letter-spacing: 0.5px; font-size: 16px;">BERITA ACARA AUDIT STOCK OPNAME</h4>
+        <div class="small text-muted mb-3">Nomor Audit: <strong>@Model.NoReferensi</strong></div>
+        <p class="text-muted small mx-auto" style="max-width: 700px; font-size: 13px; line-height: 1.6;">
+          Pada hari ini, <strong>@Model.TanggalMulai.ToString("dd MMMM yyyy") pukul
+            @Model.TanggalMulai.ToString("HH.mm")</strong>, telah dilaksanakan audit pemeriksaan stok fisik
+          barang (<em>stock opname</em>) secara menyeluruh pada lokasi penyimpanan gudang di bawah ini:
+        </p>
+      </div>
+      <!-- Meta Informasi Gudang -->
+      <div class="row g-3 mb-3">
+        <div class="col-6">
+          <div class="border rounded-3 p-3 h-100 bg-light-subtle">
+            <span class="text-uppercase text-muted fw-bold d-block mb-1" style="font-size: 10px;">GUDANG
+              AUDIT</span>
+            <h6 class="fw-bold mb-1 text-indigo-dark">@Model.NamaGudang</h6>
+            <small class="text-muted d-block fw-semibold mb-1" style="font-size: 11px;">Kode:
+              @Model.KodeGudang</small>
+            <small class="text-muted d-block" style="font-size: 11px;">@Model.AlamatGudang</small>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="border rounded-3 p-3 h-100 bg-light-subtle">
+            <span class="text-uppercase text-muted fw-bold d-block mb-1" style="font-size: 10px;">Informasi
+              Dokumen</span>
+            @if (Model.Status == InventoryMultiGudang.Models.StatusOpname.Selesai)
+            {
+            <small class="text-muted d-block" style="font-size: 11px;">
+              Status Dokumen: <strong class="badge bg-success text-dark rounded fw-bold" style="font-size: 12px;">Selesai</strong>
+            </small>
+            }
+            else if (Model.Status == InventoryMultiGudang.Models.StatusOpname.Dibatalkan)
+            {
+            <small class="text-muted d-block" style="font-size: 11px;">
+              Status Dokumen: <strong class="badge bg-danger text-dark rounded fw-bold" style="font-size: 12px;">Dibatalkan</strong></small>
+            }
+            else
+            {
+            <small class="text-muted d-block" style="font-size: 11px;">
+              Status Dokumen:
+              <strong class="badge bg-warning text-dark rounded fw-bold" style="font-size: 12px;">Draft</strong>
+            </small>
+            }
+            <small class="text-muted d-block" style="font-size: 11px;">Mulai:
+              <strong>@Model.TanggalMulai.ToString("dd MMM yyyy, HH.mm")</strong></small>
+            <small class="text-muted d-block" style="font-size: 11px;">Selesai:
+              <strong>@(Model?.TanggalSelesai?.ToString("dd MMM yyyy, HH.mm") ?? "-")</strong></small>
+            <small class="text-muted d-block" style="font-size: 11px;">Petugas Auditor:
+              <strong>@Model.Auditor</strong></small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabel Hasil Audit -->
+      <div class="table-responsive mb-4">
+        <table class="table table-bordered align-middle text-center small mb-0">
+          <thead class="bg-light text-uppercase fw-bold text-muted" style="font-size: 10px;">
+            <tr>
+              <th width="5%">NO</th>
+              <th class="text-start" width="35%">PRODUK / SKU</th>
+              <th width="15%">STOK SISTEM</th>
+              <th width="15%">STOK FISIK</th>
+              <th width="15%">SELISIH</th>
+              <th width="15%">KETERANGAN</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (Model.Items != null && Model.Items.Count > 0)
+            {
+            int no = 1;
+            foreach (var item in Model.Items)
+            {
+            <tr>
+              <td>@(no++)</td>
+              <td class="text-start">
+                <div class="fw-bold text-indigo-dark">@item.NamaProduk</div>
+                <small class="text-muted d-block">SKU: @item.Sku</small>
+                <span class="badge bg-secondary-subtle text-secondary fw-bold text-uppercase px-2 py-0.5 rounded" style="font-size: 0.6rem;">@item.TipeBarang</span>
+                @if (item.SnItems != null && item.SnItems.Count > 0)
+                {
+                <span class="badge bg-secondary-subtle text-secondary fw-bold text-uppercase px-2 py-0.5 rounded" style="font-size: 0.6rem;">SN Tracked</span>
+                }
+                else
+                {
+                <span class="badge bg-secondary-subtle text-secondary fw-bold text-uppercase px-2 py-0.5 rounded" style="font-size: 0.6rem;">Non-SN (Bulk)</span>
+                }
+              </td>
+              <td>@item.StokSistem</td>
+              <td>@item.StokFisik</td>
+              <td class="fw-bold fs-6 @(item.Selisih < 0 ? " text-danger" : (item.Selisih> 0 ? "text-success" : "text-muted"))">
+                @(item.Selisih > 0 ? "+" + item.Selisih : item.Selisih.ToString())
+              </td>
+              <td>@(string.IsNullOrEmpty(item.Keterangan) ? "-" : item.Keterangan)</td>
+            </tr>
+
+            <!-- Baris Tambahan untuk Serial Number (SN) jika ada -->
+            @if (item.SnItems != null && item.SnItems.Count > 0)
+            {
+            <tr>
+              <td colspan="6" class="bg-light text-start p-3">
+                <h6 class="fw-bold text-secondary text-uppercase tracking-wider d-flex align-items-center gap-1.5 mb-3" style="font-size: 0.7rem;">
+                  <i class="bi bi-tag-fill text-primary"></i> Hasil Audit Serial Number:
+                </h6>
+                <div class="row g-2">
+                  @foreach (var sn in item.SnItems)
+                  {
+                  var badgeClass = sn.Kondisi switch
+                  {
+                  "Ditemukan (OK)" => "fw-bold text-success",
+                  "Hilang (Lost)" => "fw-bold text-danger",
+                  "Rusak (Damage)" => "fw-bold text-warning",
+                  _ => "fw-bold text-secondary"
+                  };
+
+                  <div class="col-12 col-md-4">
+                    <div class="p-2 bg-white border rounded-2">
+                      <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                          <span class="fw-bold small text-secondary d-block">@sn.SerialNumber</span>                          
+                        </div>                        
+                        <span class="@badgeClass" style="font-size: 0.75rem;">@sn.Kondisi</span>
+                      </div>
+
+                      <!-- Menampilkan Alasan & Keterangan spesifik per item SN jika terisi -->
+                      @if (!string.IsNullOrEmpty(sn.AlasanSelisih) || !string.IsNullOrEmpty(sn.Keterangan))
+                      {
+                      <div class="mt-1 pt-1 border-top text-muted" style="font-size: 10px;">
+                        @if (!string.IsNullOrEmpty(sn.AlasanSelisih))
+                        {
+                        <div><strong class="text-dark">Alasan:</strong> @sn.AlasanSelisih</div>
+                        }
+                        @if (!string.IsNullOrEmpty(sn.Keterangan))
+                        {
+                        <div><strong class="text-dark">Ket:</strong> @sn.Keterangan</div>
+                        }
+                      </div>
+                      }
+                    </div>
+                  </div>
+                  }
+                </div>
+              </td>
+            </tr>
+            }
+            }
+            }
+            else
+            {
+            <tr>
+              <td colspan="6" class="text-center py-3 text-muted">Belum ada data detail.</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Catatan Dokumen -->
+      <div class="border rounded-3 p-3 mb-4">
+        <span class="text-uppercase text-muted fw-bold d-block mb-1" style="font-size: 10px;">CATATAN DOKUMEN</span>
+        <p class="mb-0 small text-dark">@(string.IsNullOrWhiteSpace(Model.Catatan) ? "-" : Model.Catatan)</p>
+      </div>
+
+      <!-- Tanda Tangan 3 Pihak -->
+      <div class="row text-center mt-5 pt-2">
+        <div class="col-4">
+          <span class="text-uppercase text-muted fw-bold d-block mb-5" style="font-size: 10px;">PETUGAS
+            AUDITOR</span>
+          <div class="fw-bold border-bottom d-inline-block px-4 pb-1 mb-1">@Model.Auditor</div>
+          <div class="text-muted small" style="font-size: 11px;">Tim Stock Opname</div>
+        </div>
+        <div class="col-4">
+          <span class="text-uppercase text-muted fw-bold d-block mb-5" style="font-size: 10px;">KEPALA
+            GUDANG</span>
+          <div class="fw-bold border-bottom d-inline-block px-4 pb-1 mb-1">(...........................)</div>
+          <div class="text-muted small" style="font-size: 11px;">Supervisor Gudang</div>
+        </div>
+        <div class="col-4">
+          <span class="text-uppercase text-muted fw-bold d-block mb-5" style="font-size: 10px;">MANAGER
+            OPERASIONAL</span>
+          <div class="fw-bold border-bottom d-inline-block px-4 pb-1 mb-1">(...........................)</div>
+          <div class="text-muted small" style="font-size: 11px;">Manajemen</div>
+        </div>
+      </div>
+
+      <!-- Footer Dokumen -->
+      <div class="text-center text-muted fw-bold mt-5 pt-4 border-top" style="font-size: 10px; letter-spacing: 1px;">
+        BERITA ACARA INI MERUPAKAN BUKTI SAH PENYESUAIAN STOK FISIK SYSTEM @ViewBag.SiteName.ToUpper()
+      </div>
+    </div>
+  </body>
+</html>

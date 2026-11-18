@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Pengguna </title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->        
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Icons -->    
+    <link href="~/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+    <!-- Custom Global CSS -->    
+    <link href="~/css/guidestylecustume.css" rel="stylesheet" />
+    
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top px-3 py-2">
+        <div class="container-fluid">
+            <!-- Brand -->
+            <a class="navbar-brand d-flex align-items-center gap-2" asp-action="Index" asp-controller="Guide">
+                <div class="bg-danger text-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                    <i class="bi bi-box-seam-fill fs-6"></i>
+                </div>
+                <div>
+                    <span class="fw-bold text-indigo-dark lh-1 d-block fs-6"></span>
+                    <span class="text-muted extra-small d-block" style="font-size: 0.68rem;">Panduan Pengguna</span>
+                </div>
+            </a>
+
+            <!-- Navbar Top Search & Controls -->
+            <div class="d-flex align-items-center gap-3 ms-auto">
+                <div class="position-relative d-none d-md-block" style="width: 260px;">
+                    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-2 text-muted small"></i>
+                    <input type="text" class="form-control form-control-sm ps-4" placeholder="Cari panduan...">
+                </div>
+                <button class="btn btn-sm btn-light border rounded-circle" title="Toggle Theme">
+                    <i class="bi bi-moon"></i>
+                </button>
+                <a asp-action="Index" asp-controller="Guide" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>Kembali</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="guide-layout">
+
+        <!-- Left Sidebar Navigation -->
+        <aside class="guide-sidebar">
+            <div class="sidebar-section-title">
+                <i class="bi bi-compass"></i> MEMULAI
+            </div>
+            <a asp-action="Pengenalan" asp-controller="Guide" class="sidebar-nav-link">Pengenalan </a>
+            <a asp-action="KonsepDasarSistem" asp-controller="Guide"class="sidebar-nav-link">Konsep Dasar Sistem</a>
+
+            <div class="sidebar-section-title">
+                <i class="bi bi-arrow-left-right"></i> TRANSAKSI & STOK
+            </div>
+            <a asp-action="TransaksiBarangMasuk" asp-controller="Guide" class="sidebar-nav-link">Transaksi Barang Masuk (Stock In)</a>
+            <a asp-action="TransaksiBarangKeluar" asp-controller="Guide" class="sidebar-nav-link">Transaksi Barang Keluar (Stock Out)</a>
+
+            <div class="sidebar-section-title">
+                <i class="bi bi-truck"></i> TRANSFER ORDER
+            </div>
+            <a asp-action="Mutasi" asp-controller="Guide" class="sidebar-nav-link">Mutasi Antar Gudang (Transfer Order)</a>
+
+            <div class="sidebar-section-title">
+                <i class="bi bi-person-gear"></i> ASSET TRACKING
+            </div>
+            <a asp-action="PersetujuanPenugasanAset" asp-controller="Guide" class="sidebar-nav-link">Persetujuan Penugasan Aset (BAST)</a>
+            <a asp-action="PeminjamanAsetOverdue" asp-controller="Guide" class="sidebar-nav-link">Peminjaman Aset & Overdue</a>
+
+            <div class="sidebar-section-title">
+                <i class="bi bi-question-circle"></i> FAQ & BANTUAN
+            </div>
+            <a asp-action="Faqs" asp-controller="Guide" class="sidebar-nav-link">Pertanyaan Umum (FAQ)</a>
+            <a asp-action="Troubleshooting" asp-controller="Guide" class="sidebar-nav-link">Penanganan Masalah (Troubleshooting)</a>
+        </aside>
+
+        <!-- Right Content Area -->
+        <main class="guide-content">
+            @RenderBody()            
+        </main>
+    </div>
+
+    <!-- Bootstrap 5 JS -->    
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "_GuideLayout";
+}
+<!-- Hero Search Section -->
+<div class="guide-hero">
+    <h3>Pusat Bantuan & Panduan </h3>
+    <p>Temukan panduan operasional, konsep dasar, dan jawaban atas pertanyaan Anda untuk mengelola inventaris secara mandiri.</p>
+    <div class="search-hero-box">
+        <i class="bi bi-search"></i>
+        <input type="text" class="form-control" placeholder="Cari kata kunci (misal: serial number, transfer order)...">
+    </div>
+</div>
+
+
+<!-- Categories Section -->
+<h6 class="fw-bold text-indigo-dark mb-3">Jelajahi Berdasarkan Kategori</h6>
+
+<div class="row g-3 mb-4">
+    <!-- Card 1: Memulai -->
+    <div class="col-md-6 col-lg-4">
+        <div class="category-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="category-icon">
+                    <i class="bi bi-compass"></i>
+                </div>
+                <span class="category-badge">2 ARTIKEL</span>
+            </div>
+            <div class="category-title">Memulai</div>
+            <p class="category-desc">Konsep dasar, antarmuka dashboard, dan konfigurasi awal.</p>
+            <ul class="article-link-list">
+                <li><a asp-action="Pengenalan" asp-controller="Guide" _target="_blank"><i class="bi bi-file-text"></i> Pengenalan </a></li>
+                <li><a asp-action="KonsepDasarSistem" asp-controller="Guide" _target="_blank"><i class="bi bi-file-text"></i> Konsep Dasar Sistem</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Card 2: Transaksi & Stok -->
+    <div class="col-md-6 col-lg-4">
+        <div class="category-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="category-icon">
+                    <i class="bi bi-arrow-left-right"></i>
+                </div>
+                <span class="category-badge">2 ARTIKEL</span>
+            </div>
+            <div class="category-title">Transaksi & Stok</div>
+            <p class="category-desc">Cara mencatat barang masuk (Stock In) dan keluar (Stock Out).</p>
+            <ul class="article-link-list">
+                <li><a asp-action="TransaksiBarangMasuk" asp-controller="Guide" _target="_blank"><i class="bi bi-file-text"></i> Transaksi Barang Masuk (Stock In)</a></li>
+                <li><a asp-action="TransaksiBarangKeluar" asp-controller="Guide" _target="_blank"><i class="bi bi-file-text"></i> Transaksi Barang Keluar (Stock Out)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Card 3: Transfer Order -->
+    <div class="col-md-6 col-lg-4">
+        <div class="category-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="category-icon">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <span class="category-badge">1 ARTIKEL</span>
+            </div>
+            <div class="category-title">Transfer Order</div>
+            <p class="category-desc">Logistik pemindahan barang antar-gudang dan mutasi stok.</p>
+            <ul class="article-link-list">
+                <li><a asp-action="Mutasi" asp-controller="Guide" _target="_blank"><i class="bi bi-file-text"></i> Mutasi Antar Gudang (Transfer Order)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Card 4: Asset Tracking -->
+    <div class="col-md-6 col-lg-4">
+        <div class="category-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="category-icon">
+                    <i class="bi bi-person-gear"></i>
+                </div>
+                <span class="category-badge">2 ARTIKEL</span>
+            </div>
+            <div class="category-title">Asset Tracking</div>
+            <p class="category-desc">Serah terima BAST aset ke karyawan dan monitoring peminjaman.</p>
+            <ul class="article-link-list">
+                <li><a asp-action="PersetujuanPenugasanAset" asp-controller="Guide" _target="_blank"><i class="bi bi-file-text"></i> Persetujuan Penugasan Aset (BAST)</a></li>
+                <li><a asp-action="PeminjamanAsetOverdue" asp-controller="Guide" _target="_blank"><i class="bi bi-file-text"></i> Peminjaman Aset & Overdue</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Card 5: FAQ & Bantuan -->
+    <div class="col-md-6 col-lg-4">
+        <div class="category-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="category-icon">
+                    <i class="bi bi-question-circle"></i>
+                </div>
+                <span class="category-badge">2 ARTIKEL</span>
+            </div>
+            <div class="category-title">FAQ & Bantuan</div>
+            <p class="category-desc">Solusi cepat untuk kendala operasional yang sering ditemui.</p>
+            <ul class="article-link-list">
+                <li><a asp-action="Faqs" asp-controller="Guide" _target="_blank"><i class="bi bi-file-text"></i> Pertanyaan Umum (FAQ)</a></li>
+                <li><a asp-action="Troubleshooting" asp-controller="Guide" _target="_blank"><i class="bi bi-file-text"></i> Penanganan Masalah (Troubleshooting)</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Fast Navigation Tips Box -->
+<div class="tips-box">
+    <div class="tips-icon">
+        <i class="bi bi-compass"></i>
+    </div>
+    <div>
+        <h6 class="fw-bold text-primary mb-1 fs-7">Tips Navigasi Cepat</h6>
+        <p class="mb-0 text-muted extra-small">
+            Anda dapat menekan tombol <strong>"Kembali"</strong> di pojok kanan atas kapan saja untuk kembali ke Dashboard aplikasi utama. Gunakan kolom pencarian di sidebar kiri atau navbar atas untuk mencari topik panduan secara langsung dari artikel manapun.
+        </p>
+    </div>
+</div>

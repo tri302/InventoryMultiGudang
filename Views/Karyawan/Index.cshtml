@@ -1,0 +1,104 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Manajemen Karyawan";
+}
+<style>
+.form-control, 
+.form-select, 
+.form-input-custom,
+.form-control-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    color: #1e293b !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+</style>
+
+<div class="container-fluid">
+    <!-- HEADER SECTION -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h1 class="h3 fw-bold text-indigo-dark mb-1">Manajemen Karyawan</h1>
+            <p class="text-muted small mb-0">Kelola data pegawai, alamat email, nomor telepon, dan departemen penempatan untuk distribusi aset.</p>
+        </div>
+        <div>
+            <button class="btn btn-success rounded-pill px-4 btn-sm" id="btnTambahKaryawan">
+                <i class="bi bi-plus-lg"></i> Tambah Karyawan
+            </button>
+        </div>
+    </div>
+
+    <!-- FILTER & SEARCH BAR -->
+    <div class="card border-0 shadow-sm p-3 mb-4" style="border-radius: 12px;">
+        <div class="row g-3 align-items-center justify-content-between">
+            <div class="col-12 col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text border-end-0 bg-white text-muted">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Cari kode, nama, atau email karyawan...">
+                </div>
+            </div>
+
+            <div class="col-12 col-md-auto d-flex align-items-center gap-3 justify-content-md-end flex-wrap">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="text-muted small fw-bold text-uppercase tracking-wider" style="font-size: 0.75rem;">Departemen:</span>
+                    <select id="filterDepartment" class="form-select text-muted fw-medium py-1.5" style="min-width: 170px;">
+                        <option value="">Semua Departemen</option>
+                        @if (ViewBag.Departments != null)
+                        {
+                            foreach (var dept in ViewBag.Departments)
+                            {
+                                <option value="@dept.Id">@dept.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="text-muted small fw-bold text-uppercase tracking-wider" style="font-size: 0.75rem;">Status:</span>
+                    <select id="filterStatus" class="form-select text-muted fw-medium py-1.5" style="min-width: 140px;">
+                        <option value="">Semua Status</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="non-aktif">Non-Aktif</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLE AREA -->
+    <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 12px;">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 text-nowrap">
+                <thead class="bg-light border-bottom">
+                    <tr class="text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                        <th class="ps-4 py-3" style="width: 30%;">Karyawan Info</th>
+                        <th class="py-3" style="width: 20%;">Departemen</th>
+                        <th class="py-3" style="width: 20%;">Hubungan Kontak</th>
+                        <th class="py-3 text-center" style="width: 7.5%;">Status</th>
+                        <th class="py-3 text-center pe-4" style="width: 7.5%;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="karyawanTableBody">
+                    <!-- Loaded Via Ajax -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination Component -->
+        <div class="card-footer bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+            <div id="paginationInfo" class="text-muted small"></div>
+            <nav id="paginationContainer" class="ms-auto"></nav>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("Create", new InventoryMultiGudang.ViewModels.KaryawanViewModel())
+@await Html.PartialAsync("Edit", new InventoryMultiGudang.ViewModels.KaryawanViewModel())
+@await Html.PartialAsync("Delete")
+
+@section Scripts {        
+    <script src="~/js/karyawan.js"></script>
+}

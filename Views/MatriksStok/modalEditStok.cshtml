@@ -1,0 +1,60 @@
+﻿<!-- Modal Edit Minimal Stock (Safety Stock) -->
+<div class="modal fade" id="modalEditStok" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEditStokLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-3 bg-white shadow-lg border-0">
+
+            <!-- Modal Header -->
+            <div class="modal-header border-bottom px-4 py-3">
+                <h5 class="modal-title fw-bold text-dark fs-6" id="modalEditStokLabel">
+                    Edit Minimal Stock (Safety Stock)
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Form Edit -->
+            <form id="formEditStok">
+                <!-- Modal Body -->
+                <div class="modal-body px-4 py-3">
+                    <input type="hidden" id="editProductId" name="ProductId" />
+                    <input type="hidden" id="editWarehouseId" name="WarehouseId" />
+
+                    <!-- Informasi Produk -->
+                    <div class="mb-3">
+                        <label class="form-label text-uppercase text-muted fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">Produk</label>
+                        <p class="fw-bold text-dark mb-1" id="lblNamaProduk">-</p>
+                        <p class="text-muted small mb-0" id="lblSku">SKU: -</p>
+                    </div>
+
+                    <!-- Informasi Gudang -->
+                    <div class="mb-3">
+                        <label class="form-label text-uppercase text-muted fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">Gudang</label>
+                        <p class="fw-bold text-dark mb-0" id="lblNamaGudang">-</p>
+                    </div>
+
+                    <!-- Input Minimal Stock -->
+                    <div class="mb-2">
+                        <label for="safety-stock" class="form-label text-uppercase text-muted fw-bold" style="font-size: 0.7rem; letter-spacing: 0.5px;">
+                            Minimal Stock (Safety Stock)
+                        </label>
+                        <input type="number"
+                               id="safety-stock"
+                               name="SafetyStock"
+                               value="10"
+                               class="form-control" required />
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-0 pb-4 px-6">
+                    <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">
+                        <i class="bi bi-arrow-90deg-left me-1"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-save btn-sm px-3">
+                        <i class="bi bi-check-lg me-1"></i> Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

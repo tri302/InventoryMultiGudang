@@ -1,0 +1,29 @@
+﻿<!-- Modal Hapus -->
+<div class="modal fade" id="modalHapus" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 420px;">
+        <div class="modal-content border-0 shadow rounded-4 p-3 text-center">
+
+            <div class="modal-body p-2">
+                <!-- Icon Trash Warning -->
+                <div class="d-inline-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-trash3 fs-2"></i>
+                </div>
+
+                <h5 class="fw-bold text-dark mb-2">Hapus Transaksi Pergerakan</h5>
+                <p class="text-muted small mb-3">Apakah Anda yakin ingin menghapus transaksi pergerakan stok ini?</p>
+
+                <!-- Warning Alert Box -->
+                <div class="alert alert-warning border-0 bg-warning-subtle text-warning-emphasis small text-start p-3 mb-4 rounded-3 fs-8">
+                    <strong>Peringatan:</strong> Tindakan ini akan mengembalikan / membatalkan alokasi stok di gudang untuk seluruh produk dalam transaksi ini!
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary rounded-3 px-3 py-2 small fw-medium" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger rounded-3 px-4 py-2 small fw-medium" id="btnConfirmDelete">Hapus</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

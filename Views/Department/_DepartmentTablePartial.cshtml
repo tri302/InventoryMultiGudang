@@ -1,0 +1,139 @@
+﻿@model InventoryMultiGudang.ViewModels.PagedResultDepartment<InventoryMultiGudang.ViewModels.DepartmentListViewModel>
+
+<div class="card border-0 shadow-sm overflow-hidden mb-3" style="border-radius: 12px;">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0 text-nowrap">
+            <thead class="bg-light border-bottom">
+                <tr class="text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                    <th class="ps-4 py-3" style="width: 20%;">Kode Departemen</th>
+                    <th class="py-3" style="width: 35%;">Nama Departemen</th>
+                    <th class="py-3" style="width: 35%;">Deskripsi</th>
+                    <th class="py-3 text-center pe-4" style="width: 10%;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Items != null && Model.Items.Any())
+                {
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr class="border-bottom">
+                            <td class="ps-4 py-3 fw-bold text-indigo-dark small">
+                                @item.Code
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box flex-shrink-0" style="background-color: #ffe4e6; color: #f43f5e; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                                        <i class="bi bi-building fs-6"></i>
+                                    </div>
+                                    <span class="fw-bold text-indigo-dark fs-6">@item.Name</span>
+                                </div>
+                            </td>
+                            <td class="py-3 text-secondary small text-wrap">
+                                @(string.IsNullOrEmpty(item.Description) ? "-" : item.Description)
+                            </td>
+                            <td class="text-center pe-4">
+                                <div class="d-flex justify-content-center gap-1">
+                                    <button class="btn btn-sm btn-action-light text-primary border-0 btn-edit"
+                                            data-id="@item.Id"
+                                            title="Ubah">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-action-light text-danger border-0 btn-delete"
+                                            data-id="@item.Id"
+                                            data-name="@item.Name"
+                                            title="Hapus">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            <span>Belum ada data untuk ditampilkan !</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- BAGIAN INFO & PAGINATION -->
+@{
+    int pageSize = Model.PageSize; 
+    int totalItems = Model.TotalItems; 
+    int startItem = totalItems == 0 ? 0 : ((Model.PageNumber - 1) * pageSize) + 1;
+    int endItem = Math.Min(Model.PageNumber * pageSize, totalItems);
+
+    // Batasan maksimal 5 ke kiri dan 5 ke kanan dari halaman aktif
+    int currentPage = Model.PageNumber;
+    int totalPages = Model.TotalPages;
+    int startPage = Math.Max(1, currentPage - 5);
+    int endPage = Math.Min(totalPages, currentPage + 5);
+}
+
+<div class="d-flex justify-content-between align-items-center mt-3 px-1">
+    <!-- Teks Informasi di Sebelah Kiri -->
+    <div class="text-muted small">
+        Menampilkan @startItem - @endItem dari @totalItems data
+    </div>
+
+    <!-- Tombol Pagination di Sebelah Kanan (Dibatasi 5 ke kiri & 5 ke kanan) -->
+    @if (totalPages > 1)
+    {
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm mb-0">
+                <!-- Tombol Previous -->
+                <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                    <a class="page-link page-nav" href="javascript:void(0)" data-page="@(currentPage - 1)">Previous</a>
+                </li>
+
+                <!-- Halaman 1 & Ellipsis Awal jika rentang awal jauh dari 1 -->
+                @if (startPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link page-nav" href="javascript:void(0)" data-page="1">1</a>
+                    </li>
+                    @if (startPage > 2)
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                }
+
+                <!-- Render Nomor Halaman dalam Rentang Limit (Max 5 Kiri & 5 Kanan) -->
+                @for (int i = startPage; i <= endPage; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link page-nav" href="javascript:void(0)" data-page="@i">@i</a>
+                    </li>
+                }
+
+                <!-- Ellipsis Akhir & Halaman Terakhir jika rentang akhir jauh dari totalPages -->
+                @if (endPage < totalPages)
+                {
+                    @if (endPage < totalPages - 1)
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                    <li class="page-item">
+                        <a class="page-link page-nav" href="javascript:void(0)" data-page="@totalPages">@totalPages</a>
+                    </li>
+                }
+
+                <!-- Tombol Next -->
+                <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                    <a class="page-link page-nav" href="javascript:void(0)" data-page="@(currentPage + 1)">Next</a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>

@@ -1,0 +1,94 @@
+﻿<div class="modal fade" id="modalEditSupplier" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0">
+            <div class="modal-header d-flex align-items-start justify-content-between">
+                <div>
+                    <h5 class="modal-title fw-bold text-indigo-dark">Edit Supplier</h5>
+                    <p class="text-muted small mb-0 mt-1">Lengkapi data pemasok secara terperinci.</p>
+                </div>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditSupplier">
+                    <input type="hidden" id="editId">
+                    <div class="row g-3">
+                        
+                        <input type="text" id="editKodeSupplier" name="EditKodeSupplier" class="form-control" hidden="true">
+
+                        <div class="col-12">
+                            <label class="form-label">Nama Supplier <span class="text-danger">*</span></label>
+                            <input type="text" id="editNamaSupplier" name="EditNamaSupplier" class="form-control"
+                                   data-val="true" data-val-required="Nama Supplier wajib diisi!">
+                            <span class="text-danger small" data-valmsg-for="EditNamaSupplier"
+                                  data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="text" id="editEmail" name="EditEmail" class="form-control" data-val="true"
+                                   data-val-required="Email valid wajib diisi!" data-val-email="Format email tidak valid!">
+                            <span class="text-danger small" data-valmsg-for="EditEmail"
+                                  data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Telepon Kantor <span class="text-danger">*</span></label>
+                            <input type="text" id="editTelepon" name="EditTelepon" class="form-control" data-val="true"
+                                   data-val-required="Telepon Kantor wajib diisi!">
+                            <span class="text-danger small" data-valmsg-for="EditTelepon"
+                                  data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="col-12">
+                            <div class="p-3 border rounded-3 bg-light-subtle">
+                                <span class="form-label d-block mb-3 text-indigo" style="font-size: 0.75rem;">Person In
+                                    Charge (PIC)</span>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="form-label-custom fw-bold text-dark small d-block mb-1">Nama PIC
+                                                <span class="text-danger">*</span></label>
+                                                <input type="text" id="editNamaPic" name="EditNamaPic"
+                                                       class="form-control bg-white" data-val="true"
+                                                       data-val-required="Nama PIC wajib diisi!">
+                                                <span class="text-danger small" data-valmsg-for="EditNamaPic"
+                                                      data-valmsg-replace="true"></span>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-label-custom fw-bold text-dark small d-block mb-1">WhatsApp
+                                                    PIC <span class="text-danger">*</span></label>
+                                                    <input type="text" id="editWhatsappPic" name="EditWhatsappPic"
+                                                           class="form-control bg-white" data-val="true"
+                                                           data-val-required="WhatsApp PIC wajib diisi!">
+                                                    <span class="text-danger small" data-valmsg-for="EditWhatsappPic"
+                                                          data-valmsg-replace="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Alamat Perusahaan <span class="text-danger">*</span></label>
+                                        <textarea id="editAlamat" name="EditAlamat" class="form-control" rows="2" data-val="true"
+                                                  data-val-required="Alamat Perusahaan wajib diisi!"></textarea>
+                                        <span class="text-danger small" data-valmsg-for="EditAlamat"
+                                              data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Catatan / Deskripsi</label>
+                                        <textarea id="editCatatan" name="EditCatatan" class="form-control" rows="2"></textarea>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <div class="form-check gap-2">
+                                            <input class="form-check-input mt-0" type="checkbox" id="checkEditSupplierAktif">
+                                            <label class="fw-bold text-indigo-dark small cursor-pointer"
+                                                   for="checkEditSupplierAktif">Supplier Aktif</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-0">
+                            <button type="button" class="btn btn-cancel btn-sm" data-bs-dismiss="modal"><i
+                                class="bi bi-arrow-90deg-left"></i> Batal</button>
+                                <button type="button" id="btnUpdateSupplier" class="btn btn-save btn-sm"><i
+                                    class="bi bi-check-lg me-1"></i> Simpan Perubahan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>

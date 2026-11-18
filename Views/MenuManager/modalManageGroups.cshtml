@@ -1,0 +1,100 @@
+﻿<style>
+    .group-list-box {
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 #f1f5f9;
+    }
+    .group-list-box::-webkit-scrollbar {
+        width: 6px;
+    }
+    .group-list-box::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 4px;
+    }
+    .group-list-box::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+    }
+    .group-item-row:hover {
+        background-color: #f8fafc;
+        transition: background-color 0.2s ease;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 6px;
+    }
+</style>
+
+<!-- MODAL: Manage Menu Groups -->
+<div class="modal fade" id="modalManageGroups" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalManageGroupsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+
+            <!-- Modal Header -->
+            <div class="modal-header border-bottom px-4 py-3">
+                <h5 class="modal-title fw-bold text-dark" id="modalManageGroupsLabel">Manage Menu Groups</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body px-4 py-3">
+                
+                <!-- Form Tambah Group Baru -->
+                <div class="card bg-light border-0 p-3 mb-3 rounded-3">
+                    <label class="form-label fw-semibold small text-dark mb-1"><i class="bi bi-plus-circle text-indigo me-1"></i> Tambah Group Baru</label>
+                    <div class="input-group input-group-sm">
+                        <input type="text" id="inputNewGroupName" class="form-control" placeholder="Contoh: Main Menu, Inventory..." autocomplete="off">
+                        <button class="btn btn-success btn-sm text-dark fw-bold px-3" type="button" id="btnSaveNewGroup">
+                            <i class="bi bi-check-lg"></i> Simpan Group
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="text-muted opacity-25 my-3">
+
+                <h6 class="fw-bold small text-muted text-uppercase mb-2">Daftar Group Aktif di Database</h6>
+                <div class="group-list-box pe-1" id="groupListContainer" style="max-height: 250px; overflow-y: auto;">
+                    <!-- Loading State -->
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-indigo spinner-border-sm" role="status"></div>
+                        <span class="ms-2 text-muted small">Memuat group...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer border-top px-4 py-3">
+                <button type="button" class="btn btn-secondary px-4 btn-sm rounded-pill" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Kecil untuk Rename Group -->
+<div class="modal fade" id="modalRenameGroup" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-3">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h6 class="modal-title fw-bold">Rename Menu Group</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-2 pb-3">
+                <form id="formRenameGroup">
+                    <input type="hidden" id="oldGroupName" />
+                    <div class="mb-2">
+                        <label class="form-label small text-muted">New Group Name</label>
+                        <input type="text" id="newGroupName" class="form-control form-control-sm" required />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-top-0 pt-0 d-flex justify-content-end gap-1">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg me-1"></i> Batal
+                </button>
+                <button type="button" id="btnSubmitRename" class="btn btn-success btn-sm text-dark">
+                    <i class="bi bi-check-lg me-1"></i> Simpan
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>

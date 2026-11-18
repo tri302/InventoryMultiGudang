@@ -1,0 +1,67 @@
+<!-- Modal Form CRUD -->
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modalReparasi" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+            <form id="reparasiForm">
+                <div class="modal-header border-0 pb-0 pt-4 px-4">
+                    <h5 class="modal-title fw-bold text-dark" id="modalTitle">Form Reparasi Aset</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="Id" name="Id" value="0">
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Pilih Serial Number Aset</label>
+                        <select id="ProdukItemId" name="ProdukItemId" class="form-select form-select-sm">
+                            <option value="">-- Pilih Aset --</option>
+                        </select>
+                        <div class="invalid-feedback custom-error-msg" style="display: none; color: #dc3545; font-size: 0.8rem; margin-top: 0.25rem;">Serial Number wajib dipilih.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Tanggal Masuk</label>
+                        <input type="text" id="TanggalMasuk" name="TanggalMasuk" class="form-control form-control-sm">
+                        <div class="invalid-feedback custom-error-msg" style="display: none; color: #dc3545; font-size: 0.8rem; margin-top: 0.25rem;">Tanggal masuk wajib diisi.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Tanggal Keluar / Selesai</label>
+                        <input type="text" id="TanggalKeluar" name="TanggalKeluar" class="form-control form-control-sm">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Keluhan Kerusakan</label>
+                        <textarea id="Keluhan" name="Keluhan" class="form-control form-control-sm" rows="3" placeholder="Tuliskan detail kerusakan..."></textarea>
+                        <div class="invalid-feedback custom-error-msg" style="display: none; color: #dc3545; font-size: 0.8rem; margin-top: 0.25rem;">Keluhan wajib diisi.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Biaya (Rp)</label>
+                        <input type="text" id="Biaya" name="Biaya" class="form-control form-control-sm" value="0" min="0">
+                        <div class="invalid-feedback custom-error-msg" style="display: none; color: #dc3545; font-size: 0.8rem; margin-top: 0.25rem;">Biaya tidak valid.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Status Reparasi</label>
+                        <select id="StatusReparasi" name="StatusReparasi" class="form-select form-select-sm">
+                            <option value="0">Proses</option>
+                            <option value="1">Selesai</option>
+                            <option value="2">Dibatalkan</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 pb-4 px-4">
+                    <button type="button" class="btn btn-batal-modal btn-sm" data-bs-dismiss="modal">
+                        <i class="bi bi-arrow-90deg-left"></i>
+                        Batal
+                    </button>
+                    <button type="submit" class="btn btn-save btn-sm">
+                        <i class="bi bi-check-lg me-1"></i>
+                        Simpan Data
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

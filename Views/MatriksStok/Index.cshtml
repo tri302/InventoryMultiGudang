@@ -1,0 +1,164 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Matriks Stok Grid";
+}
+<style>
+    ::before, ::after {
+        --tw-content: "";
+    }
+
+    element {
+    }
+
+    .text-xs {
+        font-size: .75rem;
+        line-height: 1rem;
+    }
+
+    .font-mono {
+        font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .py-4 {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    *, ::before, ::after {
+        box-sizing: border-box;
+        border: 0 solid #e5e7eb;
+    }
+
+    *, ::before, ::after, ::backdrop {
+        --tw-ring-offset-shadow: 0 0 #0000;
+        --tw-ring-shadow: 0 0 #0000;
+        --tw-shadow: 0 0 #0000;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .border-collapse {
+        border-collapse: collapse;
+    }
+
+    table {
+        text-indent: 0;
+        border-collapse: collapse;
+    }
+
+    .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-y-reverse: 0;
+    }
+
+    .shadow-sm {
+        --tw-shadow: 0 1px 2px 0 #0000000d;
+        --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+    }
+
+    .bg-white {
+        --tw-bg-opacity: 1;
+    }
+
+    .border-slate-200 {
+        --tw-border-opacity: 1;
+    }
+
+    .text-slate-900 {
+        --tw-text-opacity: 1;
+        color: rgb(15 23 42/var(--tw-text-opacity,1));
+    }
+
+    .bg-slate-50 {
+        --tw-bg-opacity: 1;
+    }
+
+    .font-sans {
+        font-family: Figtree,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    }
+
+    body {
+        line-height: inherit;
+    }
+
+    html, :host {
+        -webkit-text-size-adjust: 100%;
+        tab-size: 4;
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        font-family: Figtree,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+        line-height: 1.5;
+    }
+    /* 1. Menargetkan container Select2 agar konsisten */
+    .select2-container--bootstrap-5 .select2-selection,
+    .select2-container--bootstrap-5 .select2-selection__rendered {
+        color: #212529 !important; /* Warna teks gelap */
+        font-weight: 500;
+    }
+
+    /* 2. Menargetkan opsi (results) di dalam dropdown Select2 saat muncul */
+    .select2-container--bootstrap-5 .select2-results__option {
+        color: #212529 !important;
+        background-color: #ffffff !important;
+    }
+
+    /* 3. Menargetkan opsi yang sedang di-hover/dipilih */
+    .select2-container--bootstrap-5 .select2-results__option--highlighted[aria-selected] {
+        background-color: #e9ecef !important; /* Warna abu-abu muda saat hover */
+        color: #212529 !important;
+    }
+
+    /* 4. Jika Anda masih menggunakan select biasa sebagai cadangan */
+    #formSelectSemuaGudang select.form-select {
+        color: #212529 !important;
+        font-weight: 500;
+    }
+
+        #formSelectSemuaGudang select.form-select option {
+            color: #212529 !important;
+            background-color: #ffffff !important;
+        }
+</style>
+
+<!-- KONTEN UTAMA -->
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+        <div>
+            <h4 class="fw-bold text-indigo-dark mb-1">Matriks Stok Grid (Cross-Tab)</h4>
+            <p class="text-muted small mb-0">Agregat sebaran stok riil produk di seluruh gudang fisik dan virtual secara real-time.</p>
+        </div>
+
+        <!-- Bagian Filter Gudang & Tombol Cetak Laporan -->
+        <div class="d-flex gap-2 w-100 w-md-auto ms-md-auto justify-content-end align-items-center" id="formSelectSemuaGudang">
+            <!-- Form select dengan dukungan AJAX live search (Select2 / Custom JS) -->
+            <select id="selectGudangFilter" class="form-select shadow-sm" style="max-width: 200px; width: 100%;">
+                <option value="">Semua Gudang</option>
+            </select>
+
+            <a asp-action="ReportMatrikStok" asp-controller="MatriksStok" target="_blank" class="btn btn-success shadow-sm d-flex align-items-center gap-2 px-3 text-nowrap">
+                <i class="bi bi-printer"></i> Cetak Laporan
+            </a>
+        </div>
+    </div>
+
+    <!-- Container Utama Tabel yang dimuat via AJAX -->
+    <div id="matriksStokContainer">
+        <!-- Konten tabel akan dirender secara dinamis melalui AJAX parsial view -->
+    </div>
+</div>
+@await Html.PartialAsync("modalEditStok")
+@section Scripts {
+    <!-- Memanggil file JavaScript terpisah sesuai standar -->
+    <script src="~/js/MatriksStok.js"></script>
+}

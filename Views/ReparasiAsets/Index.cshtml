@@ -1,0 +1,80 @@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Manajemen Reparasi Aset";
+}
+<div class="container-fluid px-0">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+            <h4 class="fw-bold text-dark mb-1">Manajemen Reparasi Aset</h4>
+            <p class="text-muted small mb-0">Kelola data pemeliharaan, servis, dan perbaikan perangkat aset.</p>
+        </div>
+        <button class="btn btn-success rounded-pill px-4 btn-sm" onclick="openModalAdd()">
+            <i class="bi bi-plus-lg me-1"></i> Tambah Reparasi
+        </button>
+    </div>
+
+    <!-- Input Pencarian -->
+    <div class="mb-3">
+        <div class="input-group style-search" style="max-width: 380px;">
+            <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+            <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Cari SN, Nama Barang, atau Keluhan... (Tekan Enter)" style="font-size: 0.85rem;">
+        </div>
+    </div>
+
+    <!-- Tabel Data -->
+    <div class="card border-0 shadow-sm overflow-hidden mb-3" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+        <div class="table-responsive">
+            <table class="table align-middle table-hover mb-0" style="font-size: 0.85rem;">
+                <thead class="table-light text-uppercase text-muted" style="font-size: 0.725rem; letter-spacing: 0.05em; background-color: #f8fafc;">
+                    <tr>
+                        <th class="ps-4 py-3">Serial Number (SN)</th>
+                        <th>Nama Barang</th>
+                        <th>Keluhan</th>
+                        <th>Tgl Masuk / Keluar</th>
+                        <th>Biaya</th>
+                        <th>Status</th>
+                        <th class="pe-4 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Data AJAX -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pagination & Info -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 px-1">
+        <div class="text-secondary small" id="tableInfo">Menampilkan 0 dari 0 data</div>
+        <nav><ul class="pagination pagination-sm mb-0" id="paginationContainer"></ul></nav>
+    </div>
+</div>
+@await Html.PartialAsync("modalReparasiAssets")
+@section Scripts {
+   <script src="~/js/ReparasiIndex.js"></script>
+   <script>
+// Inisialisasi Flatpickr untuk Tanggal Masuk dan Tanggal Keluar saat modal ditampilkan
+$(document).off('shown.bs.modal', '#modalReparasi').on('shown.bs.modal', '#modalReparasi', function () {
+    ['#TanggalMasuk', '#TanggalKeluar'].forEach(function(selector) {
+        var inputElement = document.querySelector(selector);
+        
+        if (inputElement) {
+            // Hancurkan instans lama jika ada untuk mencegah duplikasi
+            if (inputElement._flatpickr) {
+                inputElement._flatpickr.destroy();
+            }
+
+            // Inisialisasi Flatpickr
+            flatpickr(inputElement, {
+                dateFormat: "d-m-Y", // Menggunakan format strip (-) agar sinkron dengan fungsi konversi backend
+                allowInput: true,
+                appendTo: document.getElementById('modalReparasi'),
+                locale: {
+                    firstDayOfWeek: 1
+                }
+            });
+        }
+    });
+});
+</script>
+}

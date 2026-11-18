@@ -1,0 +1,167 @@
+@model InventoryMultiGudang.ViewModels.UomViewModel
+@{
+    ViewData["Title"] = "Master UOM";
+    Layout = "_AdminLayout";
+}
+<style>
+    /* Custom Ukuran Pagination agar lebih kecil & ringkas */
+    .pagination-sm .page-link {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+    
+    :root {
+        --primary-indigo: #311b92;
+        --accent-emerald: #00c853;
+    }
+
+    .bg-deep-indigo {
+        background-color: var(--primary-indigo) !important;
+        color: #fff;
+    }
+
+    .btn-emerald {
+        background-color: var(--accent-emerald);
+        color: #fff;
+        border: none;
+    }
+
+    .btn-emerald:hover {
+        background-color: #00b0ff;
+        color: #fff;
+    }
+
+    /* Live Validation Dynamic Colors */
+    .input-validation-error {
+        border-color: #dc3545 !important;
+        background-color: #fff8f8;
+    }
+
+    .valid-field {
+        border-color: #28a745 !important;
+        background-color: #f8fff9;
+    }
+</style>
+
+<!-- AntiForgeryToken untuk AJAX POST -->
+@Html.AntiForgeryToken()
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1 text-primary-emphasis fw-bold"></i> Master Unit of Measure (UOM)</h1>
+            <p class="text-muted mb-0">Kelola satuan unit (UOM) produk.</p>
+        </div>
+        <button class="btn btn-success rounded-pill px-4 btn-sm" id="btnTambah">
+            <i class="bi bi-plus"></i> Tambah UOM
+        </button>
+    </div>
+
+    <div class="card shadow border-0 mb-4">
+        <div class="card-body">
+            <!-- Filter & Search Bar -->
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+                        <input type="text" id="searchKeyword" class="form-control"
+                               placeholder="Cari Kode atau Nama UOM...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabel Data -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle border">
+                    <thead class="table-light text-secondary">
+                        <tr>
+                            <th style="width: 5%;">No</th>
+                            <th style="width: 15%;">Code</th>
+                            <th style="width: 25%;">Name</th>
+                            <th style="width: 35%;">Description</th>
+                            <th style="width: 10%;">Status</th>
+                            <th style="width: 10%; text-align: center;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableUomBody">
+                        <!-- Data dimuat via AJAX -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination Section -->
+            <div class="row align-items-center mt-3">
+                <div class="col-md-6 text-muted" id="paginationInfo">
+                    Menampilkan 0 - 0 dari 0 data
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <nav>
+                        <ul class="pagination mb-0" id="paginationContainer">
+                            <!-- Pagination AJAX Buttons -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Form CRUD (Bootstrap Modal) -->
+<div class="modal fade" id="uomModal" tabindex="-1" aria-labelledby="uomModalLabel" aria-hidden="true"
+     data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <form id="uomForm">
+                <div class="modal-header text-primary">
+                    <h5 class="modal-title" id="uomModalLabel"><i class="bi bi-pencil-square me-2"></i> Form UOM</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="Id" name="Id" value="0" />
+
+                    <div class="mb-3">
+                        <label asp-for="Code" class="form-label fw-bold"></label>
+                        <input asp-for="Code" class="form-control text-uppercase" id="Code"
+                               placeholder="Contoh: PCS, KG" required />
+                        <span asp-validation-for="Code" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-bold"></label>
+                        <input asp-for="Name" class="form-control" id="Name" placeholder="Contoh: Pieces, Kilogram"
+                               required />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label fw-bold"></label>
+                        <textarea asp-for="Description" class="form-control" id="Description" rows="3"
+                                  placeholder="Keterangan satuan..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="IsActive" name="IsActive"
+                               value="true" checked />
+                        <label class="form-check-label fw-bold px-1" for="IsActive">Status Aktif</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-center gap-2">
+                    <button type="button" class="btn btn-batal-custom btn-sm" data-bs-dismiss="modal">
+                        <i class="bi bi-arrow-90deg-left"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-emerald-custom btn-sm" id="btnSave">
+                        <i class="bi bi-check-lg me-1"></i> Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/master-uom.js" asp-append-version="true"></script>
+}

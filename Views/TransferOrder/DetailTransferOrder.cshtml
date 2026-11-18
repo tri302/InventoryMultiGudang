@@ -1,0 +1,129 @@
+﻿@using InventoryMultiGudang.Models
+@model InventoryMultiGudang.ViewModels.TransferOrderDetailViewModel
+
+@{
+    Layout = "_AdminLayout";
+
+    // Gunakan Class Bootstrap baku
+    var badgeClass = Model.Status switch
+    {
+        StatusTransfer.DalamPerjalanan => "bg-warning text-dark",
+        StatusTransfer.Diterima => "bg-success text-white",
+        _ => "bg-secondary text-white"
+    };
+
+    // Format teks enum menjadi ber-spasi untuk UI
+    var displayStatus = Model.Status switch
+    {
+        StatusTransfer.DalamPerjalanan => "Dalam Perjalanan",
+        StatusTransfer.Diterima => "Diterima",
+        _ => Model.Status.ToString()
+    };
+}
+
+<div class="mb-4">
+    <!-- Baris Pertama: Judul Detail Mutasi Barang -->
+    <div class="mb-3">
+        <h5 class="fw-bold text-indigo-dark small tracking-wider text-uppercase mb-0">
+            <i class="bi bi-journal-text text-indigo"></i> Detail Mutasi Barang
+        </h5>
+    </div>
+
+    <!-- Baris Kedua: Tombol-tombol & Status -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <!-- Sisi Kiri Baris Kedua: Tombol Kembali -->
+        <a asp-action="Index" asp-controller="TransferOrder" class="btn btn-sm btn-secondary border rounded-3">
+            <i class="bi bi-arrow-left"></i> Kembali
+        </a>
+
+        <!-- Sisi Kanan Baris Kedua: Status & Tombol Cetak -->
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge @badgeClass px-3 py-2 rounded-pill fw-bold">
+                @displayStatus
+            </span>
+            <a href="@Url.Action("Print", "TransferOrder", new { id = Model.Id })" target="_blank"
+               class="btn btn-success btn-sm rounded-3">
+                <i class="bi bi-printer"></i> Cetak
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Container Form Receive -->
+<form id="formTerimaBarang">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="DetailTransferOrderId" value="@Model.Id" />
+
+    <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-4">
+        <div class="card-header bg-white border-bottom py-3 px-4">
+            <div class="d-flex align-items-center gap-2 fw-bold text-indigo-dark small tracking-wider text-uppercase">
+                <i class="bi bi-boxes text-indigo"></i> Daftar Barang Mutasi
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle mb-0" style="min-width: 900px;">
+                <thead>
+                    <tr class="text-uppercase small fw-bold tracking-wider text-muted border-bottom bg-light-subtle">
+                        <th class="py-3 px-4" style="width: 40%;">Produk</th>
+                        <th class="py-3 text-center" style="width: 20%;">Satuan (UOM)</th>
+                        <th class="py-3 text-center" style="width: 20%;">Kuantitas Permintaan</th>
+                        <th class="py-3 text-center" style="width: 20%;">Kuantitas Diterima</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Items != null && Model.Items.Any())
+                    {
+                        for (int i = 0; i < Model.Items.Count; i++)
+                        {
+                            <tr>
+                                <td class="py-4 px-4">
+                                    <div class="fw-bold text-indigo-dark">@Model.Items[i].NamaProduk</div>
+                                    <div class="text-muted tracking-wide text-uppercase mb-2"
+                                         style="font-size: 0.7rem; font-weight: 600;">@Model.Items[i].Sku</div>
+                                </td>
+                                <td class="py-4 text-center">
+                                    <span class="badge bg-light text-indigo-dark border px-3 py-1.5 fw-semibold"
+                                          style="font-size: 0.8rem;">
+                                        @Model.Items[i].Satuan
+                                    </span>
+                                </td>
+                                <td class="py-4 text-center fw-bold text-indigo-dark fs-6">
+                                    @Model.Items[i].QtyPermintaan
+                                </td>
+                                <td class="py-4">
+                                    <div class="d-flex justify-content-center">
+                                        <input type="number"
+                                               data-item-id="@(Model.Items[i].ItemId != 0 ? Model.Items[i].ItemId : Model.Items[i].ProdukId)"
+                                               class="form-control text-center fw-bold shadow-none input-qty-diterima"
+                                               value="@Model.Items[i].QtyDiterima" min="0" max="@Model.Items[i].QtyPermintaan"
+                                               style="width: 80px; height: 38px;" @(Model.Status == StatusTransfer.Diterima ?
+                                               "readonly" : "") />
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+</tbody>
+</table>
+</div>
+
+<div class="card-footer bg-white border-top d-flex justify-content-center py-3 px-4">
+    @if (Model.Status != StatusTransfer.Diterima)
+    {
+        <button type="button" id="btnTerimaBarang" class="btn btn-sm btn-success">
+            <i class="bi bi-box-arrow-down"></i> Terima Barang (Received)
+        </button>
+    }
+    else
+    {
+        <span class="badge bg-success bg-opacity-10 text-success border border-success px-3 py-2 fw-bold">
+            <i class="bi bi-check-circle-fill me-1"></i> Barang Sudah Diterima
+        </span>
+    }
+</div>
+</div>
+</form>
+@section Scripts {
+    <script src="~/js/TransferOrder.js"></script>
+}

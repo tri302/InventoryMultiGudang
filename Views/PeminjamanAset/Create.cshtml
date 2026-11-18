@@ -1,0 +1,407 @@
+﻿@model InventoryMultiGudang.ViewModels.PeminjamanAsetFormViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Peminjaman Aset Baru";
+}
+
+<style>    
+    ::before,
+    ::after {
+        --tw-content: "";
+    }
+
+    element {}
+
+    .hover\:bg-slate-100:hover {
+        --tw-bg-opacity: 1;
+        background-color: rgb(241 245 249/var(--tw-bg-opacity, 1));
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: .15s;
+        transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .text-slate-700 {
+        --tw-text-opacity: 1;
+        color: rgb(51 65 85/var(--tw-text-opacity, 1));
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    .text-xs {
+        font-size: .75rem;
+        line-height: 1rem;
+    }
+
+    .py-1\.5 {
+        padding-top: .375rem;
+        padding-bottom: .375rem;
+    }
+
+    .px-3 {
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+
+    .border-slate-200 {
+        --tw-border-opacity: 1;
+        border-color: rgb(226 232 240/var(--tw-border-opacity, 1));
+    }
+
+    .border {
+        border-width: 1px;
+    }
+
+    .rounded-lg {
+        border-radius: .5rem;
+    }
+
+    .gap-1\.5 {
+        gap: .375rem;
+    }
+
+    .items-center {
+        align-items: center;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .inline-flex {
+        display: inline-flex;
+    }
+
+    button,
+    [role="button"] {
+        cursor: pointer;
+    }
+
+    button,
+    input:where([type="button"]),
+    input:where([type="reset"]),
+    input:where([type="submit"]) {
+        -webkit-appearance: button;
+        background-color: #0000;
+        background-image: none;
+    }
+
+    button,
+    select {
+        text-transform: none;
+    }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        font-feature-settings: inherit;
+        font-variation-settings: inherit;
+        font-family: inherit;
+        font-size: 100%;
+        font-weight: inherit;
+        line-height: inherit;
+        letter-spacing: inherit;
+        color: inherit;
+        margin: 0;
+        padding: 0;
+    }
+
+    *,
+    ::before,
+    ::after {
+        box-sizing: border-box;
+        border: 0 solid #e5e7eb;
+        border-top-width: 0px;
+        border-top-color: rgb(229, 231, 235);
+        border-right-width: 0px;
+        border-right-color: rgb(229, 231, 235);
+        border-bottom-width: 0px;
+        border-bottom-color: rgb(229, 231, 235);
+        border-left-width: 0px;
+        border-left-color: rgb(229, 231, 235);
+    }
+
+    *,
+    ::before,
+    ::after,
+    ::backdrop {
+        --tw-ring-offset-shadow: 0 0 #0000;
+        --tw-ring-shadow: 0 0 #0000;
+        --tw-shadow: 0 0 #0000;
+    }
+
+    .shadow-sm {
+        --tw-shadow: 0 1px 2px 0 #0000000d;
+        --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+    }
+
+    .bg-white {
+        --tw-bg-opacity: 1;
+    }
+
+    .space-y-6> :not([hidden])~ :not([hidden]) {
+        --tw-space-y-reverse: 0;
+    }
+
+    .text-slate-900 {
+        --tw-text-opacity: 1;
+        color: rgb(15 23 42/var(--tw-text-opacity, 1));
+    }
+
+    .bg-slate-50 {
+        --tw-bg-opacity: 1;
+    }
+
+    .font-sans {
+        font-family: Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    body {
+        line-height: inherit;
+    }
+
+    html,
+    :host {
+        -webkit-text-size-adjust: 100%;
+        tab-size: 4;
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        font-family: Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        line-height: 1.5;
+    }
+
+    /* Reset & Base Styles */
+    *,
+    ::before,
+    ::after {
+        box-sizing: border-box;
+    }
+
+    html,
+    :host {
+        -webkit-text-size-adjust: 100%;
+        tab-size: 4;
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        font-family: Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        line-height: 1.5;
+    }
+
+    /* Custom Form Styles */
+    select.form-select,
+    select.form-select option {
+        color: #0f172a !important;
+        background-color: #ffffff !important;
+    }
+
+    .scanner-box {
+        background-color: #f8fafc;
+        border: 1px dashed #cbd5e1;
+        border-radius: 8px;
+    }
+
+    .table-empty-state {
+        text-align: center;
+        padding: 2.5rem 1rem;
+        color: #94a3b8;
+        font-size: 0.85rem;
+    }
+
+    .text-indigo-dark {
+        color: #1e1b4b;
+    }
+
+    .btn-save {
+        background-color: #10b981;
+        color: #ffffff;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        border-radius: 6px;
+    }
+
+    .btn-save:hover {
+        background-color: #059669;
+        color: #ffffff;
+    }
+
+    .btn-batal-modal {
+        background-color: #e2e8f0;
+        color: #334155;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        border-radius: 6px;
+    }
+
+    .btn-batal-modal:hover {
+        background-color: #cbd5e1;
+        color: #1e293b;
+    }
+</style>
+
+<div class="container-fluid py-4">
+    <div class="d-flex align-items-center gap-3 mb-4">
+        <a asp-action="Index" asp-controller="PeminjamanAset"
+           class="btn btn-outline-secondary bg-white p-2 d-inline-flex align-items-center justify-content-center shadow-sm"
+           style="border-radius: 8px; width: 38px; height: 38px;">
+            <i class="bi bi-arrow-left text-indigo-dark fs-5"></i>
+        </a>
+        <div>
+            <h1 class="h4 fw-bold text-indigo-dark mb-0.5">Catat Peminjaman Aset Baru</h1>
+            <p class="text-muted small mb-0">Daftar peminjaman jangka pendek unit aset bernomor seri beserta pemantauan
+                tanggal jatuh tempo.</p>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post" id="formPeminjamanAset">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <!-- ROW UTAMA 2 KOLOM SEJAJAR -->
+                    <div class="row g-4">
+                        <!-- KOLOM KIRI (Detail Peminjaman) -->
+                        <div class="col-12 col-lg-5">
+                            <div class="card border border-light-subtle shadow-sm p-4 h-100"
+                                 style="border-radius: 12px; background-color: #ffffff;">
+                                <h6 class="text-uppercase tracking-wider fw-bold text-indigo-dark mb-3"
+                                    style="font-size: 0.8rem;">Detail Peminjaman</h6>
+                                <input asp-for="KodePeminjaman" class="form-control" hidden="hidden" />
+                                <input asp-for="GudangId" class="form-control" hidden="hidden" />
+                                <input type="hidden" id="TipePenerimaVal" value="1" />
+                                <!-- Penerima (Karyawan) -->
+                                <div class="mb-3">
+                                    <label class="form-label text-uppercase text-muted fw-bold tracking-wider"
+                                           style="font-size: 0.75rem;">Penerima (Karyawan)</label>
+                                    <select asp-for="KaryawanId" id="KaryawananId" class="form-select select2-penerima"
+                                            required style="width: 100%;">
+                                        <option value="" selected disabled>Pilih Penerima...</option>
+                                    </select>
+                                    <span asp-validation-for="KaryawanId" class="text-danger small d-block mt-1"></span>
+                                </div>
+
+                                <!-- Tanggal Pinjam -->
+                                <div class="mb-3">
+                                    <label asp-for="TanggalPinjam" class="form-label fw-semibold"
+                                           style="font-size: 0.85rem;">Tanggal Pinjam <span
+                                        class="text-danger">*</span></label>
+                                        <input asp-for="TanggalPinjam" type="text" id="datepickerTanggalPinjam"
+                                               class="form-control" required />
+                                        <span asp-validation-for="TanggalPinjam" class="text-danger small"></span>
+                                    </div>
+
+                                    <!-- Tanggal Jatuh Tempo -->
+                                    <div class="mb-3">
+                                        <label asp-for="TanggalJatuhTempo" class="form-label fw-semibold"
+                                               style="font-size: 0.85rem;">Tanggal Jatuh Tempo <span
+                                            class="text-danger">*</span></label>
+                                            <input asp-for="TanggalJatuhTempo" type="text" id="datepickerTanggalJatuhTempo"
+                                                   class="form-control" required />
+                                            <span asp-validation-for="TanggalJatuhTempo" class="text-danger small"></span>
+                                        </div>
+
+                                        <!-- Tujuan Peminjaman -->
+                                        <div class="mb-2">
+                                            <label asp-for="TujuanPeminjaman" class="form-label fw-semibold"
+                                                   style="font-size: 0.85rem;">Tujuan Peminjaman</label>
+                                            <textarea asp-for="TujuanPeminjaman" class="form-control" rows="3"
+                                                      placeholder="Keperluan peminjaman aset..."></textarea>
+                                            <span asp-validation-for="TujuanPeminjaman" class="text-danger small"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- KOLOM KANAN (Aset Yang Dipinjam) -->
+                                <div class="col-12 col-lg-7">
+                                    <div class="card border border-light-subtle shadow-sm p-4 h-100"
+                                         style="border-radius: 12px; background-color: #ffffff;">
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                            <h6 class="text-uppercase tracking-wider fw-bold text-indigo-dark mb-0"
+                                                style="font-size: 0.8rem;">Aset Yang Dipinjam (<span id="lblItemCount">0</span>)
+                                            </h6>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#modalPilihAset"
+                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg text-xs font-bold transition-all cursor-pointer">
+                                                <i class="bi bi-plus text-muted fs-5"></i> Cari Manual
+                                            </button>
+                                        </div>
+
+                                        <div class="scanner-box p-3 mb-4">
+                                            <div class="d-flex align-items-center gap-2 mb-2 text-indigo-dark fw-bold small">
+                                                <i class="bi bi-qr-code-scan text-danger"></i> Mode Barcode / QR Scanner
+                                            </div>
+                                            <p class="text-muted mb-3" style="font-size: 0.75rem;">Arahkan fokus kursor ke input di
+                                                bawah, lalu scan barcode/QR asset tag Anda, atau ketik langsung nomor serinya dan
+                                                tekan Enter.</p>
+
+                                                <div class="input-group">
+                                                    <input type="text" id="txtScanSerial" class="form-control font-monospace ps-3"
+                                                           placeholder="Tempel/Scan Serial Number di sini..." style="font-size: 0.9rem;"
+                                                           aria-label="Tempel/Scan Serial Number di sini...">
+                                                    <button
+                                                        class="btn btn-dark px-3 fw-medium d-flex align-items-center justify-content-center"
+                                                        type="button" id="btnTambahScan"
+                                                        style="background-color: #0f172a; border-radius: 0 6px 6px 0;"
+                                                        title="Scan QR / Cari Serial">
+                                                        <i class="bi bi-qr-code-scan fs-5"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive border-0 overflow-hidden flex-grow-1">
+                                                <table class="table align-middle mb-0 text-nowrap table-responsive"
+                                                       id="tableSelectedAset">
+                                                    <thead>
+                                                        <tr class="text-uppercase text-muted fw-bold"
+                                                            style="font-size: 0.75rem; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0;">
+                                                            <th class="pb-3 justify-content-center" style="width: 100%;">Detail List
+                                                                Barang</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbodySelectedAset"></tbody>
+                                                    </table>
+                                                    <div class="table-empty-state my-2" id="emptyStateDetail">
+                                                        Daftar aset kosong. Silakan scan barcode atau cari manual di atas.
+                                                    </div>
+                                                </div>
+
+                                                <div
+                                                    class="modal-footer d-flex justify-content-center gap-2 border-top bg-white pt-4 mt-auto">
+                                                    <a asp-action="Index" asp-controller="PeminjamanAset"
+                                                       class="btn btn-batal-modal btn-sm">
+                                                        <i class="bi bi-arrow-90deg-left"></i> Batal
+                                                    </a>
+                                                    <button type="button" class="btn btn-save btn-sm" id="btnSubmitFormPeminjamanAset">
+                                                        <i class="bi bi-check-lg me-1"></i> Simpan Peminjaman
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    @await Html.PartialAsync("PilihAset")
+                    @section Scripts {
+                        <script src="~/js/PeminjamanAset.js"></script>
+
+                        <script>
+                            $(document).ready(function () {
+                                $("#datepickerTanggalPinjam, #datepickerTanggalJatuhTempo").flatpickr({
+                                    dateFormat: "d/m/Y", // Mengatur format tanggal yang tampil di input menjadi DD/MM/YYYY
+                                    allowInput: true,
+                                    locale: {
+                                        firstDayOfWeek: 1 // Opsional: Mulai hari Senin (Su/Mo)
+                                    }
+                                });
+                            });       
+                        </script>
+                    }

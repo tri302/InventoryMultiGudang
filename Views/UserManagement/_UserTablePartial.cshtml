@@ -1,0 +1,80 @@
+@model InventoryMultiGudang.Models.UserListViewModel
+
+<div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0" style="font-size: 0.85rem;">
+            <thead class="table-light text-uppercase text-muted"
+                   style="font-size: 0.725rem; letter-spacing: 0.05em; background-color: #f8fafc;">
+                <tr>
+                    <th class="ps-4 py-3" style="width: 35%;">User</th>
+                    <th style="width: 25%;">Assigned Roles</th>
+                    <th style="width: 25%;">Created At</th>
+                    <th class="pe-4 text-end" style="width: 15%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-secondary">
+                @if (Model.Users != null && Model.Users.Any())
+                {
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="avatar-circle bg-danger text-white d-flex align-items-center justify-content-center fw-bold"
+                                         style="width:35px; height:35px; border-radius:50%;">
+                                        @(user.FullName.Length >= 2 ? user.FullName.Substring(0, 2).ToUpper() : "US")
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold text-dark mb-0">@user.FullName</div>
+                                        <div class="text-muted" style="font-size: 0.8rem;">@user.Email</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@user.CreatedAt.ToString("dd MMM yyyy")</td>
+                            <td>
+                                @foreach (var role in user.Roles)
+                                {
+                                    <span class="badge badge-role-user px-2.5 py-1.5 rounded-pill fw-medium bg-light text-dark border me-1"
+                                          style="font-size: 0.725rem;">
+                                        <i class="bi bi-hexagon me-1" style="font-size: 0.65rem;"></i> @role
+                                    </span>
+                                }
+                            </td>
+                            <td class="pe-4 text-end">
+                                <button class="action-btn btn btn-sm btn-light border-0" onclick="editUser('@user.Id')"><i
+                                    class="bi bi-pencil"></i></button>
+                                    <button class="action-btn btn btn-sm btn-light border-0 text-danger"
+                                            onclick="deleteConfirm('@user.Id')"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">Tidak ada data user ditemukan.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bootstrap Pagination -->
+        <div class="card-footer bg-white py-3"
+             style="position: relative; overflow: hidden; padding-left: 1.25rem; padding-right: 1.25rem;">
+            <div class="text-secondary d-inline-block" style="font-size: 0.875rem; float: left; line-height: 31px;">
+                Total Users: <span class="fw-bold text-dark">@Model.TotalUsers</span>
+            </div>
+            <nav class="mb-0" style="float: right;">
+                <ul class="pagination pagination-sm mb-0">
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                            <a class="page-link" href="#" onclick="loadUsers(@i); return false;">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+            <div style="clear: both;"></div>
+        </div>
+    </div>

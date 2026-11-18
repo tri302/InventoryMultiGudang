@@ -1,0 +1,130 @@
+﻿@model InventoryMultiGudang.Models.ViewModels.RoleMatrixViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Roles & Permissions Management";
+}
+
+<style>
+    .is-invalid-custom {
+        border-color: #dc3545 !important;
+        background-color: #fff8f8 !important;
+    }    
+    /* Styling untuk status Valid (Hijau) dan Invalid (Merah) */
+.form-control.is-invalid-custom {
+    border-color: #dc3545 !important;
+    background-color: #fff8f8 !important;
+}
+
+.form-control.is-valid-custom {
+    border-color: #198754 !important;
+    background-color: #f8fff9 !important;
+}
+
+.invalid-feedback-custom {
+    color: #dc3545;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    display: none;
+}
+</style>
+
+<div class="container-fluid">
+    <div class="mb-3">
+        <h4 class="fw-bold text-dark mb-1" style="font-size: 1.25rem;">Roles & Permissions</h4>
+        <p class="text-muted small mb-0">Configure granularity access control levels, user groups, and capability guards.</p>
+    </div>
+
+    <div class="d-flex gap-2 border-bottom mb-4">
+        <a asp-action="Index" asp-controller="RolesPermissions" class="nav-link-custom active">Role-Permissions Matrix</a>
+        <a asp-action="PermissionsManager" asp-controller="RolesPermissions" class="nav-link-custom">Permissions Manager</a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Sidebar Role Item -->
+        <div class="col-12 col-md-4 col-lg-3">
+            <div class="card card-custom p-3 shadow-sm border-0">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-uppercase fw-bold text-secondary" style="font-size: 0.725rem; letter-spacing: 0.5px;">Security Roles</span>
+                    <button data-bs-toggle="modal" data-bs-target="#modalAddrolle" class="btn p-0 text-danger fw-semibold d-flex align-items-center gap-1" style="font-size: 0.75rem;">
+                        <i class="bi bi-plus-circle"></i> Add Role
+                    </button>
+                </div>
+
+                <div class="role-list">
+                    @foreach (var role in Model.Roles)
+                    {
+                        bool isActive = role.Id == Model.SelectedRoleId;
+                        <a href="@Url.Action("Index", "RolesPermissions", new { roleId = role.Id })" class="text-decoration-none">
+                            <div class="role-item @(isActive ? "active" : "") d-flex justify-content-between align-items-center mb-2 p-2 rounded">
+                                <div class="@(isActive ? "" : "text-secondary")">
+                                    <i class="bi bi-hexagon me-2" style="font-size: 0.75rem;"></i> @role.Name
+                                </div>
+                                @if (role.IsSystemRole)
+                                {
+                                    <span class="badge bg-white border text-muted px-1.5 py-0.5" style="font-size: 0.65rem;">System</span>
+                                }
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Permissions Container -->
+        <div class="col-12 col-md-8 col-lg-9">
+            <div class="card card-custom p-4 shadow-sm border-0">
+                <div class="d-flex align-items-center gap-2 mb-1">
+                    <h5 class="fw-bold text-dark mb-0" style="font-size: 1.1rem;">@Model.SelectedRoleName Role</h5>
+                    <i class="bi bi-pencil-short text-muted cursor-pointer" style="font-size: 1.2rem;"></i>
+                </div>
+                <p class="text-muted small mb-3">Set capabilities and permission gates for users belonging to this security level.</p>
+
+                @if (Model.IsSuperAdmin)
+                {
+                    <div class="p-3 text-white mb-4 d-flex align-items-start gap-3" style="background-color: #0f172a; border-radius: 8px;">
+                        <i class="bi bi-shield-lock-fill text-warning mt-0.5" style="font-size: 1.1rem;"></i>
+                        <div>
+                            <div class="fw-bold mb-0.5" style="font-size: 0.8rem; letter-spacing: 0.3px;">Super Admin Gate Bypass Enabled</div>
+                            <p class="mb-0 text-secondary" style="font-size: 0.725rem; color: #94a3b8 !important;">This Super Admin role inherently bypasses all authorization gate checks. System permissions are fully enabled and cannot be revoked or tweaked locked.</p>
+                        </div>
+                    </div>
+                }
+
+                <div class="text-uppercase fw-bold text-dark border-bottom pb-2 mb-2" style="font-size: 0.8rem; letter-spacing: 0.5px;">Configure Permissions</div>
+
+                @foreach (var group in Model.GroupedPermissions)
+                {
+                    <div class="permission-section-title mt-3">@group.Key Permissions</div>
+                    <div class="row g-3">
+                        @foreach (var perm in group.Value)
+                        {
+                            <div class="col-12 col-md-6">
+                                <div class="permission-card border p-2 rounded d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="permission-name fw-semibold d-block" style="font-size: 0.85rem;">@perm.Name</span>
+                                        <span class="permission-desc text-muted" style="font-size: 0.75rem;">Category: @perm.Category</span>
+                                    </div>
+                                    <input class="form-check-input form-check-input-red chk-permission" 
+                                           type="checkbox" 
+                                           data-role-id="@Model.SelectedRoleId"
+                                           data-perm-name="@perm.Name"
+                                           @(perm.IsAssigned || Model.IsSuperAdmin ? "checked" : "") 
+                                           @(Model.IsSuperAdmin ? "disabled" : "") />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("modalAddrolle")
+@await Html.PartialAsync("modalAddPermission")
+
+@section Scripts {
+    <script src="~/js/modalAddrolle.js"></script>
+    <script src="~/js/modalAddPermission.js"></script>
+    <script src="~/js/RolesPermissions.js"></script>
+}

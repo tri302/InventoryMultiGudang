@@ -1,0 +1,308 @@
+:root {
+  --indigo-dark: #0f172a;
+  --indigo-main: #1e1b4b;
+  --indigo-accent: #312e81;
+  --emerald-main: #10b981;
+  --emerald-hover: #059669;
+  --emerald-soft: rgba(16, 185, 129, 0.08);
+  --bg-light: #f8fafc;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background-color: var(--bg-light);
+  color: #334155;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+/* Background Grid Lines Pattern */
+.grid-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+  z-index: 0;
+}
+
+.login-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Branding Left Section */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--indigo-dark);
+  letter-spacing: 0.5px;
+}
+
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--indigo-main), var(--emerald-main));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.badge-platform {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: var(--indigo-accent);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.hero-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--indigo-dark);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.hero-title span {
+  color: var(--emerald-main);
+  background: linear-gradient(
+    135deg,
+    var(--emerald-main),
+    var(--emerald-hover)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  color: #64748b;
+  font-size: 1.05rem;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+/* Feature Cards Grid */
+.feature-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--emerald-main);
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.08);
+}
+
+.feature-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background-color: var(--emerald-soft);
+  color: var(--emerald-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.feature-text {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+/* Right Section: Login Card Container */
+.login-card-container {
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.07);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.login-card-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--indigo-main), var(--emerald-main));
+}
+
+.form-control-custom {
+  background-color: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 16px 12px 45px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1e293b;
+  transition: all 0.25s ease;
+}
+
+.form-control-custom:focus {
+  background-color: #ffffff;
+  border-color: var(--emerald-main);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 1.1rem;
+  transition: color 0.25s ease;
+  z-index: 4;
+}
+
+.form-group-relative:focus-within .input-icon {
+  color: var(--emerald-main);
+}
+
+.btn-toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.btn-toggle-password:hover {
+  color: var(--indigo-dark);
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, var(--indigo-main), var(--indigo-dark));
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  width: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2);
+}
+
+.btn-submit:hover {
+  background: linear-gradient(135deg, var(--indigo-accent), var(--indigo-main));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.3);
+  color: white;
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+/* Demo Account Box */
+.demo-box {
+  background-color: #fff1f2;
+  border: 1px dashed #fecdd3;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.demo-card {
+  background: #ffffff;
+  border: 1px solid #ffe4e6;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.demo-card:hover {
+  border-color: var(--emerald-main);
+  background-color: var(--emerald-soft);
+  transform: scale(1.02);
+}
+
+.demo-role {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--indigo-dark);
+  margin-bottom: 2px;
+}
+
+.demo-email {
+  font-size: 0.72rem;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.demo-pass {
+  font-size: 0.7rem;
+  font-family: monospace;
+  color: #e11d48;
+  margin-top: 4px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-delay-1 {
+  animation-delay: 0.1s;
+}
+.animate-delay-2 {
+  animation-delay: 0.2s;
+}
+.animate-delay-3 {
+  animation-delay: 0.3s;
+}

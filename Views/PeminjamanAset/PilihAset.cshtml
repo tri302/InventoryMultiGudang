@@ -1,0 +1,70 @@
+﻿<!-- Modal Pilih Aset Dari Stok -->
+<div class="modal fade" id="modalPilihAset" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalPilihAsetLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0" style="border-radius: 12px;">
+
+            <!-- Modal Header -->
+            <div class="modal-header d-flex align-items-center justify-content-between border-bottom-0 pb-2">
+                <h5 class="modal-title fw-bold text-indigo-dark" id="modalPilihAsetLabel" style="font-size: 1.1rem;">Pilih Aset Dari Stok</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body pt-0 px-3">
+
+                <!-- Search Bar -->
+                <div class="input-group mb-3">
+                    <span class="input-group-text border-end-0 bg-light-subtle text-muted">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" id="txtSearchModalAset" class="form-control border-start-0 bg-light-subtle ps-0 shadow-none" placeholder="Cari serial number, tipe, atau nama barang..." style="font-size: 0.9rem;">
+                </div>
+
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-tabs border-bottom mb-3" id="asetTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-bold px-3 text-indigo-dark text-danger border-0 border-bottom border-danger border-3" style="font-size: 0.85rem;" id="semua-tab" data-bs-toggle="tab" data-filter="semua" type="button" role="tab">Semua</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-muted fw-medium px-3 border-0" style="font-size: 0.85rem;" id="asset-tab" data-bs-toggle="tab" data-filter="asset" type="button" role="tab">Aset (Asset)</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-muted fw-medium px-3 border-0" style="font-size: 0.85rem;" id="inventory-tab" data-bs-toggle="tab" data-filter="inventory" type="button" role="tab">Stok (Inventory)</button>
+                    </li>
+                </ul>
+
+                <!-- Asset List Container (Daftar Dinamis dari DB via AJAX) -->
+                <div class="d-flex flex-column gap-2 search-results-container" id="containerModalAsetList" style="max-height: 400px; overflow-y: auto; padding-right: 4px;">
+                    <!-- Diisi via AJAX oleh assignments.js -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .list-item-aset:hover {
+        background-color: #f8fafc;
+        border-color: #cbd5e1 !important;
+        cursor: pointer;
+    }
+
+    .search-results-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .search-results-container::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 4px;
+    }
+
+    .search-results-container::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+    }
+
+        .search-results-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+</style>

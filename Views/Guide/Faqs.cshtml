@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "_GuideLayout";
+}
+
+<div class="article-container">
+    <div class="row g-5">
+
+        <!-- Main Content Area -->
+        <div class="col-lg-12">
+
+            <!-- Breadcrumbs -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3">
+                    <li class="breadcrumb-item"><a href="#">Panduan</a></li>
+                    <li class="breadcrumb-item"><a href="#">FAQ & Bantuan</a></li>
+                    <li class="breadcrumb-item">Pertanyaan Umum (FAQ)</li>
+                </ol>
+            </nav>
+
+            <!-- Tags / Badges -->
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="tag-pill tag-pill-danger">FAQ & Bantuan</span>
+                <span class="tag-pill tag-pill-light">Pemula</span>
+                <span class="tag-pill tag-pill-light">Staff</span>
+                <span class="tag-pill tag-pill-primary">Manager</span>
+                <span class="tag-pill tag-pill-light">Super Admin</span>
+            </div>
+
+            <!-- Article Title -->
+            <h1 class="article-title">Pertanyaan Umum (FAQ)</h1>
+
+            <!-- Article Meta Info -->
+            <div class="article-meta">
+                <span><i class="bi bi-clock me-1"></i> 4 menit baca</span>
+                <span><i class="bi bi-calendar3 me-1"></i> Terakhir diperbarui</span>
+            </div>
+
+            <hr class="text-border mb-4">
+
+            <!-- Article Body Content -->
+            <div class="article-body">
+                <p>Berikut adalah daftar pertanyaan yang paling sering ditanyakan oleh pengguna beserta solusi cepatnya.</p>
+
+                <!-- Question 1 -->
+                <h6>1. Mengapa saya tidak bisa mengubah jumlah stok secara manual?</h6>
+                <p><strong>Jawaban:</strong> Untuk produk yang menggunakan pelacakan <strong>Serial Number</strong>, kuantitas stok dikunci oleh sistem dan hanya bertambah/berkurang sesuai dengan jumlah nomor seri yang Anda masukkan. Hal ini untuk menjamin kecocokan data dengan kondisi fisik barang.</p>
+
+                <!-- Question 2 -->
+                <h6>2. Apa yang harus saya lakukan jika salah menginput nomor seri (Serial Number)?</h6>
+                <p><strong>Jawaban:</strong> Jika transaksi sudah tersimpan, Anda tidak bisa mengedit nomor seri secara langsung. Anda harus membuat transaksi <strong>Stock Adjustment (Penyesuaian)</strong> atau membatalkan transaksi yang salah tersebut (jika hak akses Anda Super Admin) lalu menginput ulang dengan benar.</p>
+
+                <!-- Question 3 -->
+                <h6>3. Di mana saya bisa mendownload format cetak QR Code?</h6>
+                <p><strong>Jawaban:</strong> Buka menu <em>Katalog Produk</em>, klik tombol detail pada produk berseri yang Anda inginkan. Pada tab <em>Serial Number</em>, klik ikon <strong>Print QR Code</strong> di samping nomor seri yang ingin dicetak.</p>
+
+                <!-- Question 4 -->
+                <h6>4. Mengapa tombol "Approve" penugasan tidak muncul di akun saya?</h6>
+                <p class="mb-4"><strong>Jawaban:</strong> Hak untuk menyetujui penugasan (<em>Asset Assignment Approval</em>) dibatasi berdasarkan peran (<strong>Role-Based Access Control</strong>). Hanya pengguna dengan peran <strong>Super Admin</strong> atau <strong>Warehouse Manager</strong> yang memiliki izin ini. Peran <strong>Staff</strong> hanya dapat mengajukan penugasan baru.</p>
+            </div>
+
+            <!-- Previous & Next Article Navigation Cards -->
+            <div class="row g-3 my-4">
+                <div class="col-6">
+                    <a asp-action="PeminjamanAsetOverdue" asp-controller="Guide" class="nav-article-card text-start">
+                        <span class="text-muted extra-small d-block text-uppercase fw-bold tracking-wider mb-1">SEBELUMNYA</span>
+                        <span class="fw-bold text-indigo-dark d-flex align-items-center gap-2">
+                            <i class="bi bi-arrow-left"></i> Peminjaman Aset & Overdue
+                        </span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a asp-action="Troubleshooting" asp-controller="Guide" class="nav-article-card text-end">
+                        <span class="text-muted extra-small d-block text-uppercase fw-bold tracking-wider mb-1">SELANJUTNYA</span>
+                        <span class="fw-bold text-indigo-dark d-flex align-items-center justify-content-end gap-2">
+                            Penanganan Masalah (Troubleshoo... <i class="bi bi-arrow-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="feedback-box">
+                <p class="fw-bold text-indigo-dark mb-3 small">Apakah panduan ini bermanfaat bagi Anda?</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-up"></i> Ya, membantu
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-down"></i> Belum membantu
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sticky Right Sidebar / Table of Contents -->
+        <div class="col-lg-4 d-none d-lg-block">
+            <!-- Sidebar TOC tempat navigasi cepat jika dibutuhkan -->
+        </div>
+
+    </div>
+</div>

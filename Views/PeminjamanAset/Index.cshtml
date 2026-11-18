@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Daftar Peminjaman Aset";
+}
+<style>
+.form-control, 
+.form-select, 
+.form-input-custom,
+.form-control-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    color: #1e293b !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+</style>
+<div class="container-fluid">        
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h2 class="h3 fw-bold text-indigo-dark mb-1">Peminjaman Aset</h2>
+            <p class="text-muted small mb-0">Daftar penyerahan peminjaman asset dan inventarisasi aset nomor seri ke Karyawan</p>
+        </div>
+        <div class="d-flex align-items-center gap-2">            
+            <a asp-action="Create" asp-controller="PeminjamanAset" class="btn btn-success rounded-pill px-4 btn-sm">
+                <i class="bi bi-plus-lg"></i> Catat Peminjaman
+            </a>
+        </div>
+    </div>    
+
+    <!-- Filter & Live Search -->
+    <div class="card border-0 shadow-sm p-3 mb-4">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <!-- Cari Data dengan AJAX -->
+                <input type="text" id="txtCariPeminjaman" class="form-control" placeholder="Cari data gudang..">
+            </div>
+            <div class="col-md-4">
+                <select id="CariGudang" class="form-select">
+                    <option value="">Semua Gudang</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select id="ddlFilterStatus" class="form-select">
+                    <option value="">Semua Status</option>
+                    <option value="3">Dipinjam</option>
+                    <option value="2">Kembali</option>
+                    <option value="1">Terlambat (Over Due)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabel Data -->
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0" id="tablePeminjamanIndex">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Kode Pinjam</th>
+                        <th>Peminjam</th>
+                        <th>Masa Pinjam</th>
+                        <th>Status</th>
+                        <th class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyPeminjaman">
+                    <!-- Data dimuat via AJAX -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Container -->
+        <div class="d-flex justify-content-between align-items-center mt-2 mb-2 ">
+            <span class="text-muted small" id="tableInfoText">Menampilkan data...</span>
+            <nav>
+                <ul class="pagination pagination-sm mb-0 mr-4 ml-4" id="paginationContainer">
+                    <!-- Dynamic Pagination -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/PeminjamanAset.js"></script>
+}

@@ -1,0 +1,387 @@
+﻿@{
+Layout = "_AdminLayout";
+ViewData["Title"] = "Dashboard";
+}
+<style>
+  .form-control,
+  .form-select,
+  .form-input-custom,
+  .form-control-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    color: #1e293b !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+</style>
+<div class="container-fluid">
+  <!-- Header Section -->
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+    <div>
+      <h2 class="fw-bold text-indigo-dark mb-1">Dashboard</h2>
+      <p class="text-muted small mb-0">Analisis valuasi inventaris gudang, pemantauan penugasan aset karyawan,
+        serta monitoring peminjaman.</p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <!-- Dropdown Filter Gudang Dinamis -->
+      <select id="filterGudang" class="form-select shadow-sm" style="min-width: 180px;">
+        <option value="">Semua Gudang</option>
+        @if (Model != null && Model.ListGudang != null)
+        {
+        foreach (var gudang in Model.ListGudang)
+        {
+        <option value="@gudang.Id">@gudang.NamaGudang</option>
+        }
+        }
+      </select>
+      <!-- Tombol Aksi Utama Menggunakan Icon Bootstrap Terbaru -->
+      <a asp-action="Create" asp-controller="PenugasanAset" class="btn btn-emerald d-flex align-items-center gap-2 shadow-sm text-nowrap">
+        <i class="bi bi-plus-circle-fill"></i>
+        <span>Serah Terima Aset</span>
+      </a>
+      <a asp-action="Index" asp-controller="TransaksiStokInOut" class="btn btn-danger d-flex align-items-center gap-2 shadow-sm text-nowrap">
+        <i class="bi bi-arrow-left-right"></i>
+        <span>Mutasi Stok Gudang</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Alert Stok Kritis -->
+  <div class="alert alert-warning-custom p-3 mb-4 shadow-sm d-flex justify-content-between align-items-start">
+    <div class="d-flex gap-3 align-items-center">
+      <div class="stat-icon-wrapper stat-icon-amber flex-shrink-0">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+      </div>
+      <div>
+        <h6 class="fw-bold mb-1 text-uppercase tracking-wider fs-7">Peringatan: Stok Kritis Terdeteksi</h6>
+        <p class="mb-0 small">Terdapat <span id="valStokKritisCount" class="fw-bold text-danger">0 varian
+            produk</span> yang saat ini jumlah stoknya berada di bawah batas minimum (Safety Stock). Mohon
+          segera lakukan pemesanan ulang (Re-order).</p>
+        <a asp-action="Index" asp-controller="MatriksStok" class="btn btn-sm btn-warning text-dark fw-semibold small text-decoration-none mt-1 d-inline-block">Periksa
+          Detail Stok &rarr;</a>
+      </div>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <!-- Top KPI Cards Row 1 -->
+  <div class="row g-3 mb-3">
+    <div class="col-xl-3 col-md-6">
+      <div class="stat-card d-flex justify-content-between align-items-center">
+        <div>
+          <span class="form-label d-block text-muted mb-1">Valuasi Stok Finansial</span>
+          <h4 id="valValuasiFinansial" class="fw-bold text-emerald mb-1">Rp 0</h4>
+          <span class="text-muted extra-small">Total nilai beli aset aktif di gudang</span>
+        </div>
+        <div class="stat-icon-wrapper stat-icon-success">
+          <i class="bi bi-wallet2"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+      <div class="stat-card d-flex justify-content-between align-items-center">
+        <div>
+          <span class="form-label d-block text-muted mb-1">Total Unit Aset (SN)</span>
+          <h4 id="valTotalUnitSn" class="fw-bold text-indigo-dark mb-1">0 <span class="fs-6 fw-normal text-muted">Unit</span></h4>
+          <span class="text-muted extra-small">Jumlah fisik nomor seri terdaftar</span>
+        </div>
+        <div class="stat-icon-wrapper stat-icon-primary">
+          <i class="bi bi-layers-fill"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+      <div class="stat-card d-flex justify-content-between align-items-center">
+        <div>
+          <span class="form-label d-block text-muted mb-1">Aset Ditugaskan (Custody)</span>
+          <h4 id="valAsetCustody" class="fw-bold text-indigo-dark mb-1">0 <span class="fs-6 fw-normal text-muted">Unit</span></h4>
+          <span class="text-muted extra-small">Aset aktif di tangan karyawan/divisi</span>
+        </div>
+        <div class="stat-icon-wrapper stat-icon-primary">
+          <i class="bi bi-person-check-fill"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+      <div class="stat-card d-flex justify-content-between align-items-center border-danger-subtle">
+        <div>
+          <span class="form-label d-block text-muted mb-1">Peminjaman Overdue</span>
+          <h4 id="valPeminjamanOverdue" class="fw-bold text-danger mb-1">0 <span class="fs-6 fw-normal text-muted">Dokumen</span></h4>
+          <span class="text-muted extra-small">Peminjaman melewati tenggat kembali</span>
+        </div>
+        <div class="stat-icon-wrapper stat-icon-danger">
+          <i class="bi bi-exclamation-circle-fill"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mini Indicator KPI Cards Row 2 -->
+  <div class="row g-3 mb-4">
+    <div class="col">
+      <div class="stat-card py-2 px-3 d-flex justify-content-between align-items-center">
+        <div>
+          <span class="form-label d-block text-muted mb-0">Total Varian SKU</span>
+          <h5 id="valTotalSku" class="fw-bold text-indigo-dark mb-0">0 Item</h5>
+        </div>
+        <i class="bi bi-box-seam fs-4 text-muted"></i>
+      </div>
+    </div>
+    <div class="col">
+      <div class="stat-card py-2 px-3 d-flex justify-content-between align-items-center">
+        <div>
+          <span class="form-label d-block text-muted mb-0">Total Stok Fisik</span>
+          <h5 id="valTotalStokFisik" class="fw-bold text-indigo-dark mb-0">0 Pcs</h5>
+        </div>
+        <i class="bi bi-boxes fs-4 text-muted"></i>
+      </div>
+    </div>
+    <div class="col">
+      <div class="stat-card py-2 px-3 d-flex justify-content-between align-items-center">
+        <div>
+          <span class="form-label d-block text-muted mb-0">Gudang Aktif</span>
+          <h5 id="valGudangAktif" class="fw-bold text-indigo-dark mb-0">0 Lokasi</h5>
+        </div>
+        <i class="bi bi-building fs-4 text-muted"></i>
+      </div>
+    </div>
+    <div class="col">
+      <div class="stat-card py-2 px-3 d-flex justify-content-between align-items-center">
+        <div>
+          <span class="form-label d-block text-muted mb-0">Aset Dipinjam</span>
+          <h5 id="valAsetDipinjam" class="fw-bold text-indigo-dark mb-0">0 Unit</h5>
+        </div>
+        <i class="bi bi-calendar-event fs-4 text-muted"></i>
+      </div>
+    </div>
+    <div class="col">
+      <div class="stat-card py-2 px-3 d-flex justify-content-between align-items-center">
+        <div>
+          <span class="form-label d-block text-muted mb-0">Varian Habis</span>
+          <h5 id="valVarianHabis" class="fw-bold text-indigo-dark mb-0">0 SKU</h5>
+        </div>
+        <i class="bi bi-x-circle fs-4 text-muted"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafik Aktivitas Mutasi Gudang & Status Kepemilikan Aset -->
+  <div class="row g-3 mb-4">
+    <!-- Grafik 1: Aktivitas Mutasi Gudang (14 Hari Terakhir / Custom Date Filter) -->
+    <div class="col-lg-8">
+      <div class="form-container-custom h-100 p-3">
+        <div class="mb-3">
+          <h6 class="fw-bold text-indigo-dark text-uppercase tracking-wider mb-1">
+            Aktivitas Mutasi Gudang (14 Hari Terakhir)
+          </h6>
+          <p class="text-muted extra-small mb-2">Grafik tren harian untuk barang masuk, keluar, transfer, dan
+            audit opname.</p>
+
+          <!-- Filter Tanggal Mulai & Tanggal Akhir (Berada di bawah teks) -->
+          <div class="d-flex align-items-center gap-1">
+            <input type="date" id="tglMulaiFilter" class="form-select form-select-sm shadow-sm" style="max-width: 140px;">
+            <span class="text-muted small">s/d</span>
+            <input type="date" id="tglAkhirFilter" class="form-select form-select-sm shadow-sm" style="max-width: 140px;">
+            <button type="button" id="btnFilterGrafik" class="btn btn-sm btn-indigo px-2 shadow-sm">
+              <i class="bi bi-funnel-fill"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Container ApexChart Line Chart -->
+        <div id="chartMutasiGudang" style="min-height: 320px;"></div>
+      </div>
+    </div>
+
+    <!-- Grafik 2: Status Kepemilikan & Kondisi Aset -->
+    <div class="col-lg-4">
+      <div class="form-container-custom h-100 p-3">
+        <div class="mb-3">
+          <h6 class="fw-bold text-indigo-dark text-uppercase tracking-wider mb-1">
+            Status Kepemilikan & Kondisi Aset
+          </h6>
+          <p class="text-muted extra-small mb-0">Persentase pengelompokan kondisi fisik / letak nomor seri
+            aset saat ini.</p>
+        </div>
+        <!-- Container ApexChart Donut Chart -->
+        <div id="chartStatusAset" style="min-height: 320px;" class="d-flex justify-content-center align-items-center"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <!-- Grafik 3: Valuasi Stok per Lokasi Gudang -->
+    <div class="col-lg-5">
+      <div class="form-container-custom h-100 p-3">
+        <div class="mb-3">
+          <h6 class="fw-bold text-indigo-dark text-uppercase tracking-wider mb-1">
+            Valuasi Stok per Lokasi Gudang
+          </h6>
+          <p class="text-muted extra-small mb-0">Akumulasi nilai finansial aset ter-stok di masing-masing
+            gudang.</p>
+        </div>
+        <div id="chartValuasiGudang" style="min-height: 280px;"></div>
+      </div>
+    </div>
+
+    <!-- Grafik 4: Distribusi Kategori Produk -->
+    <div class="col-lg-7">
+      <div class="form-container-custom h-100 p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h6 class="fw-bold text-indigo-dark text-uppercase tracking-wider mb-1">
+              Distribusi Kategori Produk
+            </h6>
+            <p class="text-muted extra-small mb-0">Perbandingan jumlah varian SKU produk vs volume unit aset
+              fisik per kategori.</p>
+          </div>
+        </div>
+        <div id="chartDistribusiKategori" style="min-height: 280px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafik 3 & 4: Distribusi Penguasaan Aset & Komposisi Valuasi per Tipe Produk -->
+  <div class="row g-3 mb-4">
+    <!-- Horizontal Bar Chart: Distribusi Penguasaan Aset per Departemen -->
+    <div class="col-lg-8">
+      <div class="form-container-custom h-100 p-3">
+        <div class="mb-3">
+          <h6 class="fw-bold text-indigo-dark text-uppercase tracking-wider mb-1">
+            DISTRIBUSI PENGUASAAN ASET PER DEPARTEMEN
+          </h6>
+          <p class="text-muted extra-small mb-0">Pembagian jumlah unit aset yang sedang ditugaskan (assigned
+            custody) ke divisi/departemen.</p>
+        </div>
+        <div id="chartPenguasaanDepartemen" style="min-height: 300px;"></div>
+      </div>
+    </div>
+
+    <!-- Donut Chart: Komposisi Valuasi per Tipe Produk -->
+    <div class="col-lg-4">
+      <div class="form-container-custom h-100 p-3">
+        <div class="mb-3">
+          <h6 class="fw-bold text-indigo-dark text-uppercase tracking-wider mb-1">
+            KOMPOSISI VALUASI PER TIPE PRODUK
+          </h6>
+          <p class="text-muted extra-small mb-0">Perbandingan nilai beli (valuasi) stok antara Aset,
+            Consumables, dan Persediaan.</p>
+        </div>
+        <div id="chartKomposisiValuasiTipe" style="min-height: 300px;" class="d-flex justify-content-center align-items-center"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafik Overdue Loans & Daftar Stok Kritis (Re-order Alert) -->
+  <div class="row g-3 mb-4">
+    <!-- Tabel Overdue Loans -->
+    <div class="col-lg-7">
+      <div class="form-container-custom h-100 p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h6 class="fw-bold text-danger text-uppercase tracking-wider mb-1 d-flex align-items-center gap-2">
+              <i class="bi bi-shield-exclamation"></i> PEMINJAMAN MELEWATI BATAS WAKTU (OVERDUE LOANS)
+            </h6>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-danger fw-semibold rounded-pill small px-2" style="white-space: nowrap; font-size: 0.75rem;">
+            FOLLOW UP SEGERA
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0 small">
+            <thead class="text-muted text-uppercase fs-8">
+              <tr>
+                <th>NO. DOKUMEN</th>
+                <th>PEMINJAM</th>
+                <th>BARANG & NO. SERI</th>
+                <th>BATAS KEMBALI</th>
+                <th>KETERLAMBATAN</th>
+              </tr>
+            </thead>
+            <tbody id="tableOverdueBody">
+              <!-- Dirender via AJAX / Razor -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daftar Stok Kritis (Re-order Alert) -->
+    <div class="col-lg-5">
+      <div class="form-container-custom h-100 p-3 d-flex flex-column justify-content-between">
+        <div>
+          <div class="mb-3">
+            <h6 class="fw-bold text-warning text-uppercase tracking-wider mb-1 d-flex align-items-center gap-2">
+              <i class="bi bi-exclamation-triangle-fill"></i> DAFTAR STOK KRITIS (RE-ORDER ALERT)
+            </h6>
+          </div>
+          <div id="listStokKritisContainer" class="d-flex flex-column gap-3">
+            <!-- Item progress bar stok kritis dirender via JS -->
+          </div>
+        </div>
+        <div class="mt-3 text-center border-top pt-2">
+          <a asp-action="Index" asp-controller="MatriksStok" class="text-decoration-none text-indigo fw-semibold small">
+            Lihat Semua Stok Barang &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity Log Jurnal Kartu Stok -->
+  <div class="form-container-custom p-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h6 class="fw-bold text-indigo-dark mb-0 d-flex align-items-center gap-2">
+        <i class="bi bi-clock-history"></i> AKTIVITAS MUTASI TERKINI (JURNAL KARTU STOK)
+      </h6>
+      <a asp-action="Index" asp-controller="KartuStok" class="btn btn-warning btn-sm text-dark fw-semibold small text-decoration-none">Laporan Detail
+        &rarr;</a>
+    </div>
+    <div class="table-responsive">
+      <table id="tableAktivitasMutasi" class="table table-hover align-middle table-dashboard mb-0">
+        <thead>
+          <tr>
+            <th>PRODUK</th>
+            <th>GUDANG</th>
+            <th>TIPE TRANSAKSI</th>
+            <th>QTY MUTASI</th>
+            <th>SALDO STOK</th>
+            <th>REFERENSI DOKUMEN</th>
+            <th>WAKTU PENCATATAN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data dimuat secara dinamis via AJAX -->
+        </tbody>
+      </table>
+    </div>
+    <!-- Pagination Footer: Kiri (Info Text), Kanan (Bootstrap Pagination) -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 gap-2">
+      <div id="tableInfoText" class="text-muted small">
+        Menampilkan 0 - 0 dari 0 data
+      </div>
+      <nav aria-label="Page navigation">
+        <ul id="paginationContainer" class="pagination pagination-sm mb-0">
+          <!-- Tombol Pagination dirender via JavaScript AJAX -->
+        </ul>
+      </nav>
+    </div>
+
+    @section Scripts {
+    <script src="~/js/Dashboard.js"></script>
+    <script>
+      $(document).ready(function() {
+        flatpickr("#tglMulaiFilter", {
+          dateFormat: "d-m-Y",
+          defaultDate: new Date(new Date().setDate(new Date().getDate() - 14)),
+          maxDate: new Date(),
+        });
+        flatpickr("#tglAkhirFilter", {
+          dateFormat: "d-m-Y",
+          defaultDate: new Date(),
+          maxDate: new Date(),
+        });
+      });
+    </script>
+    }

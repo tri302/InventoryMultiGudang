@@ -1,0 +1,187 @@
+﻿@model InventoryMultiGudang.Models.MatriksStokIndexViewModel
+
+<style>
+    /* Override CSS untuk memperkecil ukuran tombol pagination sesuai standar Bootstrap (.pagination-sm) */
+    .pagination-sm .page-link,
+    .pagination .page-link {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+    }
+
+    /* Penyesuaian khusus untuk elemen ellipsis (...) */
+    .pagination .page-item.disabled .page-link {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+</style>
+<!-- Table Container Card -->
+<div class="card border-0 shadow-sm rounded-3 overflow-hidden"
+     style="border: 1px solid var(--border-color) !important;">
+     
+    <!-- Tambahkan style max-height/max-width atau overflow-x auto di sini -->
+    <div class="table-responsive" style="overflow-x: auto; white-space: nowrap; max-width: 100%;">
+        <table class="table align-middle mb-0" style="width: max-content; min-width: 100%;">
+            <thead>
+                <tr class="border-bottom">
+                    <!-- Kolom Produk/SKU dibuat sticky di sebelah kiri agar tidak ikut bergeser -->
+                    <th class="ct-table-header ps-4 py-3 bg-white"
+                        style="width: 250px; position: sticky; left: 0; z-index: 3;">
+                        Produk / SKU
+                    </th>
+                    <!-- Kolom UOM dibuat sticky setelah Produk/SKU -->
+                    <th class="ct-table-header text-center py-3 bg-white"
+                        style="width: 100px; position: sticky; left: 250px; z-index: 3;">
+                        UOM
+                    </th>
+                    
+                    @if (Model.Warehouses != null && Model.Warehouses.Any())
+                    {
+                        foreach (var wh in Model.Warehouses)
+                        {
+                            <th class="ct-table-header text-center py-3 px-4" style="min-width: 160px;">
+                                <div>@wh.NamaGudang</div>
+                                <div class="ct-sub-header font-monospace">(@wh.KodeGudang)</div>
+                            </th>
+                        }
+                    }
+                    else
+                    {
+                        <th class="ct-table-header text-center py-3 pe-4">Gudang Tidak Tersedia</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Products != null && Model.Products.Any())
+                {
+                    foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <!-- Kolom Isi Produk/SKU (Sticky Left) -->
+                            <td class="ps-4 py-3 bg-white" style="position: sticky; left: 0; z-index: 2;">
+                                <div class="fw-bold text-indigo-dark mb-0" style="font-size: 0.925rem;">@item.NamaProduk</div>
+                                <span class="sku-text font-monospace">@item.Sku</span>
+                            </td>
+                            
+                            <!-- Kolom Isi UOM (Sticky Left) -->
+                            <td class="text-center bg-white" style="position: sticky; left: 250px; z-index: 2;">
+                                <span class="uom-badge">@item.Satuan</span>
+                            </td>
+
+                            <!-- Kolom Stok Gudang (Bisa di-scroll horizontal) -->
+                            @foreach (var wh in Model.Warehouses)
+                            {
+                                int qty = item.WarehouseStocks.ContainsKey(wh.Id) ? item.WarehouseStocks[wh.Id] : 0;
+                                int safetyStock = item.SafetyStockWarehouse.ContainsKey(wh.Id) ? item.SafetyStockWarehouse[wh.Id] :
+                    0;
+                                bool isBelowSafety = qty < safetyStock;
+
+                                <td class="px-4 py-3 text-center align-middle" style="min-width: 160px;">
+                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                        <span
+                                            class="fw-bold px-2 py-1 rounded-pill border @(isBelowSafety ? "bg-danger-subtle text-danger border-danger-subtle" : "bg-success-subtle text-success border-success-subtle")"
+                                            style="font-size: 0.85rem;">
+                                            @qty
+                                        </span>
+
+                                        <button type="button"
+                                                class="btn btn-sm p-0 mt-1 d-flex align-items-center gap-1 text-danger btn-edit-safety-stock border-0 bg-transparent"
+                                                data-product-id="@item.ProductId" data-product-name="@item.NamaProduk"
+                                                data-sku="@item.Sku" data-warehouse-id="@wh.Id"
+                                                data-warehouse-name="@wh.NamaGudang (@wh.KodeGudang)" data-safety-stock="@safetyStock"
+                                                title="Klik untuk edit safety stock" style="font-size: 0.75rem;">
+                                            <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                                            <span class="text-muted">Min: @safetyStock</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="10" class="text-center py-5 text-muted">
+                            <i class="bi bi-folder-x fs-2 d-block mb-2"></i>
+                            <span>Belum ada data untuk ditampilkan !</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Bagian Footer: Summary Pagination di Kiri & Tombol Pagination di Kanan -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3 gap-2">
+    <!-- Summary Pagination di Sebelah Kiri -->
+    <div class="text-muted small">
+        @{
+            int startRecord = Model.TotalRecords == 0 ? 0 : ((Model.CurrentPage - 1) * 10) + 1;
+            int endRecord = Math.Min(Model.CurrentPage * 10, Model.TotalRecords);
+            
+            // Batasan maksimal 5 ke kiri dan 5 ke kanan dari halaman aktif
+            int currentPage = Model.CurrentPage;
+            int totalPages = Model.TotalPages;
+            int startPage = Math.Max(1, currentPage - 5);
+            int endPage = Math.Min(totalPages, currentPage + 5);
+        }
+        Menampilkan <span>@startRecord</span> - <span>@endRecord</span> dari <span>@Model.TotalRecords</span> data
+    </div>
+
+    <!-- Tombol Pagination di Sebelah Kanan (Dibatasi maksimal 5 ke kiri & 5 ke kanan) -->
+    @if (totalPages > 1)
+    {
+        <nav aria-label="Page navigation">
+            <ul class="pagination mb-0">
+                <!-- Tombol Previous -->
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link pagination-btn" href="#" data-page="@(currentPage - 1)">Previous</a>
+                </li>
+
+                <!-- Halaman 1 & Ellipsis Awal jika rentang awal jauh dari 1 -->
+                @if (startPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link pagination-btn" href="#" data-page="1">1</a>
+                    </li>
+                    @if (startPage > 2)
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                }
+
+                <!-- Render Nomor Halaman dalam Rentang Limit -->
+                @for (int i = startPage; i <= endPage; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link pagination-btn" href="#" data-page="@i">@i</a>
+                    </li>
+                }
+
+                <!-- Ellipsis Akhir & Halaman Terakhir jika rentang akhir jauh dari totalPages -->
+                @if (endPage < totalPages)
+                {
+                    @if (endPage < totalPages - 1)
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                    <li class="page-item">
+                        <a class="page-link pagination-btn" href="#" data-page="@totalPages">@totalPages</a>
+                    </li>
+                }
+
+                <!-- Tombol Next -->
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link pagination-btn" href="#" data-page="@(currentPage + 1)">Next</a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>

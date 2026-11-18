@@ -1,0 +1,27 @@
+@model List<InventoryMultiGudang.Models.MenuModel>
+
+@{
+    // Mengelompokkan menu berdasarkan GroupName dari database
+    var groupedMenus = Model.GroupBy(m => m.GroupName).ToList();
+}
+
+<!--begin::Sidebar Menu-->
+<nav class="mt-2">
+    <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+        @foreach (var group in groupedMenus)
+        {
+            <li class="nav-header">@group.Key</li>
+
+            @foreach (var menu in group)
+            {
+                <li class="nav-item">
+                    <a href="@menu.Url" class="nav-link">
+                        <i class="nav-icon bi @menu.IconClass"></i>
+                        <p>@menu.MenuTitle</p>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</nav>
+<!--end::Sidebar Menu-->

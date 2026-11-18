@@ -1,0 +1,70 @@
+﻿<div class="modal fade" id="modalTambahGudang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTambahGudangLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-box-seam text-primary fs-4"></i>
+                    <h5 class="modal-title" id="modalTambahGudangLabel">Tambah Gudang Baru</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formTambahGudang">                    
+                    <div class="mb-4">
+                        <label for="create_namaGudang" class="form-label">Nama Gudang</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                            <input type="text" class="form-control" id="create_namaGudang" placeholder="Masukkan nama gudang...">
+                        </div>
+                        <span class="text-danger small error-msg" id="error-create-NamaGudang"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="create_tipeGudang" class="form-label">Tipe Gudang</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-tags"></i></span>
+                            <select class="form-select" id="create_tipeGudang">
+                                <option value="fisik" selected>Fisik (Physical)</option>
+                                <option value="virtual">Virtual (Transit/Cloud)</option>
+                            </select>
+                        </div>
+                        <span class="text-danger small error-msg" id="error-create-TipeGudang"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="create_picGudang" class="form-label">Nama Penanggung Jawab (PIC)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text" class="form-control" id="create_picGudang" placeholder="Nama lengkap PIC...">
+                        </div>
+                        <span class="text-danger small error-msg" id="error-create-PicGudang"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="create_alamatGudang" class="form-label">Alamat Gudang</label>
+                        <div class="input-group">
+                            <span class="input-group-text align-items-start pt-2"><i class="bi bi-geo-alt"></i></span>
+                            <textarea class="form-control" id="create_alamatGudang" rows="3" placeholder="Tuliskan alamat lengkap gudang..."></textarea>
+                        </div>
+                        <span class="text-danger small error-msg" id="error-create-AlamatGudang"></span>
+                    </div>
+
+                    <div class="form-check form-switch p-0 d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input ms-0 fs-5" type="checkbox" role="switch" id="create_statusGudang" checked>
+                        <label class="form-check-label" for="create_statusGudang">Gudang Aktif</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center gap-2">
+                <button type="button" class="btn btn-batal-custom btn-sm" data-bs-dismiss="modal">
+                    <i class="bi bi-arrow-90deg-left"></i> Batal
+                </button>
+                <button type="button" class="btn btn-emerald-custom btn-sm" onclick="submitCreate()">
+                    <i class="bi bi-check-lg me-1"></i> Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

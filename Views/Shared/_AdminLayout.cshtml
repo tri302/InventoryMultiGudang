@@ -1,0 +1,159 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using InventoryMultiGudang.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    // Jika tidak login / sesi habis (idle), redirect langsung
+    if (!SignInManager.IsSignedIn(User))
+    {
+        Context.Response.Redirect("/Account/Login");
+        return; // Hentikan proses rendering agar tidak terjadi error/exception
+    }
+
+    // Ambil data user HANYA SETELAH dipastikan user benar-benar login
+    var currentUser = await UserManager.GetUserAsync(User);
+    var userRoles = currentUser != null ? await UserManager.GetRolesAsync(currentUser) : new List<string>();
+}
+
+@{
+    // Validasi di sisi layout: Jika tidak login, redirect ke halaman Login
+    if (!SignInManager.IsSignedIn(User))
+    {
+        Context.Response.Redirect("/Account/Login");
+        return; // Hentikan proses rendering jika tidak login
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Inventory & Manajemen Aset</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="preload" href="~/css/adminlte.css" as="style" />
+    <link href="~/css/overlayscrollbars.min.css" rel="stylesheet" />
+    <link href="~/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="~/css/adminlte.css" rel="stylesheet" />
+    <link href="~/css/apexcharts.css" rel="stylesheet" />
+    <link href="~/css/forms-global.css" rel="stylesheet" />
+    <link href="~/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/css/flatpickr.min.css" rel="stylesheet" />
+    <link href="~/css/OverrideCSSSelect2.css" rel="stylesheet" />
+</head>
+
+<body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+    <div class="app-wrapper">
+        <!--begin::Header-->
+        <nav class="app-header navbar navbar-expand bg-body">
+            <div class="container-fluid">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                            <i class="bi bi-list"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center flex-wrap gap-3 py-1 px-3 bg-light rounded-pill shadow-sm border"
+                        style="font-size: 0.78rem;">
+                        <!-- Mode Demo Badge -->
+                        <div class="d-flex align-items-center gap-1 text-danger fw-semibold">
+                            <i class="fa-solid fa-circle-dot fa-fade"></i>
+                            <span>Demo: Aktif</span>
+                        </div>
+
+                        <div class="vr text-muted opacity-25 d-none d-md-block"></div>
+
+                        <!-- Contact Email -->
+                        <a href="mailto:trisetia302@gmail.com"
+                           class="d-flex align-items-center gap-1 text-dark text-decoration-none hover-primary">
+                            <i class="fa-regular fa-envelope text-muted"></i>
+                            <span>trisetia302@gmail.com</span>
+                        </a>                                                
+
+                        <div class="vr text-muted opacity-25 d-none d-md-block"></div>
+
+                        <!-- support me -->
+                        <div class="d-flex align-items-center gap-1 text-secondary">
+                            <i class="fa-solid fa-mug-hot text-warning"></i>
+                            <span>Buy me a cup of coffee : <strong class="text-dark">BRI 767101008675530</strong></span>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    @await Component.InvokeAsync("UserInfo")
+                </ul>
+            </div>
+        </nav>
+        <!--end::Header-->
+
+        <!--begin::Sidebar-->
+        <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+            <div class="sidebar-brand">
+                <a asp-action="Index" asp-controller="Dashboard" class="brand-link">
+                    <img src="~/logo.svg" alt="Logo" class="brand-image opacity-75 shadow" />
+                    <span class="brand-text fw-light">Inventory Modern</span>
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                @await Component.InvokeAsync("Sidebar")
+            </div>
+        </aside>
+        <!--end::Sidebar-->
+
+        <!--begin::App Main-->
+        <main class="app-main">
+            <div class="app-content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @* <h3 class="mb-0">@ViewData["Title"]</h3> *@
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-end">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="app-content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+        </main>
+        <!--end::App Main-->
+
+        <footer class="app-footer">
+            <strong>
+                Copyright &copy; @DateTime.Now.Year &nbsp;
+                <a href="#" class="text-decoration-none">Inventory Multi-Gudang Modern</a>.
+            </strong>
+            All rights reserved.
+        </footer>
+    </div>
+
+    <!-- Core Plugins & Framework Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/overlayscrollbars.browser.es6.min.js"></script>
+    <script src="~/js/adminlte.js"></script>
+    <script src="~/toastr/toastr.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/sortable.min.js5"></script>
+    <script src="~/select2/js/select2.min.js"></script>
+    <script src="~/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/js/flatpickr.js"></script>
+    <script src="~/js/apexcharts.js"></script>
+    <script src="~/js/_AdminLayout.js"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

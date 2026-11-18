@@ -1,0 +1,123 @@
+﻿@using InventoryMultiGudang.Models
+@model InventoryMultiGudang.ViewModels.TransferOrderDetailViewModel
+
+<style>
+        ::before, ::after {
+      --tw-content: "";
+    }
+    element {
+    }
+    .text-amber-600 {
+      --tw-text-opacity: 1;
+      color: rgb(217 119 6/var(--tw-text-opacity,1));
+    }
+    .font-medium {
+      font-weight: 500;
+    }
+    .text-xs {
+      font-size: .75rem;
+      line-height: 1rem;
+    }
+    .p-2 {
+      padding: .5rem;
+    }
+    .bg-amber-50 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(255 251 235/var(--tw-bg-opacity,1));
+    }
+    .rounded {
+      border-radius: .25rem;
+    }
+    .block {
+      display: block;
+    }
+    .mt-2 {
+      margin-top: .5rem;
+    }
+    *, ::before, ::after {
+      box-sizing: border-box;
+      border: 0 solid #e5e7eb;
+    }
+    *, ::before, ::after, ::backdrop {
+      --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-shadow: 0 0 #0000;
+    }
+    .space-y-1 > :not([hidden]) ~ :not([hidden]) {
+      --tw-space-y-reverse: 0;
+    }
+    .text-slate-500 {
+      --tw-text-opacity: 1;
+      color: rgb(100 116 139/var(--tw-text-opacity,1));
+    }
+    .leading-normal {
+      line-height: 1.5;
+    }
+    .text-sm {
+      font-size: .875rem;
+      line-height: 1.25rem;
+    }
+    .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+      --tw-space-y-reverse: 0;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .shadow-2xl {
+      --tw-shadow: 0 25px 50px -12px #00000040;
+      --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+    }
+    .bg-white {
+      --tw-bg-opacity: 1;
+    }
+    .border-slate-200 {
+      --tw-border-opacity: 1;
+    }
+    .text-slate-900 {
+      --tw-text-opacity: 1;
+      color: rgb(15 23 42/var(--tw-text-opacity,1));
+    }
+    .bg-slate-50 {
+      --tw-bg-opacity: 1;
+    }
+    .font-sans {
+      font-family: Figtree,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    }
+    body {
+      line-height: inherit;
+    }
+    html, :host {
+      -webkit-text-size-adjust: 100%;
+      tab-size: 4;
+      font-feature-settings: normal;
+      font-variation-settings: normal;
+      font-family: Figtree,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+      line-height: 1.5;
+    }
+</style>
+<div class="modal fade" id="modalHapusTO" tabindex="-1" aria-labelledby="modalHapusTOLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm-custom">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-body text-center p-4 pt-5">
+                <div class="icon-delete-wrapper mb-4">
+                    <i class="bi bi-trash3-fill"></i>
+                </div>                
+                <input type="hidden" id="DetailTransferOrderId" value="@Model.Id" />
+                @Html.AntiForgeryToken()
+                <h3 class="modal-title-custom mb-3" id="modalHapusTOLabel">Hapus Transfer Order </h3>
+
+                <p class="modal-text-custom mb-4">
+                    Apakah Anda yakin ingin menghapus Transfer Order <span id="deleteDocNum" class="fw-bold text-indigo-dark">@Model.NoReferensi</span>? 
+                    Tindakan ini tidak dapat dibatalkan.
+                </p>
+
+                <span class="block mt-2 font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/20 p-2 rounded text-xs"> Peringatan: Dokumen berstatus <span class="uppercase font-bold">Dalam Perjalanan</span>. Tindakan ini akan mengembalikan alokasi stok di gudang secara otomatis! </span>
+
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="button" class="btn btn-sm btn-batal-modal px-4 py-2" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" id="btnConfirmDeleteDetail" class="btn btn-sm btn-delete-modal px-4 py-2">Ya, Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

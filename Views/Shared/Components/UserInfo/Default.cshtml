@@ -1,0 +1,42 @@
+@model InventoryMultiGudang.ViewModels.UserInfoViewModel
+
+@if (Model.User != null)
+{
+    var displayName = Model.User.Karyawan?.NamaLengkap ?? Model.User.FullName;
+    
+    // Pastikan path foto diawali dengan tilde dan slash (~/) agar mengarah ke root wwwroot
+    var fotoUrl = !string.IsNullOrEmpty(Model.User.Karyawan?.UrlFoto) 
+        ? "~/" + Model.User.Karyawan.UrlFoto.TrimStart('/') 
+        : "~/images/no-image.png";
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown">                        
+            <img src="@Url.Content(fotoUrl)" 
+                 alt="Foto @displayName" 
+                 class="rounded-circle shadow-sm" 
+                 style="width: 35px; height: 35px; object-fit: cover;" 
+                 onerror="this.onerror=null; this.src='@Url.Content("~/images/no-image.png")';" />
+            
+            <div class="d-none d-md-flex flex-column text-start">
+                <span class="fw-semibold text-dark" style="line-height: 1.2;">@displayName</span>
+                <span class="badge bg-secondary align-self-start mt-1" style="font-size: 0.75rem;">
+                    @(Model.Roles.FirstOrDefault() ?? "Standard User")
+                </span>
+            </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li>
+                <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">
+                    <i class="bi bi-key"></i> Change Password
+                </a>
+            </li>
+            <li>
+                <form class="dropdown-item p-0" asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-link text-danger text-decoration-none w-100 text-start px-3 py-2">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </li>
+}

@@ -1,0 +1,99 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Manajemen Kartu Stok";
+}
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="row align-items-center mb-4">
+        <div class="col-12 col-md-8 mb-3 mb-md-0">
+            <h4 class="fw-bold text-indigo-dark mb-1">
+                Laporan Kartu Stok (Audit Trail)
+            </h4>
+            <p class="text-muted small mb-0">
+                Jurnal audit kronologis pergerakan kuantitas stok produk tertentu
+                di gudang pilihan Anda.
+            </p>
+        </div>        
+        <div class="col-12 col-md-4 text-md-end">
+            <button id="btnCetakJurnal"
+                    type="button"
+                    class="btn btn-success btn-sm"
+                    style="display: none;"                    
+                    disabled>
+                <i class="bi bi-printer"></i>
+                Cetak Jurnal
+            </button>
+        </div>
+    </div>
+    <!-- Filter Card Section -->
+    <div class="filter-card shadow-sm mb-4">
+        <div class="row g-3 align-items-end">
+            <!-- Pilih Gudang -->
+            <div class="col-12 col-md-4">
+                <label class="form-label-custom d-block mb-2">
+                    Pilih Gudang
+                </label>
+                <select class="form-select form-select-custom"
+                        id="selectGudang">
+                    <option value="">
+                        -- Pilih Gudang --
+                    </option>
+                </select>
+            </div>
+            <!-- Cari & Pilih Produk -->
+            <div class="col-12 col-md-5">
+                <label class="form-label-custom d-block mb-2">
+                    Cari & Pilih Produk
+                </label>
+                <select class="form-select form-select-custom"
+                        id="selectProduk"
+                        disabled>
+                    <option value="">
+                        -- Pilih SKU atau Nama Produk --
+                    </option>
+                </select>
+            </div>
+            <!-- Hint -->
+            <div class="col-12 col-md-3">
+                <div class="text-muted small lh-sm pb-2 ps-md-2">
+                    Histori akan ter-load otomatis saat filter lengkap.
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dynamic Details -->
+    <div id="kartuStokDetailsContainer">
+        <!-- Empty State -->
+        <div class="empty-state-card shadow-sm">
+            <div class="text-center p-4" style="max-width: 440px;">
+                <div class="info-circle-icon">
+                    <i class="bi bi-info"></i>
+                </div>
+                <h5 class="fw-bold text-indigo-dark mb-2"
+                    style="font-size: 1.1rem;">
+                    Buka Kartu Stok
+                </h5>
+                <p class="text-muted small mb-0 lh-base">
+                    Silakan pilih
+                    <span class="fw-semibold">Gudang</span>
+                    dan
+                    <span class="fw-semibold">Produk</span>
+                    terlebih dahulu melalui form di atas
+                    untuk melihat jurnal riwayat pergerakan stok.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/js/KartuStok.js" asp-append-version="true"></script>
+    @if (TempData["ReportError"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                toastr.error(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(TempData["ReportError"])), "Gagal");
+            });
+        </script>
+    }
+}

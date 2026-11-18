@@ -1,0 +1,157 @@
+﻿@model InventoryMultiGudang.ViewModels.PaginatedListCustomer<InventoryMultiGudang.Models.Customer>
+
+<div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 12px;">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0 text-nowrap">
+            <thead class="bg-light border-bottom">
+                <tr class="text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                    <th class="ps-4 py-3" style="width: 40%;">Customer Info</th>
+                    <th class="py-3" style="width: 40%;">Kontak & Alamat</th>
+                    <th class="py-3 text-center" style="width: 10%;">Status</th>
+                    <th class="py-3 text-center pe-4" style="width: 10%;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Items.Any())
+                {
+                    foreach (var item in Model.Items)
+                    {
+                        <tr class="border-bottom">
+                            <td class="ps-4 py-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box flex-shrink-0" style="background-color: #ffe4e6; color: #f43f5e; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                                        <i class="bi bi-building fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold text-indigo-dark mb-0.5 fs-6">@item.NamaCustomer</div>
+                                        <div class="small text-muted fw-semibold">@item.KodeCustomer</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="small py-3">
+                                <div class="d-flex flex-column gap-1 text-secondary">
+                                    <div><i class="bi bi-envelope text-muted me-1 "></i>@item.Email</div>
+                                    <div><i class="bi bi-telephone text-muted me-1 "></i>@item.NoTelepon</div>
+                                    <div class="text-muted text-wrap"><i class="bi bi-geo-alt me-1"></i>@item.Alamat</div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge-aktif px-3 py-2 d-inline-flex align-items-center gap-1">
+                                        <i class="bi bi-check-lg"></i> AKTIF
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary px-3 py-2 d-inline-flex align-items-center gap-1">
+                                        NON-AKTIF
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-center pe-4">
+                                <div class="d-flex justify-content-center gap-1">
+                                    <button class="btn btn-sm btn-action-light text-primary border-0"
+                                            onclick="editCustomer(@item.Id)"
+                                            title="Ubah">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-action-light text-danger border-0"
+                                            onclick="confirmDeleteCustomer(@item.Id)"
+                                            title="Hapus">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <!-- Fallback jika data kosong -->
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-muted fw-bold">
+                            <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                            Belum ada data untuk ditampilkan !
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FOOTER: INFO DI KIRI & PAGINATION BOOTSTRAP DI KANAN -->
+    @if (Model != null)
+    {
+        int pageSize = Model.PageSize; 
+        int totalItems = Model.TotalItems; 
+        int startItem = totalItems == 0 ? 0 : ((Model.PageIndex - 1) * pageSize) + 1;
+        int endItem = Math.Min(Model.PageIndex * pageSize, totalItems);
+
+        // Batasan maksimal 5 ke kiri dan 5 ke kanan dari halaman aktif
+        int currentPage = Model.PageIndex;
+        int totalPages = Model.TotalPages;
+        int startPage = Math.Max(1, currentPage - 5);
+        int endPage = Math.Min(totalPages, currentPage + 5);
+
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-3 px-1">
+            <!-- Teks Informasi di Sebelah Kiri -->
+            <div class="text-muted small">
+                Menampilkan @startItem - @endItem dari @totalItems data
+            </div>
+
+            <!-- Tombol Pagination di Sudut Kanan Paling Ujung (Dibatasi 5 ke kiri & 5 ke kanan) -->
+            @if (totalPages > 1)
+            {
+                <nav aria-label="Page navigation" class="ms-auto">
+                    <ul class="pagination pagination-sm mb-0">
+                        <!-- Tombol Previous -->
+                        <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                            <a class="page-link page-nav" href="javascript:void(0)" onclick="loadPage(@(currentPage - 1))">Previous</a>
+                        </li>
+
+                        <!-- Halaman 1 & Ellipsis Awal jika rentang awal jauh dari 1 -->
+                        @if (startPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link page-nav" href="javascript:void(0)" onclick="loadPage(1)">1</a>
+                            </li>
+                            @if (startPage > 2)
+                            {
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            }
+                        }
+
+                        <!-- Render Nomor Halaman dalam Rentang Limit (Max 5 Kiri & 5 Kanan) -->
+                        @for (int i = startPage; i <= endPage; i++)
+                        {
+                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                <a class="page-link page-nav" href="javascript:void(0)" onclick="loadPage(@i)">@i</a>
+                            </li>
+                        }
+
+                        <!-- Ellipsis Akhir & Halaman Terakhir jika rentang akhir jauh dari totalPages -->
+                        @if (endPage < totalPages)
+                        {
+                            @if (endPage < totalPages - 1)
+                            {
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            }
+                            <li class="page-item">
+                                <a class="page-link page-nav" href="javascript:void(0)" onclick="loadPage(@totalPages)">@totalPages</a>
+                            </li>
+                        }
+
+                        <!-- Tombol Next -->
+                        <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                            <a class="page-link page-nav" href="javascript:void(0)" onclick="loadPage(@(currentPage + 1))">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        </div>
+    }

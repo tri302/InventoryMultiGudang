@@ -1,0 +1,119 @@
+﻿@{
+    Layout = "_GuideLayout";
+}
+<div class="article-container">
+    <div class="row g-5">
+
+        <!-- Main Content Area -->
+        <div class="col-lg-12">
+
+            <!-- Breadcrumbs -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3">
+                    <li class="breadcrumb-item"><a href="#">Panduan</a></li>
+                    <li class="breadcrumb-item"><a href="#">Memulai</a></li>
+                    <li class="breadcrumb-item">Konsep Dasar Sistem</li>
+                </ol>
+            </nav>
+
+            <!-- Tags / Badges -->
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="tag-pill tag-pill-danger">Memulai</span>
+                <span class="tag-pill tag-pill-light">Pemula</span>
+                <span class="tag-pill tag-pill-light">Aset</span>
+                <span class="tag-pill tag-pill-primary">Panduan</span>
+                <span class="tag-pill tag-pill-light">Super Admin</span>
+            </div>
+
+            <!-- Article Title -->
+            <h1 class="article-title">Konsep Dasar Sistem</h1>
+
+            <!-- Article Meta Info -->
+            <div class="article-meta">
+                <span><i class="bi bi-clock me-1"></i> 5 menit baca</span>
+                <span><i class="bi bi-calendar3 me-1"></i> Terakhir diperbarui</span>
+            </div>
+
+            <hr class="text-border mb-4">
+
+            <!-- Article Body Content -->
+            <div class="article-body">
+                <p>Sebelum Anda mulai menginput data, sangat penting untuk memahami 3 konsep fundamental di dalam .</p>
+
+                <!-- Section 1 -->
+                <h5 id="1-gudang-multi-lokasi-multi-warehouse">1. Gudang Multi-Lokasi (Multi-Warehouse)</h5>
+                <p>Di dalam , gudang tidak hanya merujuk pada gedung penyimpanan fisik, tetapi dikelompokkan menjadi dua tipe:</p>
+
+                <ul class="ps-3 mb-4">
+                    <li class="mb-2"><strong>Gudang Fisik:</strong> Gudang nyata tempat menyimpan barang (contoh: <em>Gudang Utama Jakarta</em>, <em>Ruang Server Lantai 3</em>).</li>
+                    <li class="mb-2"><strong>Gudang Virtual:</strong> Gudang sementara untuk mempermudah proses perpindahan logistik (contoh: <em>Transit Gudang Surabaya</em> saat barang sedang dalam pengiriman).</li>
+                </ul>
+
+                <!-- Section 2 -->
+                <h5 id="2-pelacakan-nomor-seri-serial-number-tracking">2. Pelacakan Nomor Seri (Serial Number Tracking)</h5>
+                <p>Produk di dalam  dibagi berdasarkan cara pelacakannya:</p>
+
+                <ul class="ps-3 mb-3">
+                    <li class="mb-2"><strong>Barang Non-Serial (Consumable / Stok Biasa):</strong> Barang habis pakai yang dipantau berdasarkan kuantitas saja. Contoh: kertas rim, tinta printer, kabel LAN roll.</li>
+                    <li class="mb-2"><strong>Barang dengan Serial Number (SN):</strong> Perangkat penting bernilai tinggi yang setiap unitnya memiliki nomor seri unik. Contoh: Laptop (SN: <code class="text-danger">156-A342A</code>), Monitor (SN: <code class="text-danger">SF11-2017</code>). Setelah Halaman Rincian akan memantau status fisik setiap unit nomor seri tersebut secara individual.</li>
+                </ul>
+
+                <!-- Warning Box -->
+                <div class="warning-callout">
+                    <div class="warning-callout-title">PENTING</div>
+                    <p class="mb-0 small text-muted">Begitu suatu produk diatur sebagai "Has SN" (Serial Number Tracking aktif), semua transaksi penambahan atau pengurangan stok produk tersebut wajib menyertakan kode nomor seri secara tepat.</p>
+                </div>
+
+                <!-- Section 3 -->
+                <h5 id="3-tipe-produk">3. Tipe Produk</h5>
+                <p>Master katalog produk dikelompokkan menjadi 3 tipe:</p>
+
+                <p><strong>Asset:</strong> Peralatan kantor jangka panjang yang diserahkan/dipinjamkan ke karyawan (misal: komputer, meja).</p>
+
+                <p><strong>Inventory:</strong> Barang dagangan atau persediaan utama gudang yang mengalami mutasi stok masuk-keluar secara rutin.</p>
+
+                <p><strong>Consumable:</strong> Barang habis pakai operasional kantor yang langsung dikonsumsi (misal: alat tulis, tinta).</p>
+            </div>
+
+            <!-- Previous & Next Article Navigation Cards -->
+            <div class="row g-3 my-4">
+                <div class="col-6">
+                    <a asp-action="Pengenalan" asp-controller="Guide" class="nav-article-card text-start">
+                        <span class="text-muted extra-small d-block text-uppercase fw-bold tracking-wider mb-1">SEBELUMNYA</span>
+                        <span class="fw-bold text-indigo-dark d-flex align-items-center gap-2">
+                            <i class="bi bi-arrow-left"></i> Pengenalan 
+                        </span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a asp-action="TransaksiBarangMasuk" asp-controller="Guide" class="nav-article-card text-end">
+                        <span class="text-muted extra-small d-block text-uppercase fw-bold tracking-wider mb-1">SELANJUTNYA</span>
+                        <span class="fw-bold text-indigo-dark d-flex align-items-center justify-content-end gap-2">
+                            Transaksi Barang Masuk (Stock In) <i class="bi bi-arrow-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="feedback-box">
+                <p class="fw-bold text-indigo-dark mb-3 small">Apakah panduan ini bermanfaat bagi Anda?</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-up"></i> Ya, membantu
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-down"></i> Belum membantu
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sticky Right Sidebar / Table of Contents -->
+        <div class="col-lg-4 d-none d-lg-block">
+            <!-- Tempat untuk sidebar navigasi halaman jika diperlukan -->
+        </div>
+
+    </div>
+</div>
