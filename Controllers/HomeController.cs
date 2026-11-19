@@ -12,15 +12,6 @@ namespace InventoryMultiGudang.Controllers
         {
             _logger = logger;
         }
-
-        // Endpoint khusus untuk cron-job.org
-        [HttpGet("/ping-endpoint")]
-        public IActionResult Ping()
-        {
-            _logger.LogInformation("Web diping oleh cron-job.org pada: {Time}", System.DateTime.Now);
-            // Mengembalikan respon teks sederhana 
-            return Content("Aplikasi Aktif!", "text/plain");
-        }
         public IActionResult Index()
         {
             return View();
