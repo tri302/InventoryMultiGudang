@@ -1,0 +1,79 @@
+﻿@model InventoryMultiGudang.ViewModels.KaryawanViewModel
+
+<div class="modal fade" id="modalTambahKaryawan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalTambahKaryawanLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0">
+            <div class="modal-header d-flex align-items-start justify-content-between">
+                <div>
+                    <h5 class="modal-title fw-bold text-indigo-dark" id="modalTambahKaryawanLabel">Tambah Karyawan Baru</h5>
+                    <p class="text-muted small mb-0 mt-1" style="text-transform: none; letter-spacing: normal;">Lengkapi profil kepegawaian secara lengkap.</p>
+                </div>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahKaryawan" enctype="multipart/form-data">
+                    <div class="row g-3">                        
+                        <input asp-for="Nik" class="form-control" placeholder="Auto-generate jika kosong" hidden="true">                            
+                        <div class="col-12">
+                            <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                            <input asp-for="NamaLengkap" class="form-control" placeholder="Budi Prasetyo">
+                            <span asp-validation-for="NamaLengkap" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Jabatan</label>
+                            <input asp-for="Jabatan" class="form-control" placeholder="Software Engineer">
+                            <span asp-validation-for="Jabatan" class="text-danger small"></span>
+                        </div>                        
+
+                        <div class="col-12">
+                            <label class="form-label">Alamat Email <span class="text-danger">*</span></label>
+                            <input asp-for="Email" class="form-control" placeholder="budi@company.com">
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Nomor Telepon / WhatsApp <span class="text-danger">*</span></label>
+                            <input asp-for="NoTelepon" class="form-control" placeholder="081234567890">
+                            <span asp-validation-for="NoTelepon" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Departemen Penempatan <span class="text-danger">*</span></label>
+                            <select asp-for="DepartmentId" id="createDepartmentId" class="form-select select2-dept-ajax" data-placeholder="Pilih Departemen...">
+                                <option value=""></option>
+                            </select>
+                            <span asp-validation-for="DepartmentId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Upload Foto<span class="text-muted small">(Maks. 2MB, Format: .jpg, .jpeg, .png)</span></label>
+                            <input type="file" name="FotoKaryawan" id="createUrlFotoFile" class="form-control" accept=".png,.jpg,.jpeg" required>
+                            <span asp-validation-for="FotoKaryawan" class="text-danger small"></span>
+                            <span class="text-danger small" id="errorCreateFoto"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Status Keaktifan <span class="text-danger">*</span></label>
+                            <select asp-for="Status" class="form-select">
+                                <option value="aktif" selected>Aktif</option>
+                                <option value="non-aktif">Non-Aktif</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-0">
+                <button type="button" class="btn btn-batal-modal btn-sm" data-bs-dismiss="modal">
+                    <i class="bi bi-arrow-90deg-left"></i> Batal
+                </button>
+                <button type="submit" form="formTambahKaryawan" class="btn btn-save btn-sm">
+                    <i class="bi bi-check-lg me-1"></i> Simpan Karyawan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

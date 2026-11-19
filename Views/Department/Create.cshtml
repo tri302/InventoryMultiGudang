@@ -1,0 +1,55 @@
+﻿@model InventoryMultiGudang.ViewModels.DepartmentCreateViewModel
+
+<div class="modal fade" id="modalTambahDepartemen" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalTambahDepartemenLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content border-0">
+
+            <div class="modal-header d-flex align-items-start justify-content-between">
+                <div>
+                    <h5 class="modal-title fw-bold text-indigo-dark" id="modalTambahDepartemenLabel">Tambah Departemen
+                        Baru</h5>
+                        <p class="text-muted small mb-0 mt-1" style="text-transform: none; letter-spacing: normal;">Lengkapi
+                            informasi unit kerja organisasi Anda.</p>
+                        </div>
+                        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="formTambahDepartemen">
+                            <div class="row">                        
+                                <input asp-for="Code" class="form-control"
+                                       placeholder="Auto-generate jika kosong (contoh: DPT-001)" hidden="true">
+                                <!-- Nama Departemen -->
+                                <div class="col-12">
+                                    <label asp-for="Name" class="form-label"></label>
+                                    <input asp-for="Name" class="form-control" placeholder="IT Infrastructure & Support">
+                                    <span asp-validation-for="Name" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Deskripsi / Catatan -->
+                                <div class="col-12">
+                                    <label asp-for="Description" class="form-label"></label>
+                                    <textarea asp-for="Description" class="form-control" rows="4"
+                                              placeholder="Keterangan mengenai departemen..."></textarea>
+                                    <span asp-validation-for="Description" class="text-danger small"></span>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-0">
+                        <button type="button" class="btn btn-batal-modal btn-sm" data-bs-dismiss="modal">
+                            <i class="bi bi-arrow-90deg-left"></i>
+                            Batal
+                        </button>
+                        <button type="submit" form="formTambahDepartemen" class="btn btn-save btn-sm">
+                            <i class="bi bi-check-lg me-1"></i>
+                            Simpan Departemen
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>

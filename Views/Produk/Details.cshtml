@@ -1,0 +1,168 @@
+﻿    <!-- Modal Daftar Serial Number -->
+<div class="modal fade" id="modalDetailsProduk" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalDetailsProdukLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0">
+
+            <!-- Modal Header -->
+            <div class="modal-header align-items-start border-bottom-0 pb-0">
+                <div class="d-flex gap-3">
+                    <!-- Icon Box dari global css dengan penyesuaian warna pink/red soft -->
+                    <div class="icon-box flex-shrink-0" style="background-color: #fee2e2; color: #ef4444;">
+                        <i class="bi bi-layers-half"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold text-indigo-dark" id="modalDetailsProdukLabel">Daftar Serial Number</h5>
+                        <p class="text-muted small mb-0 mt-1">
+                            Laptop Dell Latitude 5440 i7 <span class="mx-1">&#8226;</span> <span class="fw-semibold">SKU-ELC-0001</span>
+                        </p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body pt-4">
+
+                <!-- PIL / BADGES FILTER STATUS -->
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-light text-secondary border px-3 py-2 rounded-pill fw-medium">
+                        <i class="bi bi-circle-fill me-1 text-secondary" style="font-size: 0.5rem;"></i> Total 13 Unit
+                    </span>
+                    <span class="badge px-3 py-2 rounded-pill fw-medium" style="background-color: #d1fae5; color: #065f46;">
+                        <i class="bi bi-circle-fill me-1" style="font-size: 0.5rem; color: #10b981;"></i> 7 In Stock
+                    </span>
+                    <span class="badge px-3 py-2 rounded-pill fw-medium" style="background-color: #dbeafe; color: #1e40af;">
+                        <i class="bi bi-circle-fill me-1" style="font-size: 0.5rem; color: #3b82f6;"></i> 3 Assigned
+                    </span>
+                    <span class="badge px-3 py-2 rounded-pill fw-medium" style="background-color: #fef3c7; color: #92400e;">
+                        <i class="bi bi-circle-fill me-1" style="font-size: 0.5rem; color: #f59e0b;"></i> 1 Loaned
+                    </span>
+                    <span class="badge px-3 py-2 rounded-pill fw-medium" style="background-color: #ffe4e6; color: #9f1239;">
+                        <i class="bi bi-circle-fill me-1" style="font-size: 0.5rem; color: #f43f5e;"></i> 1 Repair
+                    </span>
+                    <span class="badge px-3 py-2 rounded-pill fw-medium" style="background-color: #f1f5f9; color: #475569;">
+                        <i class="bi bi-circle-fill me-1" style="font-size: 0.5rem; color: #94a3b8;"></i> 1 Lost
+                    </span>
+                </div>
+
+                <!-- TABLE HEADER (SUB-TITLE LIST) -->
+                <div class="row px-3 g-0 mb-2 text-uppercase text-muted fw-bold small" style="font-size: 0.72rem; letter-spacing: 0.05em;">
+                    <div class="col-1 text-center">#</div>
+                    <div class="col-5">Serial Number</div>
+                    <div class="col-3">Lokasi</div>
+                    <div class="col-3 text-center">Status / Aksi</div>
+                </div>
+
+                <!-- LIST ITEMS CONTAINER -->
+                <div class="d-flex flex-column gap-2">
+
+                    <!-- Item 1: Assigned (Blue border/bg) -->
+                    <div class="row align-items-center g-0 p-3 border rounded-3 text-nowrap" style="background-color: #f8fafc; border-color: #e2e8f0 !important;">
+                        <div class="col-1 text-center text-muted small fw-medium">1</div>
+                        <div class="col-5 fw-bold text-indigo-dark fs-6">ELC-0001-GDG-JKT-01-0003</div>
+                        <div class="col-3 text-muted small d-flex align-items-center gap-1">
+                            <i class="bi bi-building text-secondary"></i> GDG-JKT-01 / <span class="fw-medium">C-01-01</span>
+                        </div>
+                        <div class="col-3 d-flex justify-content-center align-items-center gap-2">
+                            <span class="badge rounded-1 px-2 py-1 fw-bold text-uppercase" style="background-color: #eff6ff; color: #2563eb; font-size: 0.7rem;">Assigned</span>
+                            <button class="btn btn-sm p-1 text-muted border-0 hover-indigo"
+                                    data-bs-toggle="modal" data-bs-target="#modalRiwayatProduk" 
+                                    title="Riwayat">
+                                <i class="bi bi-clock-history"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: Assigned -->
+                    <div class="row align-items-center g-0 p-3 border rounded-3 text-nowrap" style="background-color: #f8fafc; border-color: #e2e8f0 !important;">
+                        <div class="col-1 text-center text-muted small fw-medium">2</div>
+                        <div class="col-5 fw-bold text-indigo-dark fs-6">ELC-0001-GDG-JKT-01-0004</div>
+                        <div class="col-3 text-muted small d-flex align-items-center gap-1">
+                            <i class="bi bi-building text-secondary"></i> GDG-JKT-01 / <span class="fw-medium">A-01-02</span>
+                        </div>
+                        <div class="col-3 d-flex justify-content-center align-items-center gap-2">
+                            <span class="badge rounded-1 px-2 py-1 fw-bold text-uppercase" style="background-color: #eff6ff; color: #2563eb; font-size: 0.7rem;">Assigned</span>
+                            <button class="btn btn-sm p-1 text-muted border-0 hover-indigo" title="Riwayat"><i class="bi bi-clock-history"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: Loaned (Orange border/bg) -->
+                    <div class="row align-items-center g-0 p-3 border rounded-3 text-nowrap" style="background-color: #fffdf5; border-color: #fef3c7 !important;">
+                        <div class="col-1 text-center text-muted small fw-medium">3</div>
+                        <div class="col-5 fw-bold text-indigo-dark fs-6">ELC-0001-GDG-JKT-01-0005</div>
+                        <div class="col-3 text-muted small d-flex align-items-center gap-1">
+                            <i class="bi bi-building text-secondary"></i> GDG-JKT-01 / <span class="fw-medium">A-01-02</span>
+                        </div>
+                        <div class="col-3 d-flex justify-content-center align-items-center gap-2">
+                            <span class="badge rounded-1 px-2 py-1 fw-bold text-uppercase" style="background-color: #fffbeb; color: #d97706; font-size: 0.7rem;">Loaned</span>
+                            <button class="btn btn-sm p-1 text-muted border-0 hover-indigo" title="Riwayat"><i class="bi bi-clock-history"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Assigned -->
+                    <div class="row align-items-center g-0 p-3 border rounded-3 text-nowrap" style="background-color: #f8fafc; border-color: #e2e8f0 !important;">
+                        <div class="col-1 text-center text-muted small fw-medium">4</div>
+                        <div class="col-5 fw-bold text-indigo-dark fs-6">ELC-0001-GDG-JKT-01-0006</div>
+                        <div class="col-3 text-muted small d-flex align-items-center gap-1">
+                            <i class="bi bi-building text-secondary"></i> GDG-JKT-01 / <span class="fw-medium">A-01-02</span>
+                        </div>
+                        <div class="col-3 d-flex justify-content-center align-items-center gap-2">
+                            <span class="badge rounded-1 px-2 py-1 fw-bold text-uppercase" style="background-color: #eff6ff; color: #2563eb; font-size: 0.7rem;">Assigned</span>
+                            <button class="btn btn-sm p-1 text-muted border-0 hover-indigo" title="Riwayat"><i class="bi bi-clock-history"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Item 5: Repair (Red border/bg) -->
+                    <div class="row align-items-center g-0 p-3 border rounded-3 text-nowrap" style="background-color: #fff5f5; border-color: #fecaca !important;">
+                        <div class="col-1 text-center text-muted small fw-medium">5</div>
+                        <div class="col-5 fw-bold text-indigo-dark fs-6">ELC-0001-GDG-JKT-01-0007</div>
+                        <div class="col-3 text-muted small d-flex align-items-center gap-1">
+                            <i class="bi bi-building text-secondary"></i> GDG-JKT-01 / <span class="fw-medium">C-01-01</span>
+                        </div>
+                        <div class="col-3 d-flex justify-content-center align-items-center gap-2">
+                            <span class="badge rounded-1 px-2 py-1 fw-bold text-uppercase" style="background-color: #fef2f2; color: #dc2626; font-size: 0.7rem;">Repair</span>
+                            <button class="btn btn-sm p-1 text-muted border-0 hover-indigo" title="Riwayat"><i class="bi bi-clock-history"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Item 6: Lost (Gray border/bg) -->
+                    <div class="row align-items-center g-0 p-3 border rounded-3 text-nowrap" style="background-color: #f8fafc; border-color: #cbd5e1 !important;">
+                        <div class="col-1 text-center text-muted small fw-medium">6</div>
+                        <div class="col-5 fw-bold text-indigo-dark fs-6">ELC-0001-GDG-JKT-01-0008</div>
+                        <div class="col-3 text-muted small d-flex align-items-center gap-1">
+                            <i class="bi bi-building text-secondary"></i> GDG-JKT-01 / <span class="fw-medium">C-01-01</span>
+                        </div>
+                        <div class="col-3 d-flex justify-content-center align-items-center gap-2">
+                            <span class="badge rounded-1 px-2 py-1 fw-bold text-uppercase" style="background-color: #f1f5f9; color: #475569; font-size: 0.7rem;">Lost</span>
+                            <button class="btn btn-sm p-1 text-muted border-0 hover-indigo" title="Riwayat"><i class="bi bi-clock-history"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Item 7: In Stock (Green border/bg) -->
+                    <div class="row align-items-center g-0 p-3 border rounded-3 text-nowrap" style="background-color: #f6fdf9; border-color: #a7f3d0 !important;">
+                        <div class="col-1 text-center text-muted small fw-medium">7</div>
+                        <div class="col-5 fw-bold text-indigo-dark fs-6">ELC-0001-GDG-JKT-01-0009</div>
+                        <div class="col-3 text-muted small d-flex align-items-center gap-1">
+                            <i class="bi bi-building text-secondary"></i> GDG-JKT-01 / <span class="fw-medium">A-01-02</span>
+                        </div>
+                        <div class="col-3 d-flex justify-content-center align-items-center gap-2">
+                            <span class="badge rounded-1 px-2 py-1 fw-bold text-uppercase" style="background-color: #ecfdf5; color: #059669; font-size: 0.7rem;">In Stock</span>
+                            <button class="btn btn-sm p-1 text-muted border-0 hover-indigo" title="Riwayat"><i class="bi bi-clock-history"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer d-flex justify-content-between align-items-center bg-white border-top-0 pt-0">
+                <span class="text-muted small d-inline-flex align-items-center gap-1">
+                    Klik <i class="bi bi-clock-history mx-1"></i> untuk lihat riwayat hidup unit
+                </span>
+                <!-- Tombol elegan menggunakan tema utama Deep Indigo Dark Anda -->
+                <button type="button" class="btn btn-sm px-4 py-2 text-white fw-semibold" style="background-color: var(--indigo-dark); border-radius: 8px;" data-bs-dismiss="modal">Tutup</button>
+            </div>
+
+        </div>
+    </div>
+</div>

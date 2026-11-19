@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Laporan Aset per Departemen";
+}
+
+<!-- Input Search -->
+<div class="mb-3">
+    <div class="input-group style-search" style="max-width: 380px;">
+        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+        <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Cari kode atau nama departemen... (Tekan Enter)" style="font-size: 0.85rem;">
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm overflow-hidden mb-3" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+    <div class="table-responsive">
+        <table class="table align-middle table-hover mb-0" style="font-size: 0.85rem;">
+            <thead class="table-light text-uppercase text-muted" style="font-size: 0.725rem; letter-spacing: 0.05em; background-color: #f8fafc;">
+                <tr>
+                    <th class="ps-4 py-3" style="width: 15%;">Kode Dept</th>
+                    <th style="width: 25%;">Nama Departemen</th>
+                    <th style="width: 35%;">Deskripsi</th>
+                    <th style="width: 15%;">Jumlah Aset Aktif</th>
+                    <th class="pe-4 text-center" style="width: 10%;">Detail</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" class="text-secondary">
+                <!-- Data dinamis dimuat via AJAX -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Footer Info & Pagination Layout -->
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 px-1 mb-4" style="font-size: 0.85rem;">
+    <div class="text-secondary" id="tableInfo">
+        Menampilkan <span class="fw-bold text-dark">0</span> dari <span class="fw-bold text-dark">0</span> data.
+    </div>
+    <nav>
+        <ul class="pagination pagination-sm mb-0" id="paginationContainer">
+            <!-- Pagination Render -->
+        </ul>
+    </nav>
+</div >
+
+<!-- Modal Detail Asset per Departemen -->
+<div class="modal fade" id="modalAssetPerDepartemen" tabindex="-1" aria-labelledby="modalAssetPerDepartemenLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content border-0 px-2 py-1" style="border-radius: 16px; background-color: #ffffff;">
+            <div class="modal-header border-0 pb-0 pt-4 px-4 d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="modal-title fw-bold text-dark" id="modalAssetPerDepartemenLabel" style="font-size: 1.2rem;">Daftar Aset Aktif</h5>
+                    <span class="text-secondary small d-block mt-1" style="font-size: 0.85rem;">Departemen: <span id="modalDeptName" class="text-primary fw-bold"></span></span>
+                </div>                
+            </div>
+            <div class="modal-body p-4" id="modalAssetBody" style="max-height: 400px; overflow-y: auto;">
+                <!-- Content detail asset dimuat dinamis -->
+            </div>
+            <div class="modal-footer border-0 pt-0 pb-4 px-4 justify-content-end">                
+                <button type="button" class="btn fw-semibold text-white px-4 py-2 shadow-sm" data-bs-dismiss="modal" style="background-color: #0f172a; border-radius: 8px; font-size: 0.85rem;">
+                   Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/AssetPerDepartemen.js"></script>
+}

@@ -1,0 +1,74 @@
+﻿<!-- Modal Detail Transaksi -->
+<div class="modal fade" id="modalDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+
+            <!-- Header -->
+            <div class="modal-header justify-content-between border-bottom-0 pb-0 align-items-start">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="p-2 rounded-3 bg-light text-success fs-4" id="detailIconBox">
+                        <i class="bi bi-layers"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold text-dark" id="detailJudul">Rincian Transaksi</h5>
+                        <span class="text-muted small fs-7">Ref: <strong id="detailRef">-</strong></span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-success btn-sm rounded-3 px-3 py-1 text-muted small fw-medium" id="btnCetakDariDetail">
+                        <i class="bi bi-printer me-1"></i> Cetak Bukti
+                    </button>
+                    <button type="button" class="btn btn-close btn-sm ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body p-4">
+                <!-- Informasi Ringkas -->
+                <div class="bg-light p-3 rounded-3 mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="text-uppercase text-muted fw-bold small fs-8 d-block mb-1">Gudang Target</label>
+                            <span class="fw-semibold text-dark" id="detailGudang">-</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-uppercase text-muted fw-bold small fs-8 d-block mb-1">Diposting Oleh</label>
+                            <div class="d-flex align-items-center gap-1 text-dark fw-semibold">
+                                <i class="bi bi-person text-muted"></i>
+                                <span id="detailUser">-</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="text-uppercase text-muted fw-bold small fs-8 d-block mb-1">Tanggal Posting</label>
+                            <span class="fw-medium text-dark" id="detailTanggal">-</span>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="text-uppercase text-muted fw-bold small fs-8 d-block mb-1">Catatan</label>
+                            <p class="mb-0 text-dark small" id="detailCatatan">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabel Daftar Item -->
+                <h6 class="fw-bold fs-7 text-uppercase text-muted mb-3">
+                    <i class="bi bi-file-earmark-text me-1"></i> Daftar Item Pergerakan
+                </h6>
+
+                <div class="border rounded-3 overflow-hidden">
+                    <table class="table table-borderless align-middle mb-0">
+                        <thead class="bg-light border-bottom text-uppercase fs-8 text-muted fw-bold">
+                            <tr>
+                                <th class="ps-3 py-2">Produk</th>
+                                <th class="py-2">Lokasi / Rak</th>
+                                <th class="text-center py-2">Kuantitas</th>
+                                <th class="text-end pe-3 py-2">Alur Perubahan Stok</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detailItemList" class="fs-7">
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>

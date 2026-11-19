@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "_GuideLayout";
+}
+
+<div class="article-container">
+    <div class="row g-5">
+
+        <!-- Main Content Area -->
+        <div class="col-lg-12">
+
+            <!-- Breadcrumbs -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3">
+                    <li class="breadcrumb-item"><a href="#">Panduan</a></li>
+                    <li class="breadcrumb-item"><a href="#">FAQ & Bantuan</a></li>
+                    <li class="breadcrumb-item">Penanganan Masalah (Troubleshooting)</li>
+                </ol>
+            </nav>
+
+            <!-- Tags / Badges -->
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="tag-pill tag-pill-danger">FAQ & Bantuan</span>
+                <span class="tag-pill tag-pill-light">Pemula</span>
+                <span class="tag-pill tag-pill-light">Staff</span>
+                <span class="tag-pill tag-pill-primary">Manager</span>
+                <span class="tag-pill tag-pill-light">Super Admin</span>
+            </div>
+
+            <!-- Article Title -->
+            <h1 class="article-title">Penanganan Masalah (Troubleshooting)</h1>
+
+            <!-- Article Meta Info -->
+            <div class="article-meta">
+                <span><i class="bi bi-clock me-1"></i> 3 menit baca</span>
+                <span><i class="bi bi-calendar3 me-1"></i> Terakhir diperbarui</span>
+            </div>
+
+            <hr class="text-border mb-4">
+
+            <!-- Article Body Content -->
+            <div class="article-body">
+                <p>Jika Anda menemui kendala saat mengoperasikan aplikasi , berikut adalah panduan troubleshooting cepat untuk meengatasinya.</p>
+
+                <!-- Issue 1 -->
+                <h6>1. Kamera QR Code Scanner Tidak Berfungsi</h6>
+                <ul class="ps-3 mb-4">
+                    <li class="mb-2">
+                        <strong class="text-danger">Masalah:</strong> Saat mengklik tombol Scanner di navbar, kamera tidak aktif atau layar hitam.
+                    </li>
+                    <li class="mb-2">
+                        <strong class="text-danger">Solusi:</strong><br>
+                        Pastikan Anda mengizinkan akses kamera (<em>Allow camera access</em>) saat browser menampilkan pop-up izin.<br>
+                        Jika menggunakan HTTPS di server produksi, pastikan sertifikat SSL terpasang dengan benar. Browser modern memblokir akses kamera pada domain non-HTTPS di luar <span class="code-badge">localhost</span>.<br>
+                        Coba muat ulang halaman (F5) dan pastikan tidak ada aplikasi lain (seperti Zoom atau Google Meet) yang sedang menggunakan kamera Anda.
+                    </li>
+                </ul>
+
+                <!-- Issue 2 -->
+                <h6>2. Muncul Pesan "Demo Mode Active"</h6>
+                <ul class="ps-3 mb-4">
+                    <li class="mb-2">
+                        <strong class="text-danger">Masalah:</strong> Di atas menu dashboard muncul bar merah-orange bertuliskan "Mode Demo Aktif" dan Anda tidak bisa menyimpan atau menghapus data.
+                    </li>
+                    <li class="mb-2">
+                        <strong class="text-danger">Solusi:</strong> Aplikasi Anda sedang diatur ke mode demonstrasi pada file konfigurasi <span class="code-badge-light">.env</span> (<span class="code-badge">APP_DEMO_MODE</span>). Pada mode ini, seluruh request perubahan database diblokir untuk menjaga data contoh. Hubungi Admin Sistem untuk mengubah status environment ke <span class="code-badge">production</span> atau <span class="code-badge-light">local</span> di file <span class="code-badge-light">.env</span>.
+                    </li>
+                </ul>
+
+                <!-- Issue 3 -->
+                <h6>3. Notifikasi Overdue Tidak Hilang Meskipun Barang Sudah Dikembalikan</h6>
+                <ul class="ps-3 mb-4">
+                    <li class="mb-2">
+                        <strong class="text-danger">Masalah:</strong> Notifikasi peminjaman terlambat di navbar tetap menyala.
+                    </li>
+                    <li class="mb-2">
+                        <strong class="text-danger">Solusi:</strong><br>
+                        Periksa kembali di modul <em>Peminjaman Aset</em> apakah status transaksi peminjaman tersebut sudah diubah menjadi <strong>Returned</strong> (Kembali) dengan menekan tombol <strong>Return</strong>.<br>
+                        Jika sudah dikembalikan tetapi notifikasi tetap muncul, coba lakukan pembersihan cache browser Anda (Ctrl + F5).
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Previous Article Navigation Card -->
+            <div class="row g-3 my-4">
+                <div class="col-6">
+                    <a asp-action="Faqs" asp-controller="Guide" class="nav-article-card text-start">
+                        <span class="text-muted extra-small d-block text-uppercase fw-bold tracking-wider mb-1">SEBELUMNYA</span>
+                        <span class="fw-bold text-indigo-dark d-flex align-items-center gap-2">
+                            <i class="bi bi-arrow-left"></i> Pertanyaan Umum (FAQ)
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="feedback-box">
+                <p class="fw-bold text-indigo-dark mb-3 small">Apakah panduan ini bermanfaat bagi Anda?</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-up"></i> Ya, membantu
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-down"></i> Belum membantu
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sticky Right Sidebar / Table of Contents -->
+        <div class="col-lg-4 d-none d-lg-block">
+            <!-- Sidebar TOC tempat navigasi cepat jika dibutuhkan -->
+        </div>
+
+    </div>
+</div>

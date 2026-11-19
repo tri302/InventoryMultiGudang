@@ -1,0 +1,281 @@
+﻿@model InventoryMultiGudang.Models.TransaksiStok
+@{
+    Layout = null;
+    var isStockIn = Model.TipeTransaksi == "Stock In";
+}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Bukti Mutasi - @Model.NomorReferensi</title>        
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />    
+    <link href="~/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .print-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+        }
+
+        .border-thick {
+            border-bottom: 2px solid #000;
+        }
+        @@media print {
+            .no-print
+
+        {
+            display: none !important;
+        }
+
+        body {
+            background-color: #fff;
+        }
+
+        .print-container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        }
+
+        .text-red-600 {
+            --tw-text-opacity: 1;
+            color: rgb(220 38 38/var(--tw-text-opacity,1));
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .bg-red-100 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(254 226 226/var(--tw-bg-opacity,1));
+        }
+
+        .rounded-lg {
+            border-radius: .5rem;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .w-8 {
+            width: 2rem;
+        }
+
+        .h-8 {
+            height: 2rem;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        *, ::before, ::after {
+            box-sizing: border-box;
+            border: 0 solid #e5e7eb;
+        }
+
+        *, ::before, ::after, ::backdrop {
+            --tw-ring-offset-shadow: 0 0 #0000;
+            --tw-ring-shadow: 0 0 #0000;
+            --tw-shadow: 0 0 #0000;
+        }
+
+        .shadow-md {
+            --tw-shadow: 0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a;
+            --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+        }
+
+        .bg-white {
+            --tw-bg-opacity: 1;
+        }
+
+        .border-slate-200 {
+            --tw-border-opacity: 1;
+        }
+
+        .text-slate-900 {
+            --tw-text-opacity: 1;
+            color: rgb(15 23 42/var(--tw-text-opacity,1));
+        }
+
+        .font-sans {
+            font-family: Figtree,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+        }
+
+        .bg-slate-50 {
+            --tw-bg-opacity: 1;
+        }
+
+        body {
+            line-height: inherit;
+        }
+
+        html, :host {
+            -webkit-text-size-adjust: 100%;
+            tab-size: 4;
+            font-feature-settings: normal;
+            font-variation-settings: normal;
+            font-family: Figtree,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+            line-height: 1.5;
+    </style>
+</head>
+<body>
+
+    <!-- Floating Bar Top (No Print) -->
+    <div class="no-print bg-white border-bottom py-2 px-4 d-flex justify-content-between align-items-center sticky-top shadow-sm">
+        <div class="d-flex align-items-center gap-2">            
+            <div class="avatar-box bg-light text-danger d-flex align-items-center justify-content-center rounded" style="width: 36px; height: 36px;">
+                <i class="bi bi-file-earmark-pdf-fill fs-5"></i>
+            </div>
+            <div>
+                <h6 class="mb-0 fw-bold">Pratinjau Bukti Mutasi</h6>
+                <small class="text-muted">Laporan diatur dalam tata letak khusus kertas cetak (Portrait).</small>
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <button onclick="window.close()" class="btn btn-secondary btn-sm rounded-3"><i class="bi bi-x-lg"></i> Tutup Halaman</button>
+            <button onclick="window.print()" class="btn btn-success btn-sm rounded-3"><i class="bi bi-printer"></i> Cetak Sekarang</button>
+        </div>
+    </div>
+
+    <!-- Document Body -->
+    <div class="print-container shadow-sm">
+        <!-- Header Invoice -->        
+        <div class="row align-items-start pb-3 mb-3 border-thick">
+            <div class="col-7">
+                <!-- Nama Perusahaan Dinamis -->
+                <h3 class="fw-bold text-dark mb-1">@ViewBag.CompanyName</h3>
+                
+                <!-- Deskripsi / Tagline Dinamis -->
+                <p class="text-muted small mb-1" style="font-size: 10px; line-height: 1.2;">
+                    @ViewBag.CompanyDesc
+                </p>
+                
+                <!-- Alamat, Telp, & Email Dinamis -->
+                <p class="text-muted small mb-0" style="font-size: 11px;">
+                    @ViewBag.CompanyAddress<br>
+                    Telp: @ViewBag.CompanyPhone | Email: @ViewBag.CompanyEmail
+                </p>
+            </div>
+            <div class="col-5 text-end">
+                <h4 class="fw-bold mb-1">BUKTI MUTASI @(isStockIn ? "MASUK" : "KELUAR")</h4>
+                <div class="small text-muted mb-1">Nomor Referensi: <strong>@Model.NomorReferensi</strong></div>
+                <div class="small text-muted mb-1">Tipe Pergerakan: <strong>@Model.TipeTransaksi.ToUpper()</strong></div>
+                <div class="small text-muted">Pencetak: <strong>@Model.Pembuat</strong></div>
+            </div>
+        </div>
+
+        <!-- Meta Info Box -->
+        <div class="row g-3 mb-4">
+            <div class="col-6">
+                <div class="border rounded-3 p-3 h-100">
+                    <span class="text-uppercase text-muted fw-bold d-block mb-1" style="font-size: 10px;">Gudang Target (Lokasi)</span>
+                    <h6 class="fw-bold mb-0">@(Model.Gudang?.NamaGudang ?? "-")</h6>
+                    <small class="text-muted d-block mb-2">Kode Gudang: @(Model.Gudang?.KodeGudang ?? "-")</small>
+                    @if (Model.Supplier != null)
+                    {
+                        <small class="text-muted d-block">Supplier Asal: @Model.Supplier.NamaSupplier</small>
+                    }
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="border rounded-3 p-3 h-100">
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="text-uppercase text-muted fw-bold d-block mb-1" style="font-size: 10px;">Pencatat Transaksi</span>
+                            <h6 class="fw-bold mb-0">@Model.Pembuat</h6>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-uppercase text-muted fw-bold d-block mb-1" style="font-size: 10px;">Tanggal Transaksi</span>
+                            <div class="fw-bold">@Model.TanggalPosting.ToString("dd MMM yyyy, HH.mm")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Items Table -->
+        <div class="table-responsive mb-4">
+            <table class="table table-bordered align-middle text-center small">
+                <thead class="bg-light text-uppercase fw-bold text-muted" style="font-size: 11px;">
+                    <tr>
+                        <th width="5%">NO</th>
+                        <th class="text-start" width="35%">PRODUK / SKU</th>
+                        <th width="20%">LOKASI / RAK</th>
+                        <th width="15%">KUANTITAS</th>
+                        <th width="25%">ALUR PERUBAHAN STOK</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int no = 1;
+                        foreach (var d in Model.Details)
+                        {
+                            var stokAwal = isStockIn ? (d.Produk?.Stok - d.Jumlah) : (d.Produk?.Stok + d.Jumlah);
+                            var stokAkhir = d.Produk?.Stok;
+                            <tr>
+                                <td>@(no++)</td>
+                                <td class="text-start">
+                                    <div class="fw-bold">@(d.Produk?.NamaProduk ?? "-")</div>
+                                    <small class="text-muted">@(d.Produk?.Sku ?? "-")</small>
+                                </td>
+                                <td>@(d.Rak != null ? $"[{d.Rak.KodeLokasi}] {d.Rak.NamaRak}" : "-")</td>
+                                <td class="fw-bold">@d.Jumlah</td>
+                                <td class="fw-bold">@stokAwal &rarr; @stokAkhir</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Notes -->
+        <div class="border rounded-3 p-3 mb-5">
+            <span class="text-uppercase text-muted fw-bold d-block mb-1" style="font-size: 10px;">Keterangan / Catatan</span>
+            <p class="mb-0 small">@(string.IsNullOrWhiteSpace(Model.Catatan) ? "-" : Model.Catatan)</p>
+        </div>
+
+        <!-- Signatures -->
+        <div class="row text-center mt-5 pt-3">
+            <div class="col-4">
+                <span class="text-uppercase text-muted fw-bold d-block mb-5" style="font-size: 10px;">DISIAPKAN OLEH (OPERATOR)</span>
+                <div class="fw-bold border-bottom d-inline-block px-4 pb-1 mb-1">@Model.Pembuat</div>
+                <div class="text-muted small" style="font-size: 11px;">Staff / Operator Pelaksana</div>
+            </div>
+            <div class="col-4">
+                <span class="text-uppercase text-muted fw-bold d-block mb-5" style="font-size: 10px;">DIPERIKSA OLEH</span>
+                <div class="fw-bold border-bottom d-inline-block px-4 pb-1 mb-1">(...........................)</div>
+                <div class="text-muted small" style="font-size: 11px;">Supervisor / Auditor</div>
+            </div>
+            <div class="col-4">
+                <span class="text-uppercase text-muted fw-bold d-block mb-5" style="font-size: 10px;">DISETUJUI OLEH</span>
+                <div class="fw-bold border-bottom d-inline-block px-4 pb-1 mb-1">(...........................)</div>
+                <div class="text-muted small" style="font-size: 11px;">Kepala Gudang / Manager</div>
+            </div>
+        </div>
+
+        <!-- Footer Document -->        
+        <div class="text-center text-muted fw-bold mt-5 pt-4 border-top" style="font-size: 10px; letter-spacing: 1px;">
+            DOKUMEN INI MERUPAKAN BUKTI SAH MUTASI STOK INTERNAL SYSTEM @ViewBag.CompanyName.ToUpper()
+        </div>
+
+    </div>
+</body>
+</html>

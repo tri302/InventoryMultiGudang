@@ -1,0 +1,283 @@
+﻿@model InventoryMultiGudang.Models.PenugasanAset
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Detail Penugasan Aset";
+}
+
+<div class="container-fluid py-2">
+    <!-- HEADER SECTION -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <a asp-action="Index" asp-controller="PenugasanAset" class="btn btn-outline-secondary bg-white p-2 d-inline-flex align-items-center justify-content-center shadow-sm" style="border-radius: 8px; width: 38px; height: 38px;">
+                <i class="bi bi-arrow-left text-indigo-dark"></i>
+            </a>
+            <div>
+                <h1 class="h4 fw-bold text-indigo-dark mb-0.5">Detail Penugasan Aset</h1>
+                <p class="text-muted small mb-0">Lihat aset yang diserahkan dan kelola pengembalian inventaris.</p>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <a asp-action="PrintDepartment" asp-controller="PenugasanAset" asp-route-id="@Model.Id" target="_blank" class="btn btn-sm btn-success">
+                <i class="bi bi-printer text-muted"></i> Cetak Bukti (PDF)
+            </a>
+
+            @if (Model.Status == InventoryMultiGudang.Models.StatusPenugasan.MenungguPersetujuan)
+            {
+                <button type="button" id="btnSetujuiPenugasan" data-id="@Model.Id" class="btn btn-save btn-sm">
+                    <i class="bi bi-check"></i> Setujui Penugasan
+                </button>
+                <button type="button" id="btnTolakPenugasan" data-id="@Model.Id" class="btn btn-danger btn-sm">
+                    <i class="bi bi-x"></i> Tolak Penugasan
+                </button>
+            }
+            @if (Model.Status == InventoryMultiGudang.Models.StatusPenugasan.DalamPenugasan)
+            {
+                <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalPengembalianAset">
+                    <i class="bi bi-arrow-counterclockwise"></i> Proses Pengembalian
+                </button>
+            }
+        </div>
+    </div>
+
+    <!-- MAIN INFO CARDS LAYOUT -->
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 12px;">
+                <div class="row g-4">
+                    <!-- Detail Penerima -->
+                    <div class="col-12 col-md-6 border-end border-light-subtle pe-md-4">
+                        <h6 class="text-uppercase tracking-wider fw-bold text-muted mb-3" style="font-size: 0.7rem; letter-spacing: 0.05em;">PENERIMA ASET (HANDOVER TARGET)</h6>
+
+                        <div class="d-flex align-items-start gap-3 mb-3">
+                            <div class="icon-box flex-shrink-0 bg-primary bg-opacity-10 text-primary p-2.5 rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                                <i class="bi bi-person fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-indigo-dark mb-0.5" style="font-size: 0.95rem;">@(ViewBag.NamaPenerima ?? "-")</h6>
+                                <div class="text-muted font-monospace" style="font-size: 0.75rem;">@(ViewBag.KodePenerima ?? "-")</div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column gap-2 pt-2" style="font-size: 0.8rem;">                             
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Divisi:</span>
+                                <span class="fw-semibold text-indigo-dark">@(ViewBag.DivisiPenerima ?? "-")</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Deskripsi :</span>
+                                <span class="fw-semibold text-indigo-dark">@(ViewBag.Des ?? "-")</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Detail Dokumen -->
+                    <div class="col-12 col-md-6 ps-md-4">
+                        <h6 class="text-uppercase tracking-wider fw-bold text-muted mb-3" style="font-size: 0.7rem; letter-spacing: 0.05em;">DETAIL DOKUMEN</h6>
+                        <div class="d-flex flex-column gap-2.5" style="font-size: 0.8rem;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Kode Penugasan:</span>
+                                <span class="fw-bold font-monospace text-indigo-dark">@Model.KodePenugasan</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Tanggal Penugasan:</span>
+                                <span class="fw-semibold text-dark">
+                                    <i class="bi bi-calendar3 text-muted me-1"></i> @Model.TanggalSerahTerima.ToString("yyyy-MM-dd")
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Tanggal Pengembalian:</span>
+                                <span class="fw-semibold text-success">
+                                    <i class="bi bi-calendar-check text-success me-1"></i>
+                                    @(Model.TanggalPengembalian.HasValue ? Model.TanggalPengembalian.Value.ToString("yyyy-MM-dd") : "-")
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Penanggung Jawab (Admin):</span>
+                                <span class="fw-semibold text-indigo-dark">Super Admin</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-1">
+                                <span class="text-muted">Status Penugasan:</span>
+                                @if (Model.Status == InventoryMultiGudang.Models.StatusPenugasan.MenungguPersetujuan)
+                                {
+                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle px-2 py-1">Menunggu Persetujuan</span>
+                                }
+                                else if (Model.Status == InventoryMultiGudang.Models.StatusPenugasan.DalamPenugasan)
+                                {
+                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1">Dalam Penugasan</span>
+                                }
+                                else if (Model.Status == InventoryMultiGudang.Models.StatusPenugasan.Dikembalikan)
+                                {
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Dikembalikan</span>
+                                }
+                                else if (Model.Status == InventoryMultiGudang.Models.StatusPenugasan.Ditolak)
+                                {
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">Ditolak</span>
+                                }
+                                else if (Model.Status == InventoryMultiGudang.Models.StatusPenugasan.TransferAsetLangsung)
+                                {
+                                    <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle px-2 py-1">Transfer Aset Langsung</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-info-subtle text-success border border-info-subtle px-2 py-1">Selesai</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCAN QR TAG -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm p-4 h-100 text-center d-flex flex-column align-items-center justify-content-center" style="border-radius: 12px;">
+                <h6 class="text-uppercase tracking-wider fw-bold text-muted mb-3 w-100 text-center" style="font-size: 0.7rem; letter-spacing: 0.05em;">SCAN QR TAG PENUGASAN</h6>
+                <div class="qr-placeholder mb-2">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=@Model.KodePenugasan" alt="QR Code Penugasan" style="width: 110px; height: 110px;">
+                </div>
+                <div class="text-muted font-monospace mt-1" style="font-size: 0.7rem;">Kode unik: <span class="fw-semibold text-dark">@Model.KodePenugasan</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATATAN TAMBAHAN -->
+    <div class="card border-0 shadow-sm p-3 mb-4" style="border-radius: 12px;">
+        <div class="d-flex align-items-start gap-2.5">
+            <i class="bi bi-file-earmark-text text-muted fs-5 mt-0.5"></i>
+            <div>
+                <div class="text-uppercase tracking-wider fw-bold text-muted mb-1" style="font-size: 0.7rem;">CATATAN TAMBAHAN</div>
+                <div class="text-indigo-dark small fw-medium">@(string.IsNullOrEmpty(Model.Keterangan) ? "-" : Model.Keterangan)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLE DAFTAR UNIT ASET -->
+    <div class="card border-0 shadow-sm p-4" style="border-radius: 12px;">
+        <h6 class="text-uppercase tracking-wider fw-bold text-indigo-dark mb-4" style="font-size: 0.75rem; letter-spacing: 0.05em;">DAFTAR UNIT ASET YANG DISERAHKAN</h6>
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 text-nowrap">
+                <thead>
+                    <tr class="text-uppercase text-muted fw-bold border-bottom" style="font-size: 0.7rem; letter-spacing: 0.05em;">
+                        <th class="pb-3" style="width: 30%;">DETAIL ASET / SERIAL</th>
+                        <th class="pb-3" style="width: 20%;">LOKASI AWAL</th>
+                        <th class="pb-3" style="width: 15%;">KONDISI PENYERAHAN</th>
+                        <th class="pb-3" style="width: 20%;">KONDISI PENGEMBALIAN</th>
+                        <th class="pb-3 text-center" style="width: 15%;">BARCODE LABEL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Details != null && Model.Details.Any())
+                    {
+                        foreach (var item in Model.Details)
+                        {
+                            <tr class="border-bottom">
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-laptop text-muted fs-5"></i>
+                                        <div>
+                                            <div class="fw-bold text-indigo-dark small mb-0.5">@item.NamaBarang</div>
+                                            <div class="font-monospace text-muted" style="font-size: 0.7rem;">
+                                                <span>SKU-ELC-0001</span> <span class="mx-1">•</span>
+                                                SN: <span class="text-danger fw-semibold">@(string.IsNullOrEmpty(item.SerialNumber) ? "-" : item.SerialNumber)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-3">
+                                    <div class="fw-semibold text-indigo-dark small mb-0.5">@(item.LokasiAwal ?? "Gudang Utama Jakarta")</div>
+                                    <div class="text-muted small" style="font-size: 0.7rem;">Rak: C-01-01</div>
+                                </td>
+                                <td class="py-3">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
+                                        @(string.IsNullOrEmpty(item.KondisiSerah) ? "Good" : item.KondisiSerah)
+                                    </span>
+                                </td>
+                                <!-- KOLOM KONDISI PENGEMBALIAN -->
+                                <td class="py-3">
+                                @if (!string.IsNullOrEmpty(item.KondisiKembali))
+                                {
+                                @if (item.KondisiKembali.Equals("Broken", StringComparison.OrdinalIgnoreCase) ||
+                                item.KondisiKembali.Equals("Lost", StringComparison.OrdinalIgnoreCase))
+                                {
+                                <span class="badge bg-danger text-dark border border-danger px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
+                                    @item.KondisiKembali
+                                </span>
+                                }
+                                else if (item.KondisiKembali.Equals("Good", StringComparison.OrdinalIgnoreCase))
+                                {
+                                <span class="badge bg-success text-dark border border-success px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
+                                    Good (Layak Pakai)
+                                </span>
+                                }
+                                else
+                                {
+                                <span class="badge bg-secondary text-dark px-2.5 py-1 text-uppercase fw-semibold" style="font-size: 0.7rem;">
+                                    @item.KondisiKembali
+                                </span>
+                                }
+
+                                <div class="text-muted mt-1" style="font-size: 0.68rem;">
+                                    Kembali: @(Model.TanggalPengembalian.HasValue?
+                                    Model.TanggalPengembalian.Value.ToString("dd MMMM yyyy") : "-")
+                                </div>
+                                }
+                                else
+                                {
+                                <span class="text-muted small">-</span>
+                                }
+                                </td>
+                                <td class="py-3 text-center">
+                                    @if (!string.IsNullOrEmpty(item.SerialNumber))
+                                    {
+                                        <div class="p-1 border rounded bg-light d-inline-block">
+                                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=45x45&data=@item.SerialNumber" alt="QR Serial" style="width: 40px; height: 40px;" />
+                                            <div class="font-monospace text-muted" style="font-size: 0.6rem;">@item.SerialNumber</div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">-</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">Tidak ada detail aset.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("PengembalianAsset")
+@section Scripts {
+    <script src="~/js/PenugasanAset.js"></script>   
+    <script>
+//Inisialisasi Flatpickr secara global menggunakan delegated event saat modal ditampilkan
+$(document).off('shown.bs.modal', '#modalPengembalianAset').on('shown.bs.modal', '#modalPengembalianAset', function () {
+    var inputElement = document.getElementById('TglPengembalian');
+    
+    if (inputElement) {
+        // Hancurkan instans lama jika ada untuk mencegah duplikasi atau error dobel inisialisasi
+        if (inputElement._flatpickr) {
+            inputElement._flatpickr.destroy();
+        }
+
+        // Inisialisasi Flatpickr
+        flatpickr(inputElement, {
+            dateFormat: "d/m/Y",
+            allowInput: true,
+            appendTo: document.getElementById('modalPengembalianAset'),
+            locale: {
+                firstDayOfWeek: 1
+            }
+        });
+    }
+});
+</script>   
+}

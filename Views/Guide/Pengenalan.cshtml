@@ -1,0 +1,109 @@
+﻿@{
+    Layout = "_GuideLayout";
+}
+<div class="guide-content">
+    <div class="article-container">
+
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="#">Panduan</a></li>
+                <li class="breadcrumb-item"><a href="#">Memulai</a></li>
+                <li class="breadcrumb-item">Pengenalan </li>
+            </ol>
+        </nav>
+
+        <!-- Tags / Category Pills -->
+        <div class="d-flex flex-wrap gap-2 mb-3">
+            <span class="tag-pill tag-pill-indigo">Panduan</span>
+            <span class="tag-pill tag-pill-slate">Memulai</span>
+            <span class="tag-pill tag-pill-light">Aset</span>
+            <span class="tag-pill tag-pill-light">Pengadaan</span>
+            <span class="tag-pill tag-pill-light">Super Admin</span>
+        </div>
+
+        <!-- Title & Metadata -->
+        <h1 class="article-title">Pengenalan </h1>
+        <div class="article-meta">
+            <span><i class="bi bi-clock me-1"></i> 3 menit baca</span>
+            <span><i class="bi bi-calendar3 me-1"></i> Terakhir diperbarui</span>
+        </div>
+
+        <hr class="my-4 text-muted opacity-25">
+
+        <!-- Article Content Body -->
+        <div class="article-body">
+            <p class="lead text-dark font-normal">
+                Selamat datang di <strong></strong>, solusi modern untuk manajemen aset dan inventaris perusahaan.  dirancang untuk memecahkan berbagai tantangan tata kelola barang di perusahaan modern, mulai dari pelacakan kepemilikan perangkat IT hingga mutasi logistik antar-gudang secara real-time.
+            </p>
+
+            <h5 id="mengapa-">Mengapa Menggunakan ?</h5>
+            <p>Sistem ini membantu memecahkan 5 masalah utama tata kelola inventaris:</p>
+
+            <ul class="list-unstyled ps-0">
+                <li class="mb-2 d-flex align-items-start gap-2">
+                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                    <div><strong>Kehilangan Jejak Aset (Asset Loss):</strong> Mencegah laptop atau perangkat IT kantor berpindah tangan tanpa tercatat.</div>
+                </li>
+                <li class="mb-2 d-flex align-items-start gap-2">
+                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                    <div><strong>Otorisasi Tanpa Birokratis:</strong> Mengurai transaksi keluar agar memerlukan persetujuan pimpinan terlebih dahulu.</div>
+                </li>
+                <li class="mb-2 d-flex align-items-start gap-2">
+                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                    <div><strong>Peminjaman yang Terlupakan:</strong> Sistem pengingat otomatis untuk barang-barang yang belum dikembalikan melewati batas waktu.</div>
+                </li>
+                <li class="mb-2 d-flex align-items-start gap-2">
+                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                    <div><strong>Ketaatan Riwayat Aset:</strong> Mengumpulkan catatan siklus hidup perangkat dari barang masuk hingga pembuangan (disposal).</div>
+                </li>
+                <li class="mb-2 d-flex align-items-start gap-2">
+                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                    <div><strong>Pencarian Lambat:</strong> Menggunakan pemindaian kamera QR Code/Barcode langsung dari browser Anda.</div>
+                </li>
+            </ul>
+
+            <!-- Info Callout Box -->
+            <div class="info-callout my-4">
+                <div class="info-callout-title"><i class="bi bi-info-circle-fill me-1"></i> Informasi</div>
+                 dikembangkan dengan mengutamakan performa tinggi dan tampilan modern yang terinspirasi dari produk kelas dunia seperti Stripe dan Linear.
+            </div>
+
+            <h5 id="siapa-pengguna">Siapa yang Menggunakan ?</h5>
+            <p>Hak akses sistem dibagi menjadi <strong>3 tingkat peran utama</strong>:</p>
+
+            <div class="card border-0 bg-light p-3 mb-4 rounded-3">
+                <ul class="mb-0 ps-3">
+                    <li class="mb-2"><strong>Super Admin:</strong> Memiliki kontrol penuh atas konfigurasi, hak akses (RBAC), pengaturan instansi, dan log audit keamanan.</li>
+                    <li class="mb-2"><strong>Warehouse Manager:</strong> Bertanggung jawab mengelola katalog produk, menyetujui Transfer Order, dan menganalisis laporan.</li>
+                    <li><strong>Warehouse Staff:</strong> Mengoperasikan transaksi harian seperti mencatat barang masuk (Stock In), mengajukan mutasi stok, dan mencetak label QR Code.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Nav Card Footer -->
+        <div class="d-flex justify-content-end my-4">
+            <a asp-action="KonsepDasarSistem" asp-controller="Guide" class="nav-article-card d-inline-flex align-items-center gap-3 text-end">
+                <div>
+                    <span class="text-uppercase text-muted fw-bold d-block" style="font-size: 0.65rem;">Berikutnya</span>
+                    <span class="fw-bold text-dark">Konsep Dasar Sistem</span>
+                </div>
+                <i class="bi bi-arrow-right fs-5 text-primary"></i>
+            </a>
+        </div>
+
+        <!-- Feedback Box dengan Emerald Buttons -->
+        <div class="feedback-box mt-5">
+            <h6 class="fw-bold text-dark mb-3">Apakah panduan ini bermanfaat bagi Anda?</h6>
+            <div class="d-flex justify-content-center gap-2">
+                <button type="button" class="btn btn-emerald px-4 py-2 rounded-3 d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-hand-thumbs-up-fill"></i> Ya, membantu
+                </button>
+                <button type="button" class="btn btn-outline-secondary px-4 py-2 rounded-3 d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-hand-thumbs-down"></i> Belum membantu
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

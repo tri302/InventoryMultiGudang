@@ -1,0 +1,152 @@
+﻿@model InventoryMultiGudang.ViewModels.AssetTimelineViewModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Detail Aset";
+}
+
+<div class="container-fluid">
+    <!-- Header Top Bar -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div class="d-flex align-items-center gap-3">
+            <a href="@Url.Action("AssetDaftarSerialNumber", "LaporanAsset")" class="btn btn-sm btn-light border bg-white rounded-3 px-2.5 py-2 shadow-sm text-secondary">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <div>
+                <h5 class="fw-bold text-dark mb-0">Riwayat Siklus Hidup Aset</h5>
+                <span class="text-muted small" style="font-size: 0.75rem;">SN: <span class="text-uppercase fw-medium text-secondary">@Model.SerialNumber</span></span>
+            </div>
+        </div>        
+    </div>
+
+    <!-- Main Grid Content -->
+    <div class="row g-4">
+        <!-- Kolom Kiri: Detail Data & QR -->
+        <div class="col-12 col-md-4">
+            <!-- Card 1: Informasi Unit -->
+            <div class="card card-custom p-4 shadow-sm mb-3" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                <div class="d-flex align-items-center gap-2 border-bottom pb-3 mb-3">
+                    <i class="bi bi-tag text-danger" style="font-size: 1.1rem;"></i>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.9rem;">Informasi Unit</h6>
+                </div>
+                <div class="d-flex flex-column gap-2.5" style="font-size: 0.825rem;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Nama Aset:</span>
+                        <span class="fw-bold text-dark text-end">@Model.NamaBarang</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Nomor Seri:</span>
+                        <span class="fw-bold text-danger text-end" style="letter-spacing: 0.3px;">@Model.SerialNumber</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">SKU:</span>
+                        <span class="fw-bold text-uppercase text-end">@Model.Sku</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Merek:</span>
+                        <span class="fw-medium text-dark text-end">@(string.IsNullOrEmpty(Model.Merek) ? "—" : Model.Merek)</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Status Aktif:</span>
+                        <div>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 text-uppercase" style="font-size: 0.675rem; font-weight: 700; letter-spacing: 0.3px;">@Model.StatusAktif</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Gudang Penyimpanan:</span>
+                        <span class="fw-medium text-dark text-end">@Model.NamaGudang</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Lokasi Rak / Bin:</span>
+                        <span class="fw-semibold text-secondary text-uppercase text-end">@Model.NamaRak</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Pengadaan & Perolehan -->
+            <div class="card card-custom p-4 shadow-sm mb-3" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                <div class="d-flex align-items-center gap-2 border-bottom pb-3 mb-3">
+                    <i class="bi bi-boxes text-success" style="font-size: 1.1rem;"></i>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.9rem;">Pengadaan & Perolehan</h6>
+                </div>
+                <div class="d-flex flex-column gap-2.5" style="font-size: 0.825rem;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Supplier Aset:</span>
+                        <span class="fw-bold text-dark text-end">@Model.NamaSupplier</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Tanggal Perolehan:</span>
+                        <span class="fw-medium text-dark text-end">@Model.TanggalPerolehan</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Harga Perolehan:</span>
+                        <span class="fw-bold text-success text-end">Rp @Model.HargaPerolehan.ToString("N0")</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Preview Label Cetak -->
+            <div class="card card-custom p-4 shadow-sm text-center" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                <span class="text-uppercase text-muted fw-bold d-block mb-3" style="font-size: 0.725rem; letter-spacing: 0.05em;">Preview Label Cetak</span>
+
+                <div class="qr-preview-box mb-3 mx-auto p-2 bg-light rounded border" style="max-width: 240px;">
+                    <!-- Simulasi Barcode/QR Code Menggunakan SVG -->
+                    <svg class="mb-2" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                        <path d="M14 14h1v1h-1zM17 14h2v1h-2zM14 17h2v2h-2zM18 17h3v1h-3zM14 20h1v1h-1zM17 20h1v1h-1zM20 20h1v1h-1z" />
+                    </svg>
+                    <div class="text-muted font-monospace text-uppercase" style="font-size: 0.65rem; letter-spacing: 0.3px;">SN: @Model.SerialNumber</div>
+                </div>
+
+                <p class="text-muted mb-0 mx-auto" style="font-size: 0.725rem; line-height: 1.5; max-width: 280px;">
+                    Tempel label barcode QR ini pada fisik barang. Scan label menggunakan device kamera / pemindai untuk membuka riwayat siklus hidup secara langsung.
+                </p>
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Timeline Perjalanan Aset -->
+        <div class="col-12 col-md-8">
+            <div class="card card-custom p-4 shadow-sm h-100 d-flex flex-column" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                <div class="d-flex align-items-center gap-2 border-bottom pb-3 mb-4">
+                    <i class="bi bi-clock-history text-danger" style="font-size: 1.1rem;"></i>
+                    <h6 class="fw-bold text-dark mb-0" style="font-size: 0.9rem;">Timeline Perjalanan Aset</h6>
+                </div>
+
+                @if (Model.TimelineEvents != null && Model.TimelineEvents.Any())
+                {
+                    <div class="timeline-container px-2">
+                        <ul class="list-unstyled position-relative border-start ps-4 ms-2" style="border-color: #cbd5e1 !important;">
+                            @foreach (var ev in Model.TimelineEvents)
+                            {
+                                <li class="mb-4 position-relative">
+                                    <!-- Bullet Point Indicator -->
+                                    <span class="position-absolute bg-danger rounded-circle border border-white" style="width: 12px; height: 12px; left: -27px; top: 4px;"></span>
+                                    
+                                    <div class="p-3 bg-light rounded-3 shadow-sm border">
+                                        <div class="d-flex justify-content-between align-items-center mb-1 flex-wrap">
+                                            <span class="fw-bold text-dark" style="font-size: 0.85rem;">@ev.StatusEvent</span>
+                                            <span class="text-muted small" style="font-size: 0.75rem;"><i class="bi bi-calendar3 me-1"></i> @ev.Tanggal</span>
+                                        </div>
+                                        <p class="text-secondary small mb-1" style="font-size: 0.8rem;">@ev.Keterangan</p>
+                                        <div class="text-muted" style="font-size: 0.75rem;"><i class="bi bi-geo-alt text-danger me-1"></i> Lokasi/Rak: <span class="fw-medium text-dark">@ev.Lokasi</span></div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <!-- State Kosong / Empty State Timeline -->
+                    <div class="flex-grow-1 d-flex align-items-center justify-content-center my-5 py-5">
+                        <span class="text-muted fst-italic" style="font-size: 0.825rem; color: #94a3b8 !important;">
+                            Tidak ada log riwayat siklus hidup terdaftar untuk unit ini.
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

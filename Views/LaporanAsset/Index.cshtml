@@ -1,0 +1,157 @@
+﻿@model InventoryMultiGudang.ViewModels.LaporanAssetIndexViewModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Laporan Aset & Peminjaman";
+}
+
+<div class="container-fluid px-0">
+    <!-- Header Title -->
+    <div class="mb-4">
+        <h4 class="fw-bold text-dark mb-1">Laporan Aset & Peminjaman</h4>
+        <p class="text-muted small mb-0" style="font-size: 0.85rem;">
+            Analisis utilitas, laporan distribusi departemen/karyawan/customer, pelacakan unit nomor seri, dan pemantauan jatuh tempo peminjaman.
+        </p>
+    </div>
+
+    <!-- Navigation Tabs / Sub-menu -->
+    <ul class="nav nav-tabs border-bottom mb-4" style="font-size: 0.875rem;">
+        <li class="nav-item">
+            <a class="nav-link active fw-bold text-danger border-bottom-2 border-danger pb-3" href="@Url.Action("Index", "LaporanAsset")">
+                <i class="bi bi-pie-chart me-1"></i> Ringkasan & Utilitas
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-secondary pb-3" href="@Url.Action("AssetPerDepartemen", "LaporanAsset")">Aset per Departemen</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-secondary pb-3" href="@Url.Action("AssetPerKaryawan", "LaporanAsset")">Aset per Karyawan</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-secondary pb-3" href="@Url.Action("AssetPerCustumer", "LaporanAsset")">Aset per Customer</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-secondary pb-3" href="@Url.Action("AssetDaftarSerialNumber", "LaporanAsset")">Daftar Serial Number (SN)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-secondary pb-3" href="@Url.Action("AssetPeminjamanBelumKembali", "LaporanAsset")">Peminjaman Belum Kembali</a>
+        </li>
+    </ul>
+
+    <!-- Main Content Grid -->
+    <div class="row g-4">
+        <!-- Kolom Kiri: Rasio Utilitas Aset -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm p-4 h-150 d-flex flex-column justify-content-center align-items-center text-center" style="border: 1px solid #e2e8f0 !important; border-radius: 12px; min-height: 280px;">
+                <h6 class="fw-bold text-dark mb-4" style="font-size: 0.95rem;">Rasio Utilitas Aset</h6>
+                
+                <!-- Circular Progress / Badge Ratio -->
+                <div class="position-relative d-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px; border-radius: 50%; border: 8px solid #f1f5f9; border-top-color: #dc3545;">
+                    <span class="fw-bold text-dark" style="font-size: 1.5rem;">@Model.RasioUtilitas%</span>
+                </div>
+
+                <p class="text-muted small px-2 mb-0" style="font-size: 0.75rem; line-height: 1.4;">
+                    Rasio utilitas menunjukkan persentase nomor seri aset terdaftar yang sedang digunakan aktif (ditugaskan atau dipinjamkan) dari total aset yang ada.
+                </p>
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Kartu Statistik Dinamis -->
+        <div class="col-12 col-lg-8">
+            <div class="row g-3">
+                <!-- Aset Tersedia -->
+                <div class="col-12 col-md-6">
+                    <div class="card border-0 shadow-sm p-3 d-flex flex-row justify-content-between align-items-center" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                        <div>
+                            <span class="text-muted small d-block mb-1" style="font-size: 0.75rem;">Aset Tersedia (Ready)</span>
+                            <span class="text-muted extra-small" style="font-size: 0.65rem;">Aset berada di gudang & siap ditugaskan</span>
+                        </div>
+                        <span class="fw-bold text-success fs-5">@Model.AsetTersedia unit</span>
+                    </div>
+                </div>
+
+                <!-- Aset Ditugaskan -->
+                <div class="col-12 col-md-6">
+                    <div class="card border-0 shadow-sm p-3 d-flex flex-row justify-content-between align-items-center" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                        <div>
+                            <span class="text-muted small d-block mb-1" style="font-size: 0.75rem;">Aset Ditugaskan</span>
+                            <span class="text-muted extra-small" style="font-size: 0.65rem;">Aset sedang dipegang karyawan/departemen</span>
+                        </div>
+                        <span class="fw-bold text-primary fs-5">@Model.AsetDitugaskan unit</span>
+                    </div>
+                </div>
+
+                <!-- Aset Dipinjamkan -->
+                <div class="col-12 col-md-6">
+                    <div class="card border-0 shadow-sm p-3 d-flex flex-row justify-content-between align-items-center" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                        <div>
+                            <span class="text-muted small d-block mb-1" style="font-size: 0.75rem;">Aset Dipinjamkan</span>
+                            <span class="text-muted extra-small" style="font-size: 0.65rem;">Aset dalam status peminjaman luar</span>
+                        </div>
+                        <span class="fw-bold text-warning fs-5">@Model.AsetDipinjamkan unit</span>
+                    </div>
+                </div>
+
+                <!-- Dalam Reparasi -->
+                <div class="col-12 col-md-6">
+                    <div class="card border-0 shadow-sm p-3 d-flex flex-row justify-content-between align-items-center" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                        <div>
+                            <span class="text-muted small d-block mb-1" style="font-size: 0.75rem;">Dalam Reparasi (Repair)</span>
+                            <span class="text-muted extra-small" style="font-size: 0.65rem;">Perbaikan/maintenance vendor & teknisi</span>
+                        </div>
+                        <span class="fw-bold text-secondary fs-5">@Model.DalamReparasi unit</span>
+                    </div>
+                </div>
+
+                <!-- Aset Hilang -->
+                <div class="col-12 col-md-6">
+                    <div class="card border-0 shadow-sm p-3 d-flex flex-row justify-content-between align-items-center" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                        <div>
+                            <span class="text-muted small d-block mb-1" style="font-size: 0.75rem;">Aset Hilang (Lost)</span>
+                            <span class="text-muted extra-small" style="font-size: 0.65rem;">Aset yang terdeteksi hilang</span>
+                        </div>
+                        <span class="fw-bold text-danger fs-5">@Model.AsetHilang unit</span>
+                    </div>
+                </div>
+
+                <!-- Dihapuskan -->
+                <div class="col-12 col-md-6">
+                    <div class="card border-0 shadow-sm p-3 d-flex flex-row justify-content-between align-items-center" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                        <div>
+                            <span class="text-muted small d-block mb-1" style="font-size: 0.75rem;">Dihapuskan (Disposed)</span>
+                            <span class="text-muted extra-small" style="font-size: 0.65rem;">Aset yang sudah di-write-off / pensiun</span>
+                        </div>
+                        <span class="fw-bold text-dark fs-5">@Model.Dihapuskan unit</span>
+                    </div>
+                </div>
+
+                <!-- Sold/Terjual -->
+                <div class="col-12 col-md-6">
+                    <div class="card border-0 shadow-sm p-3 d-flex flex-row justify-content-between align-items-center" style="border: 1px solid #e2e8f0 !important; border-radius: 12px;">
+                        <div>
+                            <span class="text-muted small d-block mb-1" style="font-size: 0.75rem;">Sold/Terjual</span>
+                            <span class="text-muted extra-small" style="font-size: 0.65rem;">Aset yang sudah dijual</span>
+                        </div>
+                        <span class="fw-bold text-dark fs-5">@Model.Sold unit</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar: Total Aset Berseri Terdaftar -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 text-white p-4 shadow-sm d-flex flex-row justify-content-between align-items-center flex-wrap gap-3" style="background-color: #0f172a; border-radius: 12px;">
+                <div>
+                    <h6 class="fw-bold mb-1" style="font-size: 1rem;">Total Aset Berseri Terdaftar</h6>
+                    <span class="text-white-55 small" style="font-size: 0.75rem;">Total akumulasi seluruh unit nomor seri dalam database.</span>
+                </div>
+                <div class="fs-3 fw-bold text-white">
+                    @Model.TotalAsetBerseri Unit
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

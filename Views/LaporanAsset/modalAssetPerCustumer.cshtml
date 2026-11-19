@@ -1,0 +1,30 @@
+﻿<div class="modal fade" id="modalAssetPerCustumer" tabindex="-1" aria-labelledby="modalAssetPerCustumerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content border-0 px-2 py-1" style="border-radius: 16px; background-color: #ffffff;">
+
+            <!-- Modal Header -->
+            <div class="modal-header border-0 pb-0 pt-4 px-4 d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="modal-title fw-bold text-dark" id="modalAssetPerCustumerLabel" style="font-size: 1.2rem;">Daftar Aset Aktif</h5>
+                    <span class="text-secondary small d-block mt-1" style="font-size: 0.85rem;">Customer: <span id="modalCustomerName" class="text-primary fw-bold">—</span></span>
+                </div>
+                <button type="button" class="btn btn-link text-decoration-none text-muted p-0 border-0 align-self-top d-flex align-items-center gap-1" data-bs-dismiss="modal" style="font-size: 0.9rem;">
+                    Close <i class="bi bi-x-lg" style="font-size: 0.75rem; -webkit-text-stroke: 0.5px;"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body (Container untuk data dynamic via AJAX) -->
+            <div class="modal-body p-4" id="modalAssetBody" style="max-height: 400px; overflow-y: auto;">
+                <div class="text-center text-muted py-3">Memuat data...</div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer border-0 pt-0 pb-4 px-4 justify-content-end">
+                <button type="button" class="btn fw-semibold text-white px-4 py-2 shadow-sm" data-bs-dismiss="modal" style="background-color: #0f172a; border-radius: 8px; font-size: 0.85rem;">
+                    Tutup
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

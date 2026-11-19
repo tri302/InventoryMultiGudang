@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Manajemen Stock Opname";
+}
+@Html.AntiForgeryToken()
+<style>
+.form-control, 
+.form-select, 
+.form-input-custom,
+.form-control-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    color: #1e293b !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+</style>
+<div class="container-fluid">
+
+    <!-- HEADER UTAMA -->
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
+        <div>
+            <h1 class="h3 mb-1 fw-bold text-indigo-dark" style="color: #0f172a !important;">Stock Opname (Audit Stok)</h1>
+            <p class="text-muted mb-0 small">Lakukan audit fisik, rekapitulasi selisih stok, dan posting jurnal penyesuaian otomatis.</p>
+        </div>
+        <button data-bs-toggle="modal" data-bs-target="#modalTargetAudit"
+                class="btn btn-success rounded-pill px-4 btn-sm">
+            <i class="bi bi-plus-lg"></i> Mulai Audit Baru
+        </button>
+    </div>
+
+    <!-- FILTER & PENCARIAN -->
+    <div class="card border-0 shadow-sm rounded-4 p-3 mb-4" style="background: #ffffff; border: 1px solid var(--border-color) !important;">
+        <div class="row g-3 align-items-center">
+            <!-- Cari Nomor Opname (Live Search) -->
+            <div class="col-12 col-md-5 col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0 pe-1">
+                        <i class="bi bi-search text-muted fs-6"></i>
+                    </span>
+                    <input type="text" id="searchKey" class="form-control border-start-0 ps-2 fs-6" placeholder="Cari nomor opname atau nama gudang...">
+                </div>
+            </div>
+
+            <!-- Filter Gudang -->
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 d-flex align-items-center gap-2">
+                <label class="form-label mb-0 text-nowrap tracking-wider text-muted fw-bold" style="font-size: 0.75rem;">GUDANG:</label>
+                <select id="filterGudang" class="form-select fs-6 fw-semibold text-indigo-dark py-2" asp-items="ViewBag.GudangList">
+                    <option value="">Semua Gudang</option>
+                </select>
+            </div>
+
+            <!-- Filter Status -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-center gap-2">
+                <label class="form-label mb-0 text-nowrap tracking-wider text-muted fw-bold" style="font-size: 0.75rem;">STATUS:</label>
+                <select id="filterStatus" class="form-select fs-6 fw-semibold text-indigo-dark py-2">
+                    <option selected>Semua Status</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Selesai">Selesai</option>
+                    <option value="Dibatalkan">Dibatalkan</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABEL DATA AUDIT -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-3" style="border: 1px solid var(--border-color) !important;">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0" style="min-width: 1000px;">
+                <thead>
+                    <tr class="border-bottom" style="border-color: var(--border-color) !important;">
+                        <th class="py-3 px-4 text-muted tracking-wider fw-bold text-uppercase" style="font-size: 0.75rem; width: 30%;">Nomor Audit / Dokumen</th>
+                        <th class="py-3 text-muted tracking-wider fw-bold text-uppercase" style="font-size: 0.75rem; width: 20%;">Gudang</th>
+                        <th class="py-3 text-muted tracking-wider fw-bold text-uppercase" style="font-size: 0.75rem; width: 18%;">Auditor / Pembuat</th>
+                        <th class="py-3 text-muted tracking-wider fw-bold text-uppercase" style="font-size: 0.75rem; width: 12%;">Status</th>
+                        <th class="py-3 text-muted tracking-wider fw-bold text-uppercase" style="font-size: 0.75rem; width: 12%;">Selesai Pada</th>
+                        <th class="py-3 px-4 text-end text-muted tracking-wider fw-bold text-uppercase" style="font-size: 0.75rem; width: 8%;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBodyOpname">
+                    <!-- Loaded dynamically via StockOpname.js -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- PAGINATION & INFO DATA -->
+    <div class="d-flex justify-content-between align-items-center mb-4 px-1">
+        <!-- Informasi Data di Sebelah Kiri -->
+        <div class="text-muted small" id="paginationInfoText">
+            Menampilkan 0 - 0 dari 0 data
+        </div>
+
+        <!-- Tombol Pagination di Sebelah Kanan -->
+        <div id="paginationContainer"></div>
+    </div>
+</div>
+
+@await Html.PartialAsync("modalTargetAudit")
+@await Html.PartialAsync("modalHapusOpname")
+
+@section Scripts {
+    <script src="~/js/StockOpname.js"></script>
+    <script>
+        $(document).ready(function () {
+            StockOpname.initIndex();
+        });
+    </script>
+}

@@ -1,0 +1,362 @@
+﻿@model InventoryMultiGudang.ViewModels.PenugasanAsetFormViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Registrasi Penugasan Aset Baru";
+}
+<style>
+    /* Reset & Base Styles */
+    *, ::before, ::after {
+        box-sizing: border-box;
+        border: 0 solid #e5e7eb;
+        border-top-width: 0px;
+        border-top-color: rgb(229, 231, 235);
+        border-right-width: 0px;
+        border-right-color: rgb(229, 231, 235);
+        border-bottom-width: 0px;
+        border-bottom-color: rgb(229, 231, 235);
+        border-left-width: 0px;
+        border-left-color: rgb(229, 231, 235);
+    }
+
+    *, ::before, ::after, ::backdrop {
+        --tw-ring-offset-shadow: 0 0 #0000;
+        --tw-ring-shadow: 0 0 #0000;
+        --tw-shadow: 0 0 #0000;
+    }
+
+    ::before, ::after {
+        --tw-content: "";
+    }
+
+    html, :host {
+        -webkit-text-size-adjust: 100%;
+        tab-size: 4;
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        font-family: Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        line-height: 1.5;
+    }
+
+    body {
+        line-height: inherit;
+    }
+
+    /* Element Selectors */
+    button, input, optgroup, select, textarea {
+        font-feature-settings: inherit;
+        font-variation-settings: inherit;
+        font-family: inherit;
+        font-size: 100%;
+        font-weight: inherit;
+        line-height: inherit;
+        letter-spacing: inherit;
+        color: inherit;
+        margin: 0;
+        padding: 0;
+    }
+
+    button, [role="button"] {
+        cursor: pointer;
+    }
+
+    button, input:where([type="button"]), input:where([type="reset"]), input:where([type="submit"]) {
+        -webkit-appearance: button;
+        background-color: #0000;
+        background-image: none;
+    }
+
+    button, select {
+        text-transform: none;
+    }
+
+        /* Custom Form Styles */
+        select.form-select,
+        select.form-select option {
+            color: #0f172a !important; /* Warna slate-900 / Hitam */
+            background-color: #ffffff !important;
+        }
+
+    /* Utility Classes */
+    .font-sans {
+        font-family: Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    .text-xs {
+        font-size: .75rem;
+        line-height: 1rem;
+    }
+
+    .text-slate-700 {
+        --tw-text-opacity: 1;
+        color: rgb(51 65 85 / var(--tw-text-opacity, 1));
+    }
+
+    .text-slate-900 {
+        --tw-text-opacity: 1;
+        color: rgb(15 23 42 / var(--tw-text-opacity, 1));
+    }
+
+    .text-red-700 {
+        --tw-text-opacity: 1;
+        color: rgb(185 28 28 / var(--tw-text-opacity, 1));
+    }
+
+    .bg-white {
+        --tw-bg-opacity: 1;
+    }
+
+    .bg-slate-50 {
+        --tw-bg-opacity: 1;
+    }
+
+    .bg-red-50 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+    }
+
+    .border {
+        border-width: 1px;
+    }
+
+    .border-slate-200 {
+        --tw-border-opacity: 1;
+        border-color: rgb(226 232 240 / var(--tw-border-opacity, 1));
+    }
+
+    .border-red-600 {
+        --tw-border-opacity: 1;
+        border-color: rgb(220 38 38 / var(--tw-border-opacity, 1));
+    }
+
+    .rounded-lg {
+        border-radius: .5rem;
+    }
+
+    .py-1\.5 {
+        padding-top: .375rem;
+        padding-bottom: .375rem;
+    }
+
+    .px-2 {
+        padding-left: .5rem;
+        padding-right: .5rem;
+    }
+
+    .px-3 {
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .inline-flex {
+        display: inline-flex;
+    }
+
+    .flex-col {
+        flex-direction: column;
+    }
+
+    .items-center {
+        align-items: center;
+    }
+
+    .justify-center {
+        justify-content: center;
+    }
+
+    .gap-1 {
+        gap: .25rem;
+    }
+
+    .gap-1\.5 {
+        gap: .375rem;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: .15s;
+        transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .shadow-sm {
+        --tw-shadow: 0 1px 2px 0 #0000000d;
+        --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+    }
+
+    .hover\:bg-slate-50:hover {
+        --tw-bg-opacity: 1;
+        background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1));
+    }
+
+    /* Space Utilities */
+    .space-y-1\.5 > :not([hidden]) ~ :not([hidden]),
+    .space-y-4 > :not([hidden]) ~ :not([hidden]),
+    .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-y-reverse: 0;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="d-flex align-items-center gap-3 mb-4">
+        <a asp-action="Index" asp-controller="PenugasanAset" class="btn btn-outline-secondary bg-white p-2 d-inline-flex align-items-center justify-content-center shadow-sm" style="border-radius: 8px; width: 38px; height: 38px;">
+            <i class="bi bi-arrow-left text-indigo-dark fs-5"></i>
+        </a>
+        <div>
+            <h1 class="h4 fw-bold text-indigo-dark mb-0.5">Registrasi Penugasan Aset Baru</h1>
+            <p class="text-muted small mb-0">Buat formulir serah terima barang inventaris untuk karyawan atau divisi departemen.</p>
+        </div>
+    </div>
+
+    <form id="formRegistrasiPenugasan" method="post" enctype="multipart/form-data">        
+        @Html.AntiForgeryToken()
+        <div class="row g-4">            
+            <!-- KOLOM KIRI -->
+            <div class="col-12 col-lg-4">
+                <div class="card border-0 shadow-sm p-4" style="border-radius: 12px; min-height: 100%;">
+                    <h6 class="text-uppercase tracking-wider fw-bold text-indigo-dark mb-3" style="font-size: 0.8rem;">Detail Penyerahan</h6>
+
+                    <div class="alert alert-info-custom d-flex gap-2 p-3 mb-4" role="alert">
+                        <i class="bi bi-question-circle-fill flex-shrink-0 fs-6"></i>
+                        <div>Pilih tipe penerima di bawah ini untuk menentukan kepada siapa barang diserahkan.</div>
+                    </div>
+
+                    <!-- Navigasi Tipe Penerima -->
+                    <div class="mb-4">
+                        <label class="form-label text-uppercase text-muted fw-bold tracking-wider mb-2" style="font-size: 0.75rem;">Tipe Penerima</label>
+                        <input type="hidden" asp-for="TipePenerima" id="TipePenerimaVal" value="1" />
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <!-- Ubah data-type="1" untuk Karyawan -->
+                                <button type="button" class="btn-tipe-penerima w-100 px-2 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer flex flex-col items-center justify-center gap-1 border-slate-200 bg-white text-slate-600" data-type="1">
+                                    <i class="bi bi-person"></i> Karyawan
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <!-- Ubah data-type="2" untuk Departemen -->
+                                <button type="button" class="btn-tipe-penerima w-100 px-2 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer flex flex-col items-center justify-center gap-1 border-slate-200 bg-white text-slate-600" data-type="2">
+                                    <i class="bi bi-building"></i> Department
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <!-- Ubah data-type="3" untuk Customer -->
+                                <button type="button" class="btn-tipe-penerima w-100 px-2 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer flex flex-col items-center justify-center gap-1 border-slate-200 bg-white text-slate-600" data-type="3">
+                                    <i class="bi bi-people"></i> Customer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Penerima -->
+                    <div class="mb-3">
+                        <label id="lblPenerima" class="form-label text-uppercase text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">Penerima (Karyawan) </label>
+                        <select asp-for="TargetPenerimaId" id="TargetPenerimaId" class="form-select select2-penerima" required style="width: 100%;">
+                            <option value="" selected disabled>Pilih Penerima...</option>
+                        </select>
+                        <span asp-validation-for="TargetPenerimaId" class="text-danger small d-block mt-1"></span>
+                    </div>
+
+                    <!-- Tanggal Serah Terima -->
+                    <div class="mb-3">
+                        <label class="form-label text-uppercase text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">Tanggal Serah Terima</label>
+                        <input asp-for="TanggalSerahTerima" type="text" id="TglSerahTerima" class="form-control" required />
+                        <span asp-validation-for="TanggalSerahTerima" class="text-danger small d-block mt-1"></span>
+                    </div>
+
+                    <!-- Keterangan / Notes -->
+                    <div class="mb-0">
+                        <label class="form-label text-uppercase text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">Keterangan / Notes</label>
+                        <textarea asp-for="Keterangan" class="form-control" rows="4" placeholder="Tuliskan catatan perihal penugasan aset..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KOLOM KANAN -->
+            <div class="col-12 col-lg-8">
+                <div class="card border-0 shadow-sm p-4" style="border-radius: 12px; min-height: 100%;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h6 class="text-uppercase tracking-wider fw-bold text-indigo-dark mb-0" style="font-size: 0.8rem;">Aset Yang Ditugaskan (<span id="lblItemCount">0</span>)</h6>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#modalPilihAset"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg text-xs font-bold transition-all cursor-pointer">
+                            <i class="bi bi-plus text-muted fs-5"></i> Cari Manual
+                        </button>
+                    </div>
+
+                    <div class="scanner-box p-3 mb-4">
+                        <div class="d-flex align-items-center gap-2 mb-2 text-indigo-dark fw-bold small">
+                            <i class="bi bi-qr-code-scan text-danger"></i> Mode Barcode / QR Scanner
+                        </div>
+                        <p class="text-muted mb-3" style="font-size: 0.75rem;">Arahkan fokus kursor ke input di bawah, lalu scan barcode/QR asset tag Anda, atau ketik langsung nomor serinya dan tekan Enter.</p>
+
+                        <div class="input-group">
+                            <input type="text" id="txtScanSerial" class="form-control font-monospace ps-3" placeholder="Tempel/Scan Serial Number di sini..." style="font-size: 0.9rem;" aria-label="Tempel/Scan Serial Number di sini...">
+                            <button class="btn btn-dark px-3 fw-medium d-flex align-items-center justify-content-center" type="button" id="btnTambahScan" style="background-color: #0f172a; border-radius: 0 6px 6px 0;" title="Scan QR / Cari Serial">
+                                <i class="bi bi-qr-code-scan fs-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive border-0 overflow-hidden">
+                    <table class="table align-middle mb-0" id="tableSelectedAset">
+                        <thead>
+                            <tr class="text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0;">
+                                <th class="py-3" style="width: 35%;">Barang & SN</th>
+                                <th class="py-3" style="width: 25%;">Lokasi Awal</th>
+                                <th class="py-3" style="width: 15%;">Kuantitas</th>
+                                <th class="py-3" style="width: 15%;">Kondisi</th>
+                                <th class="py-3 text-center" style="width: 10%;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodySelectedAset"></tbody>
+                    </table>
+                    <div class="table-empty-state my-2" id="emptyStateDetail">
+                        Daftar aset kosong. Silakan scan barcode atau cari manual di atas.
+                    </div>
+                </div>
+
+                    <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-4">
+                        <a asp-action="Index" asp-controller="PenugasanAset" class="btn btn-batal-modal btn-sm">
+                            <i class="bi bi-arrow-90deg-left"></i> Batal
+                        </a>
+                        <button type="submit" class="btn btn-save btn-sm" id="btnSubmitForm">
+                            <i class="bi bi-check-lg me-1"></i> Simpan Penugasan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="text" name="KodePenugasan" value="@Model.KodePenugasan" readonly hidden="hidden" />
+    </form>
+</div>
+
+@await Html.PartialAsync("PilihAset")
+
+@section Scripts {
+    <script src="~/js/PenugasanAset.js"></script>
+    <script>
+        $(document).ready(function () {
+            var inputElement = document.getElementById('TglSerahTerima');
+            
+            if (inputElement) {
+                // Inisialisasi Flatpickr saat halaman dimuat
+                flatpickr(inputElement, {
+                    dateFormat: "d/m/Y",
+                    allowInput: true,
+                    locale: {
+                        firstDayOfWeek: 1
+                    }
+                });
+            }
+        });
+    </script>
+}

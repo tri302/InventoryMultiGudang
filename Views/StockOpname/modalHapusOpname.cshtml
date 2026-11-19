@@ -1,0 +1,31 @@
+﻿<div class="modal fade" id="modalHapusOpname" tabindex="-1" aria-labelledby="modalHapusOpnameLabel" aria-hidden="true">
+    <input type="hidden" id="deleteOpnameId" />
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 540px;">
+        <div class="modal-content border-0 shadow-lg p-3 rounded-4" style="background: #ffffff;">
+            <div class="modal-body p-3">
+                <div class="d-flex align-items-start gap-3">
+                    <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
+                         style="width: 48px; height: 48px; background-color: #fef2f2; color: #ef4444;">
+                        <i class="bi bi-trash3 fs-4"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="fw-bold text-indigo-dark mb-2" id="modalHapusOpnameLabel" style="color: #0f172a !important; font-size: 1.15rem;">
+                            Hapus Dokumen Stock Opname?
+                        </h5>
+                        <p class="text-muted mb-0 lh-base" style="font-size: 0.925rem; color: #64748b !important;">
+                            Apakah Anda yakin ingin menghapus dokumen audit <strong id="deleteNoRefText" class="text-dark"></strong>? Data draft ini akan hilang permanen.
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end gap-2 mt-4 pt-2">
+                    <button type="button" class="btn btn-cancel px-4 py-2 border text-secondary fw-semibold bg-white rounded-3" data-bs-dismiss="modal" style="font-size: 0.875rem;">
+                        Batal
+                    </button>
+                    <button type="button" onclick="StockOpname.executeDelete()" class="btn btn-danger px-4 py-2 text-white border-0 rounded-3 fw-semibold shadow-sm" style="background-color: #dc2626 !important; font-size: 0.875rem;">
+                        Hapus Permanen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

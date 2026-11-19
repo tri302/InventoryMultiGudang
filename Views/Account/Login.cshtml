@@ -1,0 +1,202 @@
+﻿@model InventoryMultiGudang.ViewModels.LoginViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Sign In";
+}
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="~/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="~/toastr/toastr.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Login.css" />        
+</head>
+
+<body>
+    <div class="grid-background"></div>
+    <div class="container login-wrapper my-5">
+        <div class="row align-items-center g-5">
+            <!-- Left Column: Branding & Features -->
+            <div class="col-lg-6 animate-fade-in animate-delay-1">
+                <div class="mb-4">
+                    <div class="brand-logo">
+                        <div class="brand-icon">
+                            <i class="bi bi-box-seam-fill"></i>
+                        </div>
+                        <span>Inventory Modern</span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <span class="badge-platform">
+                        <i class="bi bi-lightning-charge-fill text-warning"></i> Inventory Platform
+                    </span>
+                </div>
+
+                <h1 class="hero-title mb-3">
+                    Inventory <span>Multi-Gudang Modern.</span>
+                </h1>
+
+                <p class="hero-subtitle mb-4">
+                    Sinkronisasi stok antar-cabang, pantau valuasi aset, dan kelola mutasi barang presisi.
+                </p>
+
+                <!-- Features Grid -->
+                <div class="row g-3 max-w-lg">
+                    <div class="col-6">
+                        <div class="feature-card">
+                            <div class="feature-icon-box">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <span class="feature-text">Multi-Gudang Modern</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="feature-card">
+                            <div class="feature-icon-box">
+                                <i class="bi bi-arrow-repeat"></i>
+                            </div>
+                            <span class="feature-text">Sinkronisasi Stok</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="feature-card">
+                            <div class="feature-icon-box">
+                                <i class="bi bi-database"></i>
+                            </div>
+                            <span class="feature-text">Valuasi Aset Finansial</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="feature-card">
+                            <div class="feature-icon-box">
+                                <i class="bi bi-cpu"></i>
+                            </div>
+                            <span class="feature-text">Mutasi Barang Presisi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 text-muted small">
+                    © @DateTime.Now.Year Inventory. All rights reserved.
+                </div>
+            </div>
+
+            <!-- Right Column: Login Card -->
+            <div class="col-lg-5 offset-lg-1 animate-fade-in animate-delay-2">
+                <div class="login-card-container">
+                    
+                    <div class="text-start mb-4">
+                        <h2 class="fw-bold text-dark mb-1" style="font-size: 1.75rem;">Welcome Back</h2>
+                        <p class="text-muted small">Enter your credentials to access your dashboard</p>
+                    </div>
+
+                    <!-- Antiforgery Token Form -->
+                    <form id="formLogin" method="post" autocomplete="off"
+                          data-url="@Url.Action("ProcessLogin", "Account")">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" id="ReturnUrl" value="@Model?.ReturnUrl" />
+
+                        <!-- Email Field -->
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-secondary">Email Address</label>
+                            <div class="position-relative form-group-relative">
+                                <i class="bi bi-envelope input-icon"></i>
+                                <input type="email" id="Email" class="form-control form-control-custom"
+                                       placeholder="nama@company.com" required value="@Model?.Email" />
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label class="form-label small fw-semibold text-secondary mb-0">Password</label>
+                                <a href="javascript:void(0)"
+                                   onclick="toastr.info('Silakan hubungi Super Admin untuk mereset kata sandi Anda.')"
+                                   class="small text-danger text-decoration-none fw-medium">Forgot password?</a>
+                            </div>
+                            <div class="position-relative form-group-relative">
+                                <i class="bi bi-lock input-icon"></i>
+                                <input type="password" id="Password" class="form-control form-control-custom"
+                                       placeholder="••••••••" required />
+                                <button type="button" class="btn-toggle-password" id="btnTogglePassword">
+                                    <i class="bi bi-eye" id="eyeIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Remember Me Checkbox -->
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="RememberMe" />
+                            <label class="form-check-input-label small text-secondary" for="RememberMe">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="btnSubmit" class="btn btn-submit mb-4">
+                            <span id="btnText">Sign In</span>
+                            <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none"
+                                  role="status"></span>
+                        </button>
+                    </form>
+
+                    <!-- Demo Accounts Card -->
+                    <div class="row g-2">
+                        <!-- Super Admin -->
+                        <div class="col-4">
+                            <div class="demo-card" onclick="fillDemo('superadmin@example.com', 'superadmin123')">
+                                <div class="demo-role">Super Admin</div>
+                                <div class="demo-email">superadmin@example.com</div>
+                                <div class="demo-pass">superadmin123</div>
+                            </div>
+                        </div>
+                        <!-- Manager -->
+                        <div class="col-4">
+                            <div class="demo-card" onclick="fillDemo('manager@example.com', 'manager123')">
+                                <div class="demo-role">Manager</div>
+                                <div class="demo-email">manager@example.com</div>
+                                <div class="demo-pass">manager123</div>
+                            </div>
+                        </div>
+                        <!-- Staff -->
+                        <div class="col-4">
+                            <div class="demo-card" onclick="fillDemo('warehousestaff@example.com', 'warehousestaff123')">
+                                <div class="demo-role"> Staff</div>
+                                <div class="demo-email">staff@example.com</div>
+                                <div class="demo-pass">staff123</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <span class="text-muted" style="font-size: 0.75rem;">
+                            By signing in, you agree to our <a href="#"
+                                                               class="text-decoration-none text-secondary">Terms of Service</a> and <a href="#"
+                                                                                                    class="text-decoration-none text-secondary">Privacy Policy</a>.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script href="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/toastr/toastr.min.js"></script>
+    <script src="~/js/Login.js"></script>        
+</body>
+</html>

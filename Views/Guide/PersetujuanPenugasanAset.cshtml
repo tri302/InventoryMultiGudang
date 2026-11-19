@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "_GuideLayout";
+}
+
+<div class="article-container">
+    <div class="row g-5">
+
+        <!-- Main Content Area -->
+        <div class="col-lg-12">
+
+            <!-- Breadcrumbs -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3">
+                    <li class="breadcrumb-item"><a href="#">Panduan</a></li>
+                    <li class="breadcrumb-item"><a href="#">Asset Tracking</a></li>
+                    <li class="breadcrumb-item active">Persetujuan Penugasan Aset (BAST)</li>
+                </ol>
+            </nav>
+
+            <!-- Tags / Badges -->
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="tag-pill tag-pill-danger">Asset Tracking</span>
+                <span class="tag-pill tag-pill-light">Menengah</span>
+                <span class="tag-pill tag-pill-light">Staff</span>
+                <span class="tag-pill tag-pill-primary">Manager</span>
+                <span class="tag-pill tag-pill-light">Super Admin</span>
+            </div>
+
+            <!-- Article Title -->
+            <h1 class="article-title">Persetujuan Penugasan Aset (BAST)</h1>
+
+            <!-- Article Meta Info -->
+            <div class="article-meta">
+                <span><i class="bi bi-clock me-1"></i> 5 menit baca</span>
+                <span><i class="bi bi-calendar3 me-1"></i> Terakhir diperbarui</span>
+            </div>
+
+            <hr class="text-border mb-4">
+
+            <!-- Article Body Content -->
+            <div class="article-body">
+                <p>Modul <strong>Penugasan Aset (Asset Assignment)</strong> digunakan untuk mencatat serah terima aset kantor (misal: laptop, smartphone, mobil dinas) kepada karyawan, departemen, atau klien tertentu secara resmi.</p>
+
+                <!-- Section 1 -->
+                <h5 id="alur-kerja-approval-workflow">Alur Kerja Approval Workflow</h5>
+                <p>Untuk mencegah pengeluaran aset tanpa izin, penugasan aset harus melalui alur persetujuan:</p>
+
+                <p><strong>Pengajuan (BAST Draft):</strong> Staff membuat formulir penugasan, memilih karyawan penerima, dan memilih nomor seri laptop yang akan diserahkan. Status: <span class="status-badge">PENDING_APPROVAL</span>.</p>
+
+                <p><strong>Reservasi Stok:</strong> Nomor seri laptop yang dipilih akan otomatis dikunci (re-reserved) sehingga staff lain tidak bisa meminjam atau menjualnya di modul lain. Namun stok gudang belum berkurang sebelum disetujui.</p>
+
+                <p class="mb-2"><strong>Keputusan Manager:</strong></p>
+                <ul class="ps-3 mb-4">
+                    <li class="mb-2">
+                        <strong>Disetujui (Approved):</strong> Status berubah menjadi <span class="status-badge">ASSIGNED</span>. Stok gudang berkurang, status nomor seri berubah dari <span class="status-badge">IN_STOCK</span> menjadi <span class="status-badge">ASSIGNED</span> kepada karyawan tersebut. Berita Acara Serah Terima (BAST) siap dicetak.
+                    </li>
+                    <li class="mb-2">
+                        <strong>Ditolak (Rejected):</strong> Status dokumen berubah menjadi <span class="status-badge">REJECTED</span>. Reservasi nomor seri dibatalkan dan laptop kembali tersedia secara bebas untuk diproses staff lain.
+                    </li>
+                </ul>
+
+                <!-- Section 2 -->
+                <h5 id="mencetak-dokumen-bast">Mencetak Dokumen BAST</h5>
+                <p>Setelah status penugasan berubah menjadi <strong>Assigned</strong>, klik tombol <strong>Cetak BAST</strong> untuk mengunduh dokumen serah terima resmi berformat PDF yang siap ditandatangani oleh penerima aset.</p>
+
+                <!-- Section 3 -->
+                <h5 id="pengembalian-aset">Pengembalian Aset</h5>
+                <p>Jika karyawan mengundurkan diri atau mengembalikan aset ke kantor:</p>
+
+                <p class="mb-1">Buka kembali halaman Detail Penugasan aset terkait.</p>
+                <p class="mb-1">Klik tombol <strong>Kembalikan Aset</strong>.</p>
+                <p class="mb-4">Sistem akan menambah kembali stok di gudang yang ditunjuk dan mengembalikan status Serial Number menjadi <span class="status-badge">IN_STOCK</span> (Tersedia).</p>
+            </div>
+
+            <!-- Previous & Next Article Navigation Cards -->
+            <div class="row g-3 my-4">
+                <div class="col-6">
+                    <a asp-action="Mutasi" asp-controller="Guide" class="nav-article-card text-start">
+                        <span class="text-muted extra-small d-block text-uppercase fw-bold tracking-wider mb-1">SEBELUMNYA</span>
+                        <span class="fw-bold text-indigo-dark d-flex align-items-center gap-2">
+                            <i class="bi bi-arrow-left"></i> Mutasi Antar-Gudang (Transfer Ord...
+                        </span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a asp-action="PeminjamanAsetOverdue" asp-controller="Guide" class="nav-article-card text-end">
+                        <span class="text-muted extra-small d-block text-uppercase fw-bold tracking-wider mb-1">SELANJUTNYA</span>
+                        <span class="fw-bold text-indigo-dark d-flex align-items-center justify-content-end gap-2">
+                            Peminjaman Aset & Overdue <i class="bi bi-arrow-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="feedback-box">
+                <p class="fw-bold text-indigo-dark mb-3 small">Apakah panduan ini bermanfaat bagi Anda?</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-up"></i> Ya, membantu
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-down"></i> Belum membantu
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sticky Right Sidebar / Table of Contents -->
+        <div class="col-lg-4 d-none d-lg-block">
+            <!-- Sidebar TOC tempat navigasi cepat jika dibutuhkan -->
+        </div>
+
+    </div>
+</div>

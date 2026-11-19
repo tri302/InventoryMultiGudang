@@ -1,0 +1,86 @@
+﻿@model List<InventoryMultiGudang.Models.ViewModels.PermissionManagerRowViewModel>
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <!-- Nav Tab Sub-menu -->
+    <div class="d-flex gap-2 border-bottom mb-3">
+        <a asp-action="Index" asp-controller="RolesPermissions" class="nav-link-custom">Role-Permissions Matrix</a>
+        <a asp-action="PermissionsManager" asp-controller="RolesPermissions" class="nav-link-custom active">Permissions Manager</a>
+    </div>
+
+    <!-- Filter Bar & Action Button -->
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <form method="get" asp-action="PermissionsManager" class="input-group" style="max-width: 320px;">
+            <span class="input-group-text bg-white border-end-0 text-muted py-1 px-2.5"><i class="bi bi-search" style="font-size: 0.8rem;"></i></span>
+            <input type="text" name="search" value="@ViewBag.Search" class="form-control border-start-0 ps-0 py-1 text-secondary" placeholder="Search permissions..." style="font-size: 0.8rem;">
+        </form>
+        <button class="btn btn-success rounded-pill px-4 btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddPermission">
+            <i class="bi bi-plus"></i> Add Permission
+        </button>
+    </div>
+
+    <!-- Data Table Container -->
+    <div class="card card-custom shadow-sm border-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0" style="font-size: 0.825rem;">
+                <thead class="table-light text-uppercase text-muted" style="font-size: 0.7rem; background-color: #f8fafc;">
+                    <tr>
+                        <th class="ps-3 py-2.5" style="width: 20%;">Permission Name</th>
+                        <th style="width: 15%;">Category</th>
+                        <th style="width: 45%;">Assigned Roles</th>
+                        <th style="width: 12%;">Type</th>
+                        <th class="pe-3 text-end" style="width: 8%;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-secondary">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-3 text-dark fw-medium">
+                                <i class="bi bi-key me-1.5 text-muted px-1 py-1" style="font-size: 0.75rem;"></i>@item.Name
+                            </td>
+                            <td><span class="badge bg-light text-secondary border px-2 py-1">@item.Category</span></td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var r in item.AssignedRoles)
+                                    {
+                                        bool isRed = r == "Super Admin" || r == "Admin";
+                                        <span class="badge badge-role border @(isRed ? "text-danger bg-danger-subtle border-danger-subtle" : "text-secondary bg-light")">@r</span>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                @if (item.Type == "System Core")
+                                {
+                                    <span class="badge bg-secondary text-white px-2 py-0.5 border">System Core</span>                                    
+                                }
+                                else
+                                {
+                                    <span class="badge bg-light text-secondary border px-2 py-0.5">Custom</span>
+                                }
+                            </td>
+                            <td class="pe-3 text-end">
+                                @if (item.Type == "System Core")
+                                {
+                                    <i class="bi bi-lock-fill action-icon opacity-50"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-trash action-icon cursor-pointer text-danger btn-delete-perm" data-id="@item.Id"></i>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("modalAddPermission")
+
+@section Scripts {    
+    <script src="~/js/modalAddPermission.js"></script>
+}

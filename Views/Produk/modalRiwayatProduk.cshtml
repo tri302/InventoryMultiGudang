@@ -1,0 +1,59 @@
+﻿<!-- Modal Riwayat Hidup / Serial Number Produk -->
+<div class="modal fade" id="modalRiwayatProduk" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalRiwayatProdukLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0">
+
+            <!-- Modal Header -->
+            <div class="modal-header align-items-center border-bottom-0 pb-0">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="fs-4 text-danger d-inline-flex">
+                        <i class="bi bi-box-seam"></i>
+                    </span>
+                    <div>
+                        <h5 class="modal-title fw-bold text-indigo-dark mb-0" id="modalRiwayatProdukLabel">Daftar Serial Number</h5>
+                        <small class="text-muted" id="snModalSubTitle">-</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body pt-3">
+
+                <!-- BADGES RINGKASAN STOK PER STATUS -->
+            <div class="d-flex flex-wrap gap-2 mb-3" id="snStatusSummary">
+                <span class="badge bg-secondary text-white px-3 py-2 rounded-pill fw-semibold" id="sumTotal">Total: 0 Unit</span>
+                <span class="badge bg-success text-white px-3 py-2 rounded-pill fw-semibold" id="sumInStock">0 In Stock</span>
+                <span class="badge bg-primary text-white px-3 py-2 rounded-pill fw-semibold" id="sumAssigned">0 Assigned</span>
+                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-semibold" id="sumLoaned">0 Loaned</span>
+                <span class="badge bg-danger text-white px-3 py-2 rounded-pill fw-semibold" id="sumRepair">0 Repair</span>
+                <span class="badge bg-dark text-white px-3 py-2 rounded-pill fw-semibold" id="sumLost">0 Lost</span>
+            </div>
+
+                <!-- TABLE DAFTAR SERIAL NUMBER -->
+                <div class="table-responsive border rounded-3 style-scroll" style="max-height: 380px; overflow-y: auto;">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light sticky-top">
+                            <tr class="text-uppercase text-muted fw-bold" style="font-size: 0.75rem;">
+                                <th class="ps-3 py-2" style="width: 50px;">#</th>
+                                <th class="py-2">Serial Number</th>
+                                <th class="py-2">Gudang / Rak</th>
+                                <th class="py-2 text-center">Status</th>
+                                <th class="py-2 text-center" style="width: 80px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="snTableBody">
+                            <!-- AJAX content di-render di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer border-top-0 bg-white pt-2">
+                <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Tutup</button>
+            </div>
+
+        </div>
+    </div>
+</div>

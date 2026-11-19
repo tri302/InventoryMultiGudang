@@ -1,0 +1,77 @@
+﻿@model InventoryMultiGudang.ViewModels.CustomerViewModel
+
+<!-- Modal Tambah Customer Baru -->
+<div class="modal fade" id="modalTambahCustomer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTambahCustomerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content border-0">
+
+            <!-- Modal Header -->
+            <div class="modal-header d-flex align-items-start justify-content-between border-bottom-0 pb-0">
+                <div>
+                    <h5 class="modal-title fw-bold text-indigo-dark" id="modalTambahCustomerLabel">Tambah Customer Baru</h5>
+                </div>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body pt-3">
+                <form id="formTambahCustomer" enctype="multipart/form-data">
+                    <div class="row g-3">
+
+                        <!-- Nama Customer / Instansi -->
+                        <div class="col-12">
+                            <label class="form-label text-uppercase text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">Nama Customer / Instansi</label>
+                            <input asp-for="NamaCustomer" type="text" class="form-control" placeholder="Contoh: PT Solusi Utama">
+                            <span asp-validation-for="NamaCustomer" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Alamat Email -->
+                        <div class="col-12">
+                            <label class="form-label text-uppercase text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">Alamat Email</label>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="nama@perusahaan.com">
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Nomor Telepon -->
+                        <div class="col-12">
+                            <label class="form-label text-uppercase text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">Nomor Telepon</label>
+                            <input asp-for="NoTelepon" type="text" class="form-control" placeholder="Contoh: 021-5551234 atau 0812...">
+                            <span asp-validation-for="NoTelepon" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Alamat Site / Kantor -->
+                        <div class="col-12">
+                            <label class="form-label text-uppercase text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">Alamat Site / Kantor</label>
+                            <textarea asp-for="Alamat" class="form-control" rows="4" placeholder="Tuliskan alamat lengkap..."></textarea>
+                            <span asp-validation-for="Alamat" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Checkbox Customer Aktif -->
+                        <div class="col-12 mt-3">
+                            <div class="form-check d-flex align-items-center gap-2">
+                                <input asp-for="IsActive" class="form-check-input form-checkbox-custom mt-0" type="checkbox" id="checkCustomerAktif" checked>
+                                <label class="fw-bold text-indigo-dark text-uppercase tracking-wider cursor-pointer" for="checkCustomerAktif" style="user-select: none; font-size: 0.75rem;">
+                                    Customer Aktif (Dapat Ditugaskan Aset)
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-0">
+                <button type="button" class="btn btn-batal-modal btn-sm" data-bs-dismiss="modal">
+                    <i class="bi bi-arrow-90deg-left"></i>
+                    Batal
+                </button>
+                <button type="submit" form="formTambahCustomer" class="btn btn-save btn-sm">
+                    <i class="bi bi-check-lg me-1"></i>
+                    Simpan Customer
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

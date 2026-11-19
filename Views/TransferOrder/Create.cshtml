@@ -1,0 +1,99 @@
+﻿<style>   
+    .select2-container {
+    width: 100% !important;
+    z-index: 9999 !important; /* Memastikan dropdown berada di atas layer modal */
+}
+</style>
+<div class="modal fade" id="modalTransferOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTransferOrderLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content border-0">
+            <!-- Header Modal -->
+            <div class="modal-header bg-white align-items-center py-3 px-4">
+                <div class="d-flex align-items-center gap-3">
+                    <button type="button" class="btn btn-link p-0 text-muted border-0 lh-1" data-bs-dismiss="modal" aria-label="Back">
+                        <i class="bi bi-arrow-left fs-4"></i>
+                    </button>
+                    <div>
+                        <h5 class="modal-title fw-bold text-indigo-dark" id="modalTransferOrderLabel">Buat Transfer Order</h5>
+                        <p class="text-muted small mb-0 mt-0.5">Buat pengajuan mutasi stok barang dari satu gudang asal ke gudang tujuan.</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Body Modal -->
+            <form id="formCreateTO" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body p-4 bg-white">
+                    <!-- Baris 1: Gudang Asal & Gudang Tujuan -->
+                    <div class="row g-4 mb-4">
+                        <!-- Gudang Asal -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-custom">Gudang Asal (Pengirim)</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                <select name="GudangAsalId" id="GudangAsalId" class="form-select select2-gudang" required>
+                                    <option value="" selected disabled>-- Pilih Gudang Asal --</option>
+                                </select>
+                            </div>
+                            <span class="text-danger small fw-semibold validation-warning" data-valmsg-for="GudangAsalId"></span>
+                        </div>
+
+                        <!-- Gudang Tujuan -->
+                        <div class="col-12 col-md-6">
+                            <label class="form-label-custom">Gudang Tujuan (Penerima)</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                <select name="GudangTujuanId" id="GudangTujuanId" class="form-select select2-gudang" required>
+                                    <option value="" selected disabled>-- Pilih Gudang Tujuan --</option>
+                                </select>
+                            </div>
+                            <span class="text-danger small fw-semibold validation-warning" data-valmsg-for="GudangTujuanId"></span>
+                        </div>
+                    </div>
+
+                    <!-- Baris 2: Catatan Mutasi -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <label class="form-label-custom">Catatan Mutasi</label>
+                            <textarea name="Catatan" id="Catatan" class="form-control" rows="4" placeholder="E.g. Pengiriman suplai cabang, pemindahan inventaris akhir kuartal..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Bagian Detail Produk Transfer -->
+                    <div class="border-top pt-4 mt-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center gap-2 fw-bold text-indigo-dark small tracking-wider text-uppercase">
+                                <i class="bi bi-boxes text-indigo"></i> Detail Produk Transfer
+                            </div>
+                            <button type="button" id="btnTambahBaris" class="btn btn-action-grid py-1.5 px-3 d-flex align-items-center gap-2 text-danger border-danger-subtle bg-danger-subtle" style="background-color: #fef2f2 !important; color: #ef4444 !important; border: 1px solid #fee2e2 !important; border-radius: 6px;">
+                                <i class="bi bi-plus-lg"></i> Tambah Baris
+                            </button>
+                        </div>
+
+                        <!-- Container Dynamic Rows -->
+                        <div id="detailProdukContainer">
+                            <!-- Rows injected dynamically by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Modal -->
+                <div class="modal-footer justify-content-between align-items-center py-3 px-4">
+                    <div class="text-muted small">
+                        Status awal dokumen adalah <span class="fw-bold">Pending</span>. Stok tidak akan dikurangi sampai barang dikirim.
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-sm btn-batal-modal px-4 py-2" data-bs-dismiss="modal">
+                            <i class="bi bi-arrow-90deg-left"></i>
+                            Batal
+                        </button>
+                        <button type="submit" class="btn btn-sm btn-emerald-custom px-4 py-2 d-flex align-items-center gap-2 shadow-sm">
+                            <i class="bi bi-file-earmark-check"></i> Simpan Dokumen
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

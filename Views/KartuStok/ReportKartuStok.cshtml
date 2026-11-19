@@ -1,0 +1,313 @@
+﻿@model InventoryMultiGudang.ViewModels.KartuStokReportViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Kartu Stok - @Model.Sku</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --indigo-primary: #4f46e5;
+            --indigo-dark: #312e81;
+            --indigo-light: #eef2ff;
+            --bg-light: #f8fafc;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+
+        /* Topbar Preview */
+        .preview-topbar {
+            background: #ffffff;
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Kertas Print Styling - Ukuran A4 Portrait */
+        .print-paper {
+            max-width: 210mm; /* Lebar standar A4 */
+            min-height: 297mm; /* Tinggi standar A4 */
+            margin: 24px auto;
+            background: #ffffff;
+            padding: 10mm; /* Padding standar cetak */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .meta-box-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .meta-box-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--indigo-dark);
+        }
+
+        /* Summary Widget */
+        .summary-widget {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: left;
+        }
+
+        .summary-widget-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        /* Tabel Print */
+        .table-print th {
+            background-color: #f1f5f9 !important;
+            color: #334155;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 10px 8px;
+        }
+
+        .table-print td {
+            font-size: 0.825rem;
+            padding: 10px 8px;
+        }
+
+        /* Badge Custom */
+        .badge-print {
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+
+        .badge-stock-in {
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .badge-stock-out {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .badge-proses {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        @@media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background-color: #ffffff;
+            }
+
+            .print-container, .print-paper {
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 10mm !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+
+            @@page {
+                size: A4 portrait; /* Mengatur halaman cetak printer menjadi Portrait */
+                margin: 10mm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPBAR NO-PRINT -->
+    <div class="preview-topbar d-flex justify-content-between align-items-center shadow-sm sticky-top no-print">
+        <div class="d-flex align-items-center gap-2">
+            <div class="avatar-box bg-light text-danger d-flex align-items-center justify-content-center rounded" style="width: 36px; height: 36px;">
+                <i class="bi bi-file-earmark-pdf-fill fs-5"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-0 text-indigo-dark" style="font-size: 0.9rem;">Mode Pratinjau Cetak</h6>
+                <span class="text-muted" style="font-size: 0.75rem;">Jurnal Laporan Kartu Stok (Audit Trail)</span>
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-secondary btn-sm px-3 d-flex align-items-center gap-1" onclick="window.close()">
+                <i class="bi bi-x-lg"></i> Tutup Halaman
+            </button>
+            <button class="btn btn-success btn-sm px-3 d-flex align-items-center gap-1 shadow-sm" onclick="window.print()">
+                <i class="bi bi-printer"></i> Cetak Sekarang
+            </button>
+        </div>
+    </div>
+
+    <!-- HALAMAN DOKUMEN -->
+    <div class="container-fluid py-3">
+        <div class="print-paper">            
+            <!-- Header / Kop Dokumen -->
+            <div class="row pb-3 mb-4 border-bottom align-items-center">
+                <div class="col-7">
+                    <!-- Nama Perusahaan Dinamis dari ViewBag -->
+                    <h3 class="fw-bold text-dark mb-1" style="color: #4f46e5; letter-spacing: -0.02em;">@ViewBag.SiteName</h3>
+                    <p class="text-muted font-monospace mb-0" style="font-size: 0.725rem; line-height: 1.4;">
+                        <!-- Deskripsi / Slogan Dinamis -->
+                        @ViewBag.SiteDescription<br>
+                        <!-- Alamat Dinamis -->
+                        @ViewBag.CompanyAddress<br>
+                        <!-- Telp & Email Dinamis -->
+                        Telp: @ViewBag.CompanyPhone | Email: @ViewBag.CompanyEmail
+                    </p>
+                </div>
+                <div class="col-5 text-end">
+                    <h4 class="fw-bold text-indigo-dark mb-1" style="font-size: 1.25rem; letter-spacing: 0.02em;">JURNAL KARTU STOK</h4>
+                    <div class="text-muted font-monospace" style="font-size: 0.75rem;">
+                        <div>Ref No: <span class="text-dark fw-bold">@Model.NomorReport</span></div>
+                        <div>Tanggal Cetak: <span class="text-dark">@Model.TanggalCetak.ToString("dd MMMM yyyy 'pukul' HH.mm")</span></div>
+                        <div>Operator: <span class="text-dark">@Model.Operator</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Gudang & Produk Meta Grid -->
+            <div class="row g-3 p-3 mb-4 rounded-3" style="background-color: var(--bg-light); border: 1px solid var(--border-color);">
+                <div class="col-md-6 border-end">
+                    <div class="meta-box-title">Informasi Gudang</div>
+                    <div class="meta-box-value mt-1">@Model.NamaGudang</div>
+                    <div class="text-muted font-monospace" style="font-size: 0.725rem;">Kode Gudang: @Model.KodeGudang</div>
+                </div>
+                <div class="col-md-6 ps-md-4">
+                    <div class="meta-box-title">Informasi Produk</div>
+                    <div class="meta-box-value mt-1">@Model.NamaProduk</div>
+                    <div class="text-muted font-monospace" style="font-size: 0.725rem;">
+                        SKU: <span class="text-dark fw-bold">@Model.Sku</span> &bull; Satuan: <span class="text-dark">@Model.Satuan</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Stock Widgets -->
+            <div class="row g-3 mb-4">
+                <div class="col-3">
+                    <div class="summary-widget">
+                        <div class="form-label mb-1 text-muted small fw-semibold">Stok Awal</div>
+                        <div class="summary-widget-val">@Model.StokAwal <span class="fs-6 fw-normal text-muted">@Model.Satuan</span></div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="summary-widget">
+                        <div class="form-label mb-1 text-success small fw-semibold">Total Masuk (+)</div>
+                        <div class="summary-widget-val text-success">+@Model.TotalMasuk <span class="fs-6 fw-normal text-muted">@Model.Satuan</span></div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="summary-widget">
+                        <div class="form-label mb-1 text-danger small fw-semibold">Total Keluar (-)</div>
+                        <div class="summary-widget-val text-danger">-@Model.TotalKeluar <span class="fs-6 fw-normal text-muted">@Model.Satuan</span></div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="summary-widget" style="border-color: var(--indigo-primary); background-color: var(--indigo-light);">
+                        <div class="form-label mb-1 text-primary small fw-bold">Stok Akhir</div>
+                        <div class="summary-widget-val text-primary">@Model.StokAkhir <span class="fs-6 fw-normal text-muted">@Model.Satuan</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabel Riwayat Mutasi Lengkap -->
+            <div class="table-responsive">
+                @if (Model.Rows == null || Model.Rows.Count == 0)
+                {
+                    <div class="text-center py-5 border rounded-3 bg-light">
+                        <i class="bi bi-info-circle fs-3 text-muted"></i>
+                        <strong class="text-muted d-block mt-2">Belum ada data untuk ditampilkan !</strong>
+                        <span class="text-muted small">Pastikan gudang dan produk yang dipilih memiliki catatan histori mutasi stok.</span>
+                    </div>
+                }
+                else
+                {
+                    <table class="table table-bordered table-print align-middle">
+                        <thead>
+                            <tr class="text-center">
+                                <th style="width: 15%;">Tanggal & Waktu</th>
+                                <th style="width: 16%;">Tipe</th>
+                                <th style="width: 8%;">Jumlah</th>
+                                <th style="width: 10%;">Alur Stok</th>
+                                <th style="width: 22%;">Referensi</th>
+                                <th style="width: 12%;">Pencatat</th>
+                                <th style="width: 17%;">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var row in Model.Rows)
+                            {
+                                <tr>
+                                    <td class="font-monospace text-muted small text-center">@row.TanggalPosting.ToString("dd MMM yyyy, HH.mm")</td>
+                                    <td class="text-center">
+                                        <span class="badge-print @row.BadgeClass">@row.TipeTransaksi</span>
+                                    </td>
+                                    <td class="text-center fw-bold @(row.Jumlah >= 0 ? "text-success" : "text-danger")">
+                                        @(row.Jumlah >= 0 ? "+" : "")@row.Jumlah
+                                    </td>
+                                    <td class="text-center font-monospace text-muted">
+                                        @row.StokSebelum &rarr; @row.StokSesudah
+                                    </td>
+                                    <td>
+                                        <div class="fw-bold font-monospace small">@row.NomorReferensi</div>
+                                        @if (!string.IsNullOrWhiteSpace(row.KodeLokasi))
+                                        {
+                                            <div class="text-muted font-monospace" style="font-size: 0.68rem; line-height: 1.2;">Lokasi: @row.KodeLokasi</div>
+                                        }
+                                    </td>
+                                    <td><span class="text-muted"><i class="bi bi-person-circle"></i> @row.Pembuat</span></td>
+                                    <td><small class="text-muted">@row.Catatan</small></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+
+            <!-- Tanda Tangan Komponen -->
+            <div class="row text-center mt-5 pt-4" style="font-size: 0.85rem;">
+                <div class="col-6">
+                    <p class="text-muted mb-0">Petugas Audit Stok</p>                                                            
+                    <div style="border-bottom: 1px solid var(--border-color); width: 200px; margin: 4.5rem auto 0.5rem auto;"></div>                    
+                    <p class="fw-bold text-indigo-dark mb-0">@Model.Operator</p>
+                    <p class="text-muted small">Pemeriksa/Staff Gudang</p>
+                </div>
+                <div class="col-6">
+                    <p class="text-muted mb-0">Mengetahui/Menyetujui</p>
+                    <div style="border-bottom: 1px solid var(--border-color); width: 200px; margin: 4.5rem auto 0.5rem auto;"></div>                                        
+                    <p class="fw-bold text-indigo-dark mb-0">(..................................)</p>
+                    <p class="text-muted small mt-1">Supervisor/Kepala Gudang</p>                    
+                </div>
+            </div>
+
+            <!-- Footer Dokumen Rahasia -->            
+            <div class="text-center text-muted mt-5 pt-3 border-top" style="font-size: 0.68rem; letter-spacing: 0.05em;">
+                DOKUMEN HASIL CETAK OTOMATIS SISTEM @ViewBag.SiteName &bull; BERSIFAT RAHASIA INTERNAL PERUSAHAAN
+            </div>
+        </div>
+    </div>
+</body>
+</html>

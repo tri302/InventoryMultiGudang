@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "_GuideLayout";
+}
+
+<div class="article-container">
+    <div class="row g-5">
+
+        <!-- Main Content Area -->
+        <div class="col-lg-12">
+
+            <!-- Breadcrumbs -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3">
+                    <li class="breadcrumb-item"><a href="#">Panduan</a></li>
+                    <li class="breadcrumb-item"><a href="#">Transaksi & Stok</a></li>
+                    <li class="breadcrumb-item">Transaksi Barang Keluar (Stock Out)</li>
+                </ol>
+            </nav>
+
+            <!-- Tags / Badges -->
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="tag-pill tag-pill-danger">Transaksi & Stok</span>
+                <span class="tag-pill tag-pill-light">Pemula</span>
+                <span class="tag-pill tag-pill-light">Staff</span>
+                <span class="tag-pill tag-pill-primary">Manager</span>
+                <span class="tag-pill tag-pill-light">Super Admin</span>
+            </div>
+
+            <!-- Article Title -->
+            <h1 class="article-title">Transaksi Barang Keluar (Stock Out)</h1>
+
+            <!-- Article Meta Info -->
+            <div class="article-meta">
+                <span><i class="bi bi-clock me-1"></i> 4 menit baca</span>
+                <span><i class="bi bi-calendar3 me-1"></i> Terakhir diperbarui</span>
+            </div>
+
+            <hr class="text-border mb-4">
+
+            <!-- Article Body Content -->
+            <div class="article-body">
+                <p>Transaksi <strong>Stock Out</strong> digunakan untuk mencatat pengeluaran barang dari gudang untuk tujuan operasional internal, pembuangan barang rusak, atau penjualan.</p>
+
+                <!-- Section 1 -->
+                <h5 id="langkah-langkah-mencatat-stock-out">Langkah-Langkah Mencatat Stock Out:</h5>
+
+                <h6>Langkah 1: Buka Formulir Transaksi Baru</h6>
+                <p>
+                    Navigasi ke menu <strong>Transaksi In/Out</strong>.<br>
+                    Klik tombol <strong>Tambah Transaksi</strong>.
+                </p>
+
+                <h6>Langkah 2: Isi Data Detail</h6>
+                <p>
+                    Pilih <strong>Tipe Transaksi:</strong> <em>Stock Out (Keluar)</em>.<br>
+                    Pilih <strong>Gudang Asal</strong> tempat barang akan diambil.<br>
+                    Pilih <strong>Produk</strong> yang akan dikeluarkan.
+                </p>
+
+                <h6>Langkah 3: Tentukan Kuantitas / Nomor Seri</h6>
+                <p class="mb-2"><strong>Untuk barang Non-Serial:</strong> Masukkan jumlah kuantitas yang ingin dikeluarkan. Pastikan jumlah tidak melebihi stok yang tersedia di gudang tersebut.</p>
+                <p class="mb-1"><strong>Untuk barang Ber-SN:</strong></p>
+                <ul class="ps-3 mb-3">
+                    <li class="mb-1">Sistem akan menampilkan dropdown daftar Serial Number yang tersedia secara fisik di gudang terpilih.</li>
+                    <li class="mb-1">Centang nomor seri mana saja yang ingin dikeluarkan dari gudang.</li>
+                    <li class="mb-1">Kuantitas akan otomatis berkurang selaras jumlah nomor seri yang dicentang.</li>
+                </ul>
+
+                <h6>Langkah 4: Finalisasi</h6>
+                <p>
+                    Tulis alasan pengeluaran barang pada kolom <strong>Catatan</strong> (misal: <em>Barang rusak/pecah</em> atau <em>Dipakai untuk kantor cabang</em>).<br>
+                    Tekan tombol <strong>Simpan Transaksi</strong>.
+                </p>
+
+                <!-- Warning Callout Box -->
+                <div class="warning-callout">
+                    <div class="warning-callout-title">PERINGATAN</div>
+                    <p class="mb-0 small text-muted">Tindakan Stock Out akan secara permanen mengurangi kuantitas stok produk di gudang asal dan mengubah status Serial Number terkait menjadi Tidak Aktif (out of stock).</p>
+                </div>
+            </div>
+
+            <!-- Previous & Next Article Navigation Cards -->
+            <div class="row g-3 my-4">
+                <div class="col-6">
+                    <a asp-action="TransaksiBarangMasuk" asp-controller="Guide" class="nav-article-card text-start">
+                        <span class="text-muted extra-small d-block text-uppercase fw-bold tracking-wider mb-1">SEBELUMNYA</span>
+                        <span class="fw-bold text-indigo-dark d-flex align-items-center gap-2">
+                            <i class="bi bi-arrow-left"></i> Transaksi Barang Masuk (Stock In)
+                        </span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a asp-action="Mutasi" asp-controller="Guide" class="nav-article-card text-end">
+                        <span class="text-muted extra-small d-block text-uppercase fw-bold tracking-wider mb-1">SELANJUTNYA</span>
+                        <span class="fw-bold text-indigo-dark d-flex align-items-center justify-content-end gap-2">
+                            Mutasi Antar Gudang (Transfer Ord... <i class="bi bi-arrow-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="feedback-box">
+                <p class="fw-bold text-indigo-dark mb-3 small">Apakah panduan ini bermanfaat bagi Anda?</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-up"></i> Ya, membantu
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-hand-thumbs-down"></i> Belum membantu
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sticky Right Sidebar / Table of Contents -->
+        <div class="col-lg-4 d-none d-lg-block">
+            <!-- Sidebar TOC tempat navigasi cepat jika dibutuhkan -->
+        </div>
+
+    </div>
+</div>

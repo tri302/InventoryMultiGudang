@@ -1,0 +1,132 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Penugasan Aset";
+}
+<style>
+.form-control, 
+.form-select, 
+.form-input-custom,
+.form-control-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    color: #1e293b !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+/* --- OVERRIDE UTAMA UNTUK FOOTER PAGINATION AGAR MEPET KANAN --- */
+.card.border-0.shadow-sm.overflow-hidden {
+    overflow: visible !important; /* Mencegah terpotong */
+}
+.card-footer.custom-footer-pagi {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding-left: 1.25rem !important;
+    padding-right: 0.5rem !important; /* Dibuat sangat kecil agar tombol Next mentok kanan */
+}
+.card-footer.custom-footer-pagi nav {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+.card-footer.custom-footer-pagi ul.pagination {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+</style>
+<div class="container-fluid">
+    <!-- HEADER SECTION -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h2 class="h3 fw-bold text-indigo-dark mb-1">Penugasan Aset (Asset Assignment)</h2>
+            <p class="text-muted small mb-0">Daftar penyerahan dan inventarisasi aset nomor seri ke Karyawan atau Departemen tertentu.</p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <a asp-action="TransferAsset" asp-controller="PenugasanAset" class="btn-sm btn btn-outline-secondary bg-white px-3 py-2 d-inline-flex align-items-center gap-2 text-indigo-dark fw-semibold shadow-sm border" style="border-radius: 8px;">
+                <i class="bi bi-arrow-left-right text-muted"></i> Transfer Aset
+            </a>
+            <a asp-action="Create" asp-controller="PenugasanAset" class="btn btn-success rounded-pill px-4 btn-sm">
+                <i class="bi bi-plus-lg"></i> Buat Penugasan
+            </a>
+        </div>
+    </div>
+
+    <!-- FILTER & SEARCH BAR -->
+    <div class="card border-0 shadow-sm p-3 mb-4" style="border-radius: 12px;">
+        <div class="row g-3 align-items-center justify-content-between">
+            <div class="col-12 col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text border-end-0 bg-white text-muted">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <!-- Input Live Search AJAX -->
+                    <input type="text" id="txtSearch" class="form-control border-start-0 ps-0" placeholder="Cari kode penugasan, keterangan...">
+                </div>
+            </div>
+
+            <div class="col-12 col-md-auto d-flex align-items-center gap-3 justify-content-md-end flex-wrap">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="text-muted small fw-bold text-uppercase tracking-wider" style="font-size: 0.75rem;">Status:</span>
+                    <select id="ddlStatus" class="form-select text-muted fw-medium py-1.5" style="min-width: 150px;">
+                        <option value="">Semua Status</option>
+                        <option value="1">Menunggu Persetujuan</option>
+                        <option value="2">Dalam Penugasan</option>
+                        <option value="3">Dikembalikan</option>
+                        <option value="4">Ditolak</option>
+                        <option value="5">Transfer Aset Langsung</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLE AREA -->
+    <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 12px;">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 text-nowrap" id="tablePenugasan">
+                <thead class="bg-light border-bottom">
+                    <tr class="text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                        <th class="ps-4 py-3" style="width: 20%;">Kode Penugasan</th>
+                        <th class="py-3" style="width: 35%;">Target Serah</th>
+                        <th class="py-3" style="width: 25%;">Tanggal Serah / Kembali</th>
+                        <th class="py-3 text-center" style="width: 10%;">Status</th>
+                        <th class="py-3 text-center pe-4" style="width: 10%;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyPenugasan">
+                    <!-- Dynamic rendering via AJAX -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- FOOTER & PAGINATION -->                            
+        <div class="card-footer bg-white border-top py-3 custom-footer-pagi">
+            <div id="paginationInfo" class="text-muted small">
+                Menampilkan <strong>0</strong> - <strong>0</strong> dari <strong>0</strong> data
+            </div>
+            <nav id="paginationContainer" aria-label="Page navigation">
+                <ul class="pagination pagination-sm mb-0"></ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/PenugasanAset.js"></script>    
+    <script>
+        // Menampilkan Toastr jika ada Pesan Error dari Controller (TempData)
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                $(document).ready(function () {
+                    if (typeof toastr !== 'undefined') {
+                        toastr.error('@TempData["ErrorMessage"]');
+                    }
+                });
+            </text>
+        }
+    </script>
+}

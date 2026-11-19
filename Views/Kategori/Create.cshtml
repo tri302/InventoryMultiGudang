@@ -1,0 +1,40 @@
+﻿@model InventoryMultiGudang.ViewModels.KategoriViewModel
+
+<div class="modal fade" id="modalTambahKategori" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTambahKategoriLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-indigo-dark" id="modalTambahKategoriLabel">Tambah Kategori Baru</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formTambahKategori" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+                    <div class="mb-3">
+                        <label asp-for="NamaKategori" class="form-label fw-semibold">Nama Kategori <span class="text-danger">*</span></label>
+                        <input asp-for="NamaKategori" class="form-control" placeholder="Contoh: Electronics, IT Equipment" />
+                        <span asp-validation-for="NamaKategori" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Deskripsi" class="form-label fw-semibold">Deskripsi (Opsional)</label>
+                        <textarea asp-for="Deskripsi" class="form-control" rows="3" placeholder="Tuliskan deskripsi singkat kategori di sini..."></textarea>
+                        <span asp-validation-for="Deskripsi" class="text-danger small"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-0">
+                <button type="button" class="btn btn-batal-modal btn-sm" data-bs-dismiss="modal">
+                    <i class="bi bi-arrow-90deg-left"></i>
+                    Batal
+                </button>
+                <button type="submit" form="formTambahKategori" class="btn btn-save btn-sm">
+                    <i class="bi bi-check-lg me-1"></i>
+                    Simpan Kategori
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

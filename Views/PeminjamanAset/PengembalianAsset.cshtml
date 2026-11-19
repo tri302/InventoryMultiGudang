@@ -1,0 +1,93 @@
+﻿@model InventoryMultiGudang.ViewModels.PeminjamanAsetFormViewModel
+
+<div class="modal fade" id="modalPengembalianAset" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalPengembalianAsetLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-content border-0 shadow" style="border-radius: 12px;">
+
+      <!-- Modal Header -->
+      <div class="modal-header d-flex align-items-center justify-content-between border-bottom-0 pb-0 pt-4 px-4">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-arrow-counterclockwise fs-5" style="color: #059669; font-weight: bold;"></i>
+          <h5 class="modal-title fw-bold text-indigo-dark mb-0" id="modalPengembalianAsetLabel" style="font-size: 1.1rem;">Formulir Pengembalian Aset</h5>
+        </div>
+        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body px-4 pt-3 pb-2">
+        <form id="formPengembalian" asp-action="ProsesPengembalian" asp-controller="PeminjamanAset" method="post">
+          @Html.AntiForgeryToken()
+          <input type="hidden" name="Id" value="@Model.Id" />
+
+          <!-- Tanggal Pengembalian -->
+        <div class="mb-4">
+            <label class="form-label text-uppercase text-muted fw-bold tracking-wider mb-2"
+                style="font-size: 0.75rem;">Tanggal Pengembalian</label>
+            <input type="text" id="_RawTanggalPengembalian" name="tanggalPengembalian" class="form-control" autocomplete="off" />
+        </div>
+
+          <!-- Checklist Kondisi Aset -->
+          <div class="mb-2">
+            <label class="form-label text-uppercase text-muted fw-bold tracking-wider mb-2" style="font-size: 0.75rem;">Checklist Kondisi Aset</label>
+
+            <div class="border rounded-3 overflow-hidden" style="border-color: #e2e8f0;">
+
+              <!-- Header List -->
+              <div class="d-flex justify-content-between align-items-center bg-light-subtle px-3 py-2 border-bottom" style="border-color: #e2e8f0;">
+                <span class="text-muted small fw-medium" style="font-size: 0.8rem;">Aset / SN</span>
+                <span class="text-muted small fw-medium" style="font-size: 0.8rem;">Kondisi
+                  Kembali</span>
+              </div>
+
+              <!-- List Item Aset Dinamis -->
+              @if (Model.Details != null && Model.Details.Any())
+              {
+              int idx = 0;
+              foreach (var item in Model.Details)
+              {
+              <input type="hidden" name="updatedDetails[@idx].Id" value="@item.Id" />
+              <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 px-3 py-3 border-bottom bg-white" style="border-color: #e2e8f0;">
+                <div>
+                  <div class="fw-bold text-indigo-dark mb-1" style="font-size: 0.85rem;">
+                    @item.NamaBarang</div>
+                  @if (!string.IsNullOrEmpty(item.SerialNumber))
+                  {
+                  <span class="font-monospace fw-medium" style="background-color: #fff1f2; color: #be123c; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">
+                    SN: @item.SerialNumber
+                  </span>
+                  }
+                  else
+                  {
+                  <span class="fw-medium" style="background-color: #ecfdf5; color: #047857; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">
+                    Qty: @item.Kuantitas (Non-SN)
+                  </span>
+                  }
+                </div>
+                <div style="min-width: 160px;">
+                  <select name="updatedDetails[@idx].KondisiKembali" class="form-select form-select-sm text-dark shadow-none" style="border-radius: 6px; font-size: 0.8rem;">
+                    <option value="Good" selected>Good (Layak Pakai)</option>
+                    <option value="Broken">Broken (Rusak)</option>
+                    <option value="Lost">Lost (Hilang)</option>
+                  </select>
+                </div>
+              </div>
+              idx++;
+              }
+              }
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-0">
+        <button type="button" class="btn btn-batal-modal btn-sm" data-bs-dismiss="modal">
+          <i class="bi bi-arrow-90deg-left"></i> Batal
+        </button>
+        <button type="submit" form="formPengembalian" class="btn btn-save btn-sm">
+          <i class="bi bi-check-lg me-1"></i> Simpan Pengembalian
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

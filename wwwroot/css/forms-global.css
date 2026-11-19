@@ -1,0 +1,845 @@
+﻿/* ==========================================================================
+   1. TEMA WARNA & VARIABEL GLOBAL (Deep Indigo & Emerald Green)
+   ========================================================================== */
+:root {
+    /* Palet Indigo / Slate Blue (Primary) */
+    --indigo-primary: #3f51b5;
+    --indigo-dark: #2c387e;
+    --indigo-light: #e8eaf6;
+    --indigo-rgb: 63, 81, 181;
+    
+    /* Palet Emerald Green (Positif / Sukses) */
+    --emerald-green: #10b981;
+    --emerald-hover: #059669;
+    --emerald-light: #d1fae5;
+    
+    /* Netral & Border */
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --bg-light: #f8fafc;
+    
+    /* Bootstrap Overrides Variables */
+    --bs-primary: var(--indigo-primary);
+    --bs-primary-rgb: var(--indigo-rgb);
+    --bs-success: var(--emerald-green);
+}
+
+/* ==========================================================================
+   2. STYLING DASAR & TIPOGRAFI
+   ========================================================================== */
+body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.text-indigo-dark, 
+.text-primary-emphasis {
+    color: #0f172a !important;
+}
+
+.text-indigo {
+    color: var(--indigo-primary) !important;
+}
+
+.text-label-custom {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.bg-light-subtle {
+    background-color: #f8fafc !important;
+}
+
+.tracking-wider {
+    letter-spacing: 0.06em;
+}
+
+/* ==========================================================================
+   3. KARTU, GRID, & LAYOUT UTAMA
+   ========================================================================== */
+.warehouse-card, 
+.location-card-grid {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-top: 4px solid var(--indigo-primary) !important;
+    border-radius: 12px;
+    padding: 1rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.warehouse-card:hover, 
+.location-card-grid:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background-color: #ffffff;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.card-report {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card-report-header {
+    background-color: var(--bg-light);
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 15px;
+    font-weight: 600;
+}
+
+.filter-card,
+.summary-card-custom,
+.form-container-custom {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.summary-card-custom {
+    padding: 1.25rem;
+}
+
+.empty-state-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-footer-grid {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 0.75rem;
+}
+
+/* ==========================================================================
+   4. TABEL & KOMPONEN DATAGRID
+   ========================================================================== */
+.table th {
+    background-color: var(--bg-light) !important;
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--border-color);
+    padding: 0.75rem;
+}
+
+.table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8fafc !important;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table-mutasi td,
+.report-table td {
+    font-size: 0.85rem;
+    color: #334155;
+    padding: 0.85rem 0.75rem;
+}
+
+.table-report th {
+    background-color: var(--bg-light);
+    color: #334155;
+    font-size: 12px;
+    font-weight: 600;
+    border-bottom: 1px solid #cbd5e1;
+    border-top: 1px solid #cbd5e1;
+    padding: 12px 10px;
+}
+
+.table-report td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 12px;
+}
+
+.table-empty-state {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   5. FORM, INPUT, & KONTROL INPUT
+   ========================================================================== */
+.form-label, 
+.form-label-custom {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.form-control, 
+.form-select, 
+.form-input-custom,
+.form-control-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    color: #1e293b !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.form-control::placeholder, 
+.form-select,
+textarea::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1;
+    font-size: 0.875rem;
+}
+
+.form-control:focus, 
+.form-select:focus, 
+.form-input-custom:focus,
+.form-control-custom:focus {
+    border-color: var(--indigo-primary);
+    box-shadow: 0 0 0 4px rgba(63, 81, 181, 0.12);
+    outline: none;
+    background-color: #fff;
+}
+
+/* Khusus Select Modal & Dropdown agar teks selalu kontras */
+.modal select.form-select,
+.modal select.form-control,
+#editTipeGudang,
+#addTipeGudang {
+    color: #212529 !important;
+    font-weight: 500;
+}
+
+.modal select.form-select option,
+.modal select.form-control option {
+    color: #212529 !important;
+    background-color: #ffffff !important;
+}
+
+.input-group-text {
+    background-color: var(--bg-light);
+    border-color: var(--border-color);
+    color: var(--text-muted);
+    border-radius: 8px;
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: var(--indigo-primary);
+    color: var(--indigo-primary);
+}
+
+.form-check-custom, 
+.form-switch {
+    display: flex;
+    align-items: center;
+}
+
+.form-checkbox-custom, 
+.form-check-input {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 4px !important;
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+}
+
+.form-check-input:checked, 
+.form-checkbox-custom:checked {
+    background-color: var(--emerald-green) !important;
+    border-color: var(--emerald-green) !important;
+}
+
+.form-check-input:focus, 
+.form-checkbox-custom:focus {
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+.form-check-input-red {
+    width: 1.15rem;
+    height: 1.15rem;
+    background-color: #dc2626;
+    border-color: #dc2626;
+    cursor: pointer;
+}
+
+.form-check-input-red:checked {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+
+.form-text, 
+.form-hint-custom {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   6. TOMBOL & AKSI (BUTTONS)
+   ========================================================================== */
+.btn-primary {
+    background-color: var(--indigo-primary);
+    border-color: var(--indigo-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--indigo-dark);
+    border-color: var(--indigo-dark);
+}
+
+.btn-success, 
+.btn-emerald, 
+.btn-emerald-custom, 
+.btn-save {
+    background-color: var(--emerald-green) !important;
+    border-color: var(--emerald-green) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-success:hover, 
+.btn-emerald:hover, 
+.btn-emerald-custom:hover, 
+.btn-save:hover {
+    background-color: var(--emerald-hover) !important;
+    border-color: var(--emerald-hover) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.btn-cancel, 
+.btn-batal-custom, 
+.btn-batal-modal {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover, 
+.btn-batal-custom:hover, 
+.btn-batal-modal:hover {
+    background: var(--indigo-light);
+    color: var(--indigo-primary);
+    border-color: var(--indigo-primary);
+}
+
+.btn-generate, 
+.btn-action-grid {
+    background-color: var(--indigo-light);
+    color: var(--indigo-primary);
+    border: 1px solid rgba(63, 81, 181, 0.2);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-generate:hover, 
+.btn-action-grid:hover {
+    background-color: var(--indigo-primary);
+    color: #ffffff;
+}
+
+.btn-light,
+.btn-action-light {
+    background: transparent;
+    transition: all 0.2s;
+}
+
+.btn-light:hover,
+.btn-action-light:hover {
+    background-color: var(--indigo-light) !important;
+    transform: scale(1.05);
+}
+
+.btn-light.text-danger:hover,
+.btn-action-light.text-danger:hover {
+    background-color: #fee2e2 !important;
+}
+
+.btn-action-view {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-action-view:hover {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+
+.action-btn,
+.action-icon {
+    color: #94a3b8;
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.action-btn:hover,
+.action-icon:hover {
+    color: #475569;
+}
+
+/* ==========================================================================
+   7. BADGE & STATUS
+   ========================================================================== */
+.badge-aktif {
+    background-color: var(--emerald-light);
+    color: var(--emerald-hover);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 30px;
+    letter-spacing: 0.03em;
+}
+
+.badge-proses,
+.badge-ditugaskan {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+}
+
+.badge-kembali {
+    background-color: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+}
+
+.badge-stock-in {
+    background-color: var(--emerald-light);
+    color: var(--emerald-hover);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.badge-stock-out {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+}
+
+.badge-mutasi-custom {
+    font-size: 0.725rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.sn-badge-green {
+    background-color: var(--emerald-light);
+    color: var(--emerald-hover);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    font-size: 0.725rem;
+    font-weight: 600;
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+}
+
+.uom-badge {
+    background-color: #ffffff;
+    color: #475569;
+    border: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+}
+
+.status-terlambat {
+    background-color: #fff1f2;
+    color: #e11d48;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-terlambat::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background-color: #e11d48;
+    border-radius: 50%;
+}
+
+.status-kembali {
+    background-color: #f0fdf4;
+    color: #16a34a;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.min-stock-alert {
+    background-color: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.min-stock-normal {
+    background-color: var(--bg-light);
+    color: #64748b;
+    border: 1px solid var(--border-color);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* ==========================================================================
+   8. MODAL & DIALOG
+   ========================================================================== */
+.modal-content {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem 1.5rem;
+}
+
+.modal-title, 
+.form-title-custom,
+.modal-title-custom {
+    color: var(--indigo-dark);
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0 !important;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+    background-color: var(--bg-light);
+}
+
+.modal.fade .modal-dialog {
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out !important;
+}
+
+.modal.fade:not(.show) .modal-dialog {
+    transform: scale(0.96);
+    opacity: 0;
+}
+
+.modal-sm-custom {
+    max-width: 400px;
+}
+
+.icon-delete-wrapper,
+.delete-icon-wrapper {
+    width: 65px;
+    height: 65px;
+    background-color: #fef2f2;
+    color: #ef4444;
+    font-size: 1.75rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+}
+
+.btn-delete-modal, 
+.btn-outline-danger,
+.btn-danger-custom {
+    background-color: #ef4444 !important;
+    border: 1px solid #ef4444 !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.btn-delete-modal:hover,
+.btn-danger-custom:hover {
+    background-color: #dc2626 !important;
+    border-color: #dc2626 !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+/* ==========================================================================
+   9. KOMPONEN KHUSUS & WIDGET (DASHBOARD, NAV, MENU, DLL)
+   ========================================================================== */
+.icon-box, 
+.icon-tag-box {
+    background: var(--indigo-light);
+    color: var(--indigo-primary);
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.avatar-box {
+    background-color: var(--indigo-light);
+    color: var(--indigo-primary);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.avatar-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #ffffff;
+}
+
+.stat-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+    height: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.stat-icon-primary { background-color: var(--indigo-light); color: var(--indigo-primary); }
+.stat-icon-success { background-color: var(--emerald-light); color: var(--emerald-hover); }
+.stat-icon-danger { background-color: #fef2f2; color: #ef4444; }
+.stat-icon-amber { background-color: #fef3c7; color: #b45309; }
+
+.nav-tabs .nav-link {
+    color: #64748b;
+    border: none;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:hover {
+    color: #dc2626;
+    border-bottom: 2px solid #dc2626;
+    background: none;
+}
+
+.nav-link-custom {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: #64748b;
+    padding: 8px 16px;
+    border-bottom: 2px solid transparent;
+    text-decoration: none;
+}
+
+.nav-link-custom.active {
+    color: #dc2626;
+    border-bottom-color: #dc2626;
+}
+
+/* Toggle Tombol Tipe Transaksi */
+.btn-target-select {
+    border: 1px solid var(--border-color) !important;
+    background-color: #ffffff !important;
+    color: var(--text-muted) !important;
+    transition: all 0.2s ease !important;
+    border-radius: 8px !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+}
+
+.btn-target-select:hover {
+    background-color: var(--bg-light) !important;
+    color: var(--indigo-dark) !important;
+    border-color: var(--indigo-primary) !important;
+}
+
+#btn-inbound:checked + .btn-inbound-select {
+    border-color: var(--emerald-green) !important;
+    background-color: var(--emerald-light) !important;
+    color: var(--emerald-hover) !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15) !important;
+}
+
+.btn-outbound-select:hover {
+    background-color: #fef2f2 !important;
+    color: #dc2626 !important;
+    border-color: #f87171 !important;
+}
+
+#btn-outbound:checked + .btn-outbound-select {
+    border-color: #ef4444 !important;
+    background-color: #fee2e2 !important;
+    color: #b91c1c !important;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+}
+
+/* ==========================================================================
+   10. CETAK & LAPORAN (PRINT STYLES)
+   ========================================================================== */
+.preview-topbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1.5rem;
+}
+
+.print-paper {
+    background: #ffffff;
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 3rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.signature-section {
+    margin-top: 80px;
+    font-size: 13px;
+}
+
+.signature-space {
+    margin-top: 70px;
+    width: 200px;
+    border-bottom: 1px solid #333;
+}
+
+@media print {
+    body {
+        background-color: #ffffff !important;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .preview-topbar, 
+    .no-print,
+    .btn-print {
+        display: none !important;
+    }
+
+    .print-paper {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .report-table th,
+    .table-print th {
+        background-color: #f8fafc !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .card-report {
+        page-break-inside: avoid;
+        border: 1px solid #cbd5e1 !important;
+    }
+}

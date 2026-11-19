@@ -1,0 +1,148 @@
+﻿<div class="modal fade" id="modalEditProduk" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="modalEditProdukLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0">
+
+            <!-- Modal Header -->
+            <div class="modal-header d-flex align-items-start justify-content-between">
+                <div>
+                    <h5 class="modal-title fw-bold text-indigo-dark" id="modalEditProdukLabel">Edit Produk</h5>
+                    <p class="text-muted small mb-0 mt-1" style="text-transform: none; letter-spacing: normal;">Silakan
+                        isi detail produk inventoris di bawah ini.</p>
+                    </div>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form id="formEditProduk" novalidate>
+                        <input type="hidden" name="Id" id="edit_Id" />
+
+                        <div class="row g-3">
+                            <!-- Gudang Select2 -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-dark">Gudang</label>
+                                <select name="GudangId" id="editGudang" class="form-select select2-gudang"
+                                        data-placeholder="Pilih Gudang...">
+                                    <option value=""></option>
+                                </select>
+                                <span class="text-danger small error-msg" id="error-edit-GudangId"></span>
+                            </div>
+
+                            <!-- Rak Select2 -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-dark">Rak</label>
+                                <select name="RakId" id="editRak" class="form-select select2-rak"
+                                        data-placeholder="Pilih Rak...">
+                                    <option value=""></option>
+                                </select>
+                                <span class="text-danger small error-msg" id="error-edit-RakId"></span>
+                            </div>                            
+
+                            <!-- Nama Produk -->
+                            <div class="col-12">
+                                <label class="form-label text-dark fw-semibold">Nama Produk</label>
+                                <input type="text" name="NamaProduk" id="edit_NamaProduk"
+                                       class="form-control text-dark fw-medium" placeholder="MacBook Pro M3 Max 16">
+                                <span class="text-danger small error-msg" id="error-edit-NamaProduk"></span>
+                            </div>
+
+                            <!-- Kategori (Dynamic Select2 Live Search) -->
+                            <div class="col-md-6">
+                                <label class="form-label text-dark fw-semibold">Kategori</label>
+                                <select name="Kategori" id="edit_Kategori" class="form-select select2-kategori"
+                                        data-placeholder="Pilih atau cari kategori...">
+                                    <option value=""></option>
+                                </select>
+                                <span class="text-danger small error-msg" id="error-edit-Kategori"></span>
+                            </div>
+
+                            <!-- Merek / Brand -->
+                            <div class="col-md-6">
+                                <label class="form-label text-dark fw-semibold">Merek / Brand</label>
+                                <input type="text" name="Merek" id="edit_Merek" class="form-control text-dark fw-medium"
+                                       placeholder="Apple, Dell, Parker, dll.">
+                                <span class="text-danger small error-msg" id="error-edit-Merek"></span>
+                            </div>
+
+                            <!-- Satuan (UoM) -->
+                            <div class="col-md-6">
+                                <label class="form-label text-dark fw-semibold">Satuan (UOM)</label>
+                                <select name="UomId" id="editUomId" class="form-select select2-uom" data-placeholder="Pilih Satuan...">
+                                    <option value=""></option>
+                                </select>
+                                <span class="text-danger small error-msg" id="error-edit-UomId"></span>
+                            </div>
+
+                            <!-- Stok -->
+                            <div class="col-md-6">
+                                <label class="form-label">Stok Produk</label>
+                                <input type="text" id="edit_Stok" name="Stok" class="form-control"
+                                       placeholder="Stok Produk..">
+                                <span class="text-danger small error-msg" id="error-edit-Stok"></span>
+                            </div>
+        
+                            <!-- Pelacakan Barang -->
+                            <div class="col-md-6">
+                                <label class="form-label">Pelacakan Barang</label>
+                                <select name="PelacakanBarang" id="edit_PelacakanBarang" class="form-select">
+                                    <option value="Tanpa Serial Number (Bulk)" selected>Tanpa Serial Number (Bulk)</option>
+                                    <option value="Pelacakan Serial Number (SN)">Pelacakan Serial Number (SN)</option>
+                                </select>
+                            </div>
+                        
+                            <!-- Tipe Barang -->
+                            <div class="col-md-6">
+                                <label class="form-label text-dark fw-semibold">Tipe Barang</label>
+                                <select name="TipeBarang" id="edit_TipeBarang" class="form-select text-dark fw-medium">
+                                    <option value="Inventory (Komersial)">Inventory (Komersial)</option>
+                                    <option value="Consumable (Habis Pakai)">Consumable (Habis Pakai)</option>
+                                    <option value="Asset">Asset (Inventaris Kantor)</option>
+                                </select>
+                                <span class="text-danger small error-msg" id="error-edit-TipeBarang"></span>
+                            </div>
+
+                            <!-- Harga Beli -->
+                            <div class="col-md-6">
+                                <label class="form-label text-dark fw-semibold">Harga Beli (RP)</label>
+                                <input type="text" name="HargaBeli" id="edit_HargaBeli"
+                                       class="form-control text-dark fw-medium input-rupiah" placeholder="0">
+                                <span class="text-danger small error-msg" id="error-edit-HargaBeli"></span>
+                            </div>
+
+                            <!-- Harga Perolehan -->
+                            <div class="col-md-6">
+                                <label class="form-label text-dark fw-semibold">Harga Perolehan (RP)</label>
+                                <input type="text" name="HargaPerolehan" id="edit_HargaPerolehan"
+                                       class="form-control text-dark fw-medium input-rupiah" placeholder="0">
+                                <span class="text-danger small error-msg" id="error-edit-HargaPerolehan"></span>
+                            </div>
+
+                            <!-- Deskripsi Produk -->
+                            <div class="col-12">
+                                <label class="form-label text-dark fw-semibold">Deskripsi Produk</label>
+                                <textarea name="Deskripsi" id="edit_Deskripsi" class="form-control text-dark fw-medium"
+                                          rows="3"
+                                          placeholder="Tuliskan spesifikasi atau keterangan detail produk di sini..."></textarea>
+                                <span class="text-danger small error-msg" id="error-edit-Deskripsi"></span>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-0">
+                    <button type="button" class="btn btn-sm btn-batal-modal px-4 py-2" data-bs-dismiss="modal">
+                        <i class="bi bi-arrow-90deg-left"></i>
+                        Batal
+                    </button>
+                    <button type="submit" form="formEditProduk" class="btn btn-save px-4 py-2 btn-sm">
+                        <i class="bi bi-check-lg me-1"></i>
+                        Simpan Perubahan
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Manajemen Gudang";
+}
+
+@Html.AntiForgeryToken()
+<style>
+.form-control, 
+.form-select, 
+.form-input-custom,
+.form-control-custom {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    color: #1e293b !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+</style>
+<div class="container-fluid px-0">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1 text-primary-emphasis fw-bold">Manajemen Gudang</h1>
+            <p class="text-muted mb-0">Kelola gudang fisik dan virtual, pantau status, dan atur penanggung jawab (PIC).</p>
+        </div>
+        <button class="btn btn-success rounded-pill px-4 btn-sm" onclick="openModalCreate()">
+            <i class="bi bi-plus"></i> Tambah Gudang
+        </button>
+    </div>
+
+    <!-- Search & Filter Bar -->
+    <div class="card shadow-sm mb-4" style="border-radius: 1rem;">
+        <div class="card-body">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Cari kode, nama, atau PIC..." onkeyup="onSearchKeyup(event)">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="filterTipe" class="form-select" onchange="loadData(1)">
+                        <option value="Semua Tipe" selected>Semua Tipe</option>
+                        <option value="fisik">Fisik</option>
+                        <option value="virtual">Virtual</option>
+                    </select>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <span class="text-muted">Total Gudang: </span>
+                    <span class="fw-bold fs-5 text-primary" id="totalGudangBadge">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic Card Container -->
+    <div class="row g-4" id="warehouseCardContainer">
+        <!-- Dynamic Cards rendered via AJAX -->
+    </div>
+
+    <!-- Pagination Container -->
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-5">
+        <span class="text-muted small" id="pageInfoText">Menampilkan data...</span>
+        <nav>
+            <ul class="pagination pagination-sm mb-0" id="paginationContainer">
+                <!-- Dynamic Pagination -->
+            </ul>
+        </nav>
+    </div>
+</div>
+
+@await Html.PartialAsync("Create")
+@await Html.PartialAsync("Edit")
+@await Html.PartialAsync("Delete")
+
+@section Scripts {   
+    <script src="~/js/warehouse.js"></script>
+}

@@ -1,0 +1,419 @@
+﻿@model InventoryMultiGudang.ViewModels.PenugasanAsetFormViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Transfer Aset Langsung";
+}
+<style>
+    /* ==========================================
+           1. RESET & BASE STYLES
+           ================================---------- */
+    *, ::before, ::after {
+        box-sizing: border-box;
+        border: 0 solid #e5e7eb;
+    }
+
+    *, ::before, ::after, ::backdrop {
+        --tw-ring-offset-shadow: 0 0 #0000;
+        --tw-ring-shadow: 0 0 #0000;
+        --tw-shadow: 0 0 #0000;
+    }
+
+    ::before, ::after {
+        --tw-content: "";
+    }
+
+    html, :host {
+        -webkit-text-size-adjust: 100%;
+        tab-size: 4;
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        font-family: Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        line-height: 1.5;
+    }
+
+    body {
+        line-height: inherit;
+    }
+
+    /* ==========================================
+           2. ELEMENT SELECTORS & FORM DEFAULTS
+           ================================---------- */
+    button, input, optgroup, select, textarea {
+        font-feature-settings: inherit;
+        font-variation-settings: inherit;
+        font-family: inherit;
+        font-size: 100%;
+        font-weight: inherit;
+        line-height: inherit;
+        letter-spacing: inherit;
+        color: inherit;
+        margin: 0;
+        padding: 0;
+    }
+
+    button, [role="button"] {
+        cursor: pointer;
+    }
+
+    button,
+    input:where([type="button"]),
+    input:where([type="reset"]),
+    input:where([type="submit"]) {
+        -webkit-appearance: button;
+        background-color: transparent;
+        background-image: none;
+    }
+
+    button, select {
+        text-transform: none;
+    }
+
+        /* ==========================================
+           3. CUSTOM OVERRIDES
+           ================================---------- */
+        /* Perbaikan agar background tombol aktif (seperti Karyawan) tidak bentrok */
+        button.btn-tipe-penerima.bg-red-50 {
+            background-color: rgb(254 242 242) !important;
+        }
+
+        /* Custom Form Styles */
+        select.form-select,
+        select.form-select option {
+            color: #0f172a !important;
+            background-color: #ffffff !important;
+        }
+
+    /* ==========================================
+           4. TAILWIND UTILITY CLASSES
+           ================================---------- */
+    /* Typography & Font */
+    .font-sans {
+        font-family: Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    .font-mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .font-bold {
+        font-weight: 700;
+    }
+
+    .uppercase {
+        text-transform: uppercase;
+    }
+
+    .tracking-wider {
+        letter-spacing: 0.05em;
+    }
+
+    .text-xs {
+        font-size: .75rem;
+        line-height: 1rem;
+    }
+
+    .text-\[9px\] {
+        font-size: 9px;
+    }
+
+    /* Colors & Text */
+    .text-slate-700 {
+        --tw-text-opacity: 1;
+        color: rgb(51 65 85 / var(--tw-text-opacity, 1));
+    }
+
+    .text-slate-900 {
+        --tw-text-opacity: 1;
+        color: rgb(15 23 42 / var(--tw-text-opacity, 1));
+    }
+
+    .text-red-600 {
+        --tw-text-opacity: 1;
+        color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+    }
+
+    .text-red-700 {
+        --tw-text-opacity: 1;
+        color: rgb(185 28 28 / var(--tw-text-opacity, 1));
+    }
+
+    .text-amber-600 {
+        color: rgb(217 119 6);
+    }
+
+    /* Backgrounds */
+    .bg-white {
+        --tw-bg-opacity: 1;
+        background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+    }
+
+    .bg-slate-50 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1));
+    }
+
+    .bg-red-50 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+    }
+
+    /* Borders & Radius */
+    .border {
+        border-width: 1px;
+    }
+
+    .border-slate-100 {
+        --tw-border-opacity: 1;
+        border-color: rgb(241 245 249 / var(--tw-border-opacity, 1));
+    }
+
+    .border-slate-200 {
+        --tw-border-opacity: 1;
+        border-color: rgb(226 232 240 / var(--tw-border-opacity, 1));
+    }
+
+    .border-red-100 {
+        --tw-border-opacity: 1;
+        border-color: rgb(254 226 226 / var(--tw-border-opacity, 1));
+    }
+
+    .border-red-600 {
+        --tw-border-opacity: 1;
+        border-color: rgb(220 38 38 / var(--tw-border-opacity, 1));
+    }
+
+    .rounded {
+        border-radius: .25rem;
+    }
+
+    .rounded-lg {
+        border-radius: .5rem;
+    }
+
+    .rounded-xl {
+        border-radius: .75rem;
+    }
+
+    /* Spacing & Padding */
+    .py-0\.5 {
+        padding-top: .125rem;
+        padding-bottom: .125rem;
+    }
+
+    .py-1\.5 {
+        padding-top: .375rem;
+        padding-bottom: .375rem;
+    }
+
+    .px-1\.5 {
+        padding-left: .375rem;
+        padding-right: .375rem;
+    }
+
+    .px-2 {
+        padding-left: .5rem;
+        padding-right: .5rem;
+    }
+
+    .px-3 {
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+
+    .p-4 {
+        padding: 1rem;
+    }
+
+    /* Layout & Flexbox & Grid */
+    .flex {
+        display: flex;
+    }
+
+    .inline-flex {
+        display: inline-flex;
+    }
+
+    .flex-col {
+        flex-direction: column;
+    }
+
+    .items-center {
+        align-items: center;
+    }
+
+    .justify-center {
+        justify-content: center;
+    }
+
+    .grid {
+        display: grid;
+    }
+
+    .grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .gap-1 {
+        gap: .25rem;
+    }
+
+    .gap-1\.5 {
+        gap: .375rem;
+    }
+
+    .gap-4 {
+        gap: 1rem;
+    }
+
+    @@media (min-width: 768px) {
+        .md\:grid-cols-2
+
+    {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    }
+
+    /* Space Utilities */
+    .space-y-1\.5 > :not([hidden]) ~ :not([hidden]),
+    .space-y-4 > :not([hidden]) ~ :not([hidden]),
+    .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-y-reverse: 0;
+        margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+        margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+    }
+
+    /* Effects & Transitions */
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .duration-200 {
+        transition-duration: .2s;
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-duration: .15s;
+        transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .shadow-sm {
+        --tw-shadow: 0 1px 2px 0 #0000000d;
+        --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+    }
+
+    /* Pseudo-classes */
+    .hover\:bg-slate-50:hover {
+        --tw-bg-opacity: 1;
+        background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1));
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="d-flex align-items-center gap-3 mb-4">
+        <a asp-action="Index" asp-controller="PenugasanAset" class="btn btn-outline-secondary bg-white p-2 d-inline-flex align-items-center justify-content-center shadow-sm" style="border-radius: 8px; width: 38px; height: 38px;">
+            <i class="bi bi-arrow-left text-indigo-dark fs-5"></i>
+        </a>
+        <div>
+            <h1 class="h4 fw-bold text-indigo-dark mb-0.5">Transfer Aset Langsung</h1>
+            <p class="text-muted small mb-0">Pindahkan penugasan nomor seri dari pemegang aktif ke penerima baru tanpa dikembalikan ke gudang.</p>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm p-4 p-md-5 mb-4" style="border-radius: 12px;">
+        <form id="formTransferAset" method="post" asp-action="ProcessTransferAsset" asp-controller="PenugasanAset">
+            @Html.AntiForgeryToken()
+
+            <!-- SECTION 1: PILIH ASET BERSERI -->
+            <div class="mb-4 pb-2">
+                <label class="form-label fw-bold text-indigo-dark d-flex align-items-center gap-2 mb-2.5" style="font-size: 0.9rem;">
+                    <i class="bi bi-arrow-left-right text-danger"></i> Pilih Aset Berseri yang Akan Ditransfer
+                </label>
+                <select id="selectProduk" name="ProdukItemId" class="form-select py-2.5 px-3 select-custom-focus text-indigo-dark fw-medium" style="border-radius: 8px; font-size: 0.9rem;" required>
+                    <option value="" selected>-- Pilih Aset Aktiv --</option>
+                </select>
+            </div>
+
+            <!-- CONTAINER DINAMIS DETAIL PRODUK -->
+            <div id="dataDetailProduk" class="mb-4">
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Informasi Aset</span>
+                        <div id="detailNamaProduk" class="mt-1 font-bold text-slate-900" style="font-size: 1rem;">-</div>
+                        <div id="detailSkuSn" class="text-xs text-slate-500 font-mono mt-0.5">SKU: - | SN: -</div>
+                        <div id="detailGudang" class="text-xs text-slate-500 font-mono mt-0.5">Gudang Asal: -</div>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Pemegang Aktif Saat Ini</span>
+                        <div class="mt-1 flex items-center gap-1.5">
+                            <span id="detailBadgeTipe" class="px-1.5 py-0.5 text-[9px] font-bold rounded uppercase border">-</span>
+                            <span id="detailNamaPemegang" class="font-bold text-slate-900">-</span>
+                        </div>
+                        <div class="text-xs text-slate-500 mt-1 font-semibold flex items-center gap-1">
+                            Status Aset: <span id="detailStatusAset" class="capitalize text-amber-600 font-bold font-mono">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: TRANSFER TARGET -->
+            <div class="mb-4">
+                <label class="form-label text-uppercase text-muted fw-bold tracking-wider mb-2" style="font-size: 0.75rem;">Tipe Penerima Baru</label>
+                <input type="hidden" name="TipePenerima" id="TipePenerimaVal" value="1" />
+                <div class="row g-2">
+                    <div class="col-4">
+                        <button type="button" class="btn-tipe-penerima w-100 px-2 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer flex flex-col items-center justify-center gap-1 border-slate-200 bg-white text-slate-600" data-type="1">
+                            <i class="bi bi-person"></i> Karyawan
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        <button type="button" class="btn-tipe-penerima w-100 px-2 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer flex flex-col items-center justify-center gap-1 border-slate-200 bg-white text-slate-600" data-type="2">
+                            <i class="bi bi-building"></i> Department
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        <button type="button" class="btn-tipe-penerima w-100 px-2 py-1.5 text-xs font-bold rounded-lg border transition-all cursor-pointer flex flex-col items-center justify-center gap-1 border-slate-200 bg-white text-slate-600" data-type="3">
+                            <i class="bi bi-people"></i> Customer
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label id="lblPenerima" class="form-label text-uppercase text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">Penerima Baru (Karyawan)</label>
+                <select name="TargetPenerimaId" id="TargetPenerimaId" class="form-select select2-penerima" required style="width: 100%;">
+                    <option value="" selected disabled>Pilih Penerima...</option>
+                </select>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-bold text-indigo-dark small d-flex align-items-center gap-1.5 mb-2">
+                        <i class="bi bi-calendar3 text-muted"></i> Tanggal Transfer
+                    </label>
+                    <input type="date" name="TanggalTransfer" class="form-control py-2.5 px-3 text-muted" value="@DateTime.Now.ToString("yyyy-MM-dd")" style="border-radius: 8px; font-size: 0.9rem;" required>
+                </div>
+                <div class="col-12 col-md-8">
+                    <label class="form-label fw-bold text-indigo-dark small d-flex align-items-center gap-1.5 mb-2">
+                        <i class="bi bi-file-earmark-text text-muted"></i> Catatan Transfer
+                    </label>
+                    <textarea name="Catatan" class="form-control py-2 px-3 text-muted" rows="6" placeholder="Alasan transfer atau kondisi aset saat diserahterimakan..." style="border-radius: 8px; font-size: 0.9rem; resize: vertical;"></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center gap-2 border-top-0 bg-white pt-0">
+                <a asp-action="Index" asp-controller="PenugasanAset" class="btn btn-batal-modal btn-sm">
+                    <i class="bi bi-arrow-90deg-left"></i> Batal
+                </a>
+                <button type="submit" class="btn btn-save btn-sm">
+                    <i class="bi bi-check-lg me-1"></i> Simpan Proses Transfer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/PenugasanAset.js"></script>
+}

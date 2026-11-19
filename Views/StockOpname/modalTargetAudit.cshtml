@@ -1,0 +1,38 @@
+﻿<div class="modal fade" id="modalTargetAudit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTargetAuditLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 550px;">
+        <div class="modal-content border-0 shadow-lg p-2 rounded-4 position-relative">
+            @Html.AntiForgeryToken()
+
+            <!-- Tombol Close diposisikan secara mutlak terhadap modal-content yang diberi position-relative -->
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-4 shadow-none" data-bs-dismiss="modal" aria-label="Close" style="z-index: 1055;"></button>
+
+            <div class="modal-header border-0 pb-0">
+                <!-- Header dibiarkan bersih atau dikosongkan jika tombol close sudah diposisikan di modal-content -->
+            </div>
+
+            <div class="modal-body text-center px-4 pt-0 pb-4">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 shadow-sm"
+                     style="width: 56px; height: 56px; background-color: #fef2f2; color: #ef4444;">
+                    <i class="bi bi-clipboard-check fs-3"></i>
+                </div>
+                <h5 class="modal-title-custom fw-bold mb-2 text-indigo-dark" id="modalTargetAuditLabel">
+                    Pilih Gudang Target Audit
+                </h5>
+                <p class="modal-text-custom mb-4 px-2 text-muted text-center mx-auto" style="max-width: 420px; font-size: 0.875rem;">
+                    Proses audit akan mengunci stok acuan sistem pada gudang yang dipilih. Pastikan aktivitas keluar masuk barang di gudang tersebut sedang dihentikan.
+                </p>
+                <div class="text-start mb-4">
+                    <label class="form-label-custom d-block mb-2 text-muted fw-bold tracking-wider" style="font-size: 0.75rem;">
+                        PILIH GUDANG
+                    </label>
+                    <select id="selectGudangTarget" class="form-select py-2.5 px-3 border border-secondary-subtle select-custom-focus text-indigo-dark fw-semibold" style="border-radius: 8px;">
+                        <option value="" selected disabled>-- Memuat Data Gudang... --</option>
+                    </select>
+                </div>
+                <button type="button" id="btnSubmitTargetGudang" onclick="StockOpname.submitTargetGudang()" class="btn btn-emerald w-100 py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm border-0">
+                    <i class="bi bi-play-fill fs-5"></i> Mulai Audit Stok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

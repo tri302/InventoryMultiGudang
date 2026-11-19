@@ -1,0 +1,23 @@
+﻿<div class="modal fade" id="modalAddrolle" tabindex="-1" aria-labelledby="modalAddrolleLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 360px;">
+        <div class="modal-content border-0 p-3" style="border-radius: 12px; background-color: #f8fafc; border: 1px solid #e2e8f0 !important;">
+            <div class="modal-body p-2">
+                <form id="formAddRole">
+                    <div class="mb-3">
+                        <label for="roleNameInput" class="form-label text-uppercase fw-semibold mb-2" style="font-size: 0.75rem; letter-spacing: 0.5px; color: #64748b;">Role Name</label>
+                        <input type="text" class="form-control px-3" id="roleNameInput" placeholder="e.g. Moderator" style="border-color: #e2e8f0; background-color: #ffffff; font-size: 0.9rem; padding-top: 10px; padding-bottom: 10px; border-radius: 8px; color: #334155;">
+                        <div id="roleNameInputError" class="invalid-feedback-custom">Role name harus diisi!</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-center gap-2">
+                <button type="button" class="btn btn-cancel btn-sm" data-bs-dismiss="modal">
+                    <i class="bi bi-arrow-90deg-left"></i> Batal
+                </button>
+                <button type="button" id="btnSaveRole" class="btn btn-save btn-sm">
+                    <i class="bi bi-check-lg me-1"></i> Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
